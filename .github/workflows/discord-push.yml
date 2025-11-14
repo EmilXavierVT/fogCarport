@@ -1,50 +1,19 @@
-name: Discord push notifier
+name: Notify Discord on Push
 
 on:
   push:
-    branches:
-      - "**" # or limit to: main, master, develop
 
 jobs:
-  notify-discord:
+  notify:
     runs-on: ubuntu-latest
-    env:
-      WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }} # add this in repo/org Secrets
     steps:
-      - name: Build message
-        id: msg
-        run: |
-          EVENT="$GITHUB_EVENT_PATH"
-
-          REPO="${{ github.repository }}"
-          ACTOR="${{ github.actor }}"
-          BRANCH="${{ github.ref_name }}"
-          COMPARE_URL=$(jq -r '.compare // empty' "$EVENT")
-          COUNT=$(jq '.commits | length' "$EVENT")
-
-          # Build commit lines: * `abcd123` message — author <url>
-          COMMITS=$(jq -r '.commits[] | "* `\(.id[0:7])` \(.message | split("\n")[0]) — \(.author.name) <\(.url)>"' "$EVENT")
-
-          # Cap extremely large pushes to keep the message readable
-          MAX_LINES=20
-          LINES=$(printf "%s\n" "$COMMITS" | head -n $MAX_LINES)
-          MORE=$(printf "%s\n" "$COMMITS" | wc -l)
-          MORE_NOTE=""
-          if [ "$MORE" -gt "$MAX_LINES" ]; then
-            REM=$((MORE - MAX_LINES))
-            MORE_NOTE="\n…and ${REM} more commit(s)"
-          fi
-
-          HEADER="📦 **${ACTOR}** pushed to **${REPO}** on **${BRANCH}** (${COUNT} commit(s))"
-          [ -n "$COMPARE_URL" ] && HEADER="${HEADER}\nCompare: <${COMPARE_URL}>"
-
-          MSG="${HEADER}\n${LINES}${MORE_NOTE}"
-
-          # Emit JSON payload safely using jq
-          echo "payload=$(jq -Rn --arg content "$MSG" '{content: $content}')" >> "$GITHUB_OUTPUT"
-
-      - name: Send to Discord
-        run: |
-          curl -fsSL -H "Content-Type: application/json" \
-            -d '${{ steps.msg.outputs.payload }}' \
-            "$WEBHOOK_URL"
+      - name: Send Discord message
+        uses: ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            🚀 **New push to `${{ github.repository }}`**
+            • **Author:** ${{ github.actor }}
+            • **Branch:** ${{ github.ref_name }}
+            • **Commit message:** ${{ github.event.head_commit.message }}

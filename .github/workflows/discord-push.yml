@@ -10,7 +10,7 @@ jobs:
       - name: Send Discord message
         uses: ilshidur/action-discord@master
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
         with:
           args: |
             🚀 **New push to `${{ github.repository }}`**

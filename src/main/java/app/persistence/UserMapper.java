@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
 
@@ -178,6 +180,33 @@ public class UserMapper {
             throw new DatabaseException("something admin login", e.getMessage());
         }
         return 0;
+    }
+
+    public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> userList = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                userList.add(new User(
+                        rs.getInt("user_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("zip_code"),
+                        rs.getString("street_name"),
+                        rs.getInt("house_number"),
+                        rs.getString("floor"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getInt("role")
+                ));
+            }
+            return userList;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving all users", e.getMessage());
+        }
     }
 }
 

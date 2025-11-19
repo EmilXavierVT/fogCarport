@@ -126,6 +126,59 @@ public class UserMapper {
             throw new DatabaseException("Error deleting user", e.getMessage());
         }
     }
+
+    public static User login(String email, String password) throws DatabaseException
+    {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        String sql = "select id from users where email=? and password=?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if ( rs.next() )
+            {
+                int id = rs.getInt("id");
+
+                return getUser(id);
+            } else
+            {
+                throw new DatabaseException("Fejl i login. Prøv igen");
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("DB fejl", e.getMessage());
+        }
+    }
+
+    public static int checkIfAdmin(User user) throws DatabaseException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "SELECT * FROM roles WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ){
+            ps.setInt(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+
+                int role = rs.getInt("roles");
+                return role;
+
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("something admin login", e.getMessage());
+        }
+        return 0;
+    }
 }
 
 

@@ -1,7 +1,7 @@
 package app.persistence;
 
 
-import app.enteties.Specifications;
+import app.enteties.Specification;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SpecificationsMapper {
+public class SpecificationMapper {
 
     public static void CreateSpecification(int EAN, String model, String roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
@@ -47,7 +47,7 @@ public class SpecificationsMapper {
         }
     }
 
-    public static Specifications GetSpecifications(int specificationId) throws SQLException, DatabaseException {
+    public static Specification GetSpecifications(int specificationId) throws SQLException, DatabaseException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "SELECT * FROM specifications WHERE specification_id = ?";
 
@@ -57,7 +57,7 @@ public class SpecificationsMapper {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Specifications(
+                return new Specification(
                         rs.getInt("specification_id"),
                         rs.getInt("EAN"),
                         rs.getString("model"),

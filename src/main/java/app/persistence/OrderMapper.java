@@ -80,4 +80,23 @@ public class OrderMapper {
         }
         return orders;
     }
+
+    // get oders from last 7 days not implimented
+
+
+    // maybe we want to look into this later
+    public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
+    {
+        try (Connection connection = connectionPool.getConnection())
+        {
+            String sql = "DELETE FROM orders WHERE order_id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, orderId);
+            ps.executeQuery();
+
+        } catch (SQLException e)
+        {
+            throw new DatabaseException("Error removing order", e.getMessage());
+        }
+    }
 }

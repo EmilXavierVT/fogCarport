@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.enteties.User;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;

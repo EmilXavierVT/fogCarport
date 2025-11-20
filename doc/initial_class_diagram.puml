@@ -1,0 +1,73 @@
+@startuml
+!pragma layout smetana
+'https://plantuml.com/class-diagram
+
+
+class Main
+class App
+
+package entities{
+class Order
+class Specification
+class StandardCarport
+class User
+class Product
+class UserDefinedCarport
+class CarportRequest
+class ProductInOrder
+class Admin
+abstract Carport
+}
+
+package util{
+class FileIO
+class JakartaMail
+}
+
+package config{
+class ThymeleafConfig
+}
+
+package controllers{
+class UserController
+class SpecificationController
+class CarportController
+class OrderController
+class ProductController
+class RequestController
+class CartController
+}
+
+package exceptions {
+class DatabaseException
+class FileException
+}
+
+package persistence{
+class ConnectionPool
+class OrderMapper
+class SpecificationMapper
+class UserMapper
+class CarportMapper
+class ProductMapper
+class CarportRequestMapper
+class ProductInOrderMapper
+}
+
+
+
+Main --* App
+App --* controllers
+util *--- controllers
+DatabaseException *--- persistence
+FileException *--- util
+
+config --* App
+Carport <|-- UserDefinedCarport
+Carport <|-- StandardCarport
+controllers --* persistence
+persistence --* entities
+User <|-- Admin
+
+
+@enduml

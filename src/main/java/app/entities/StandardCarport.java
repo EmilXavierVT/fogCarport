@@ -1,6 +1,4 @@
-package app.enteties;
-
-import java.time.LocalDate;
+package app.entities;
 
 public class StandardCarport {
 int standardId;

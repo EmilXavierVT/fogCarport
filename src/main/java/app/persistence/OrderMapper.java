@@ -72,7 +72,7 @@ public class OrderMapper {
                 int userId = rs.getInt("user_id");
                 int discountId = rs.getInt("applied_discount");
                 LocalDate date = rs.getDate("date").toLocalDate();
-                orders.add(new Order(id, userId, date, discountId));
+                orders.add(new Order(id, userId, date));
             }
         } catch (SQLException e)
         {

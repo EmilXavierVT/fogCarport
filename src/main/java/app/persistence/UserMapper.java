@@ -34,7 +34,7 @@ public class UserMapper {
 
             if (rs.next())
             {
-                return getUser(rs.getInt(1));
+                return getUserByID(rs.getInt(1));
             } else
             {
                 throw new DatabaseException("Failed to create new user");
@@ -44,7 +44,7 @@ public class UserMapper {
             throw new DatabaseException("Error creating user", e.getMessage());
         }
     }
-    public static User getUser(int id) throws DatabaseException
+    public static User getUserByID(int id) throws DatabaseException
     {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -104,7 +104,7 @@ public class UserMapper {
             {
                 throw new DatabaseException("Failed to update user with ID: " + id);
             }
-            return getUser(id);
+            return getUserByID(id);
         } catch (SQLException e)
         {
             throw new DatabaseException("Error updating user", e.getMessage());
@@ -148,7 +148,7 @@ public class UserMapper {
             {
                 int id = rs.getInt("id");
 
-                return getUser(id);
+                return getUserByID(id);
             } else
             {
                 throw new DatabaseException("Fejl i login. Prøv igen");
@@ -162,7 +162,7 @@ public class UserMapper {
 
     public static int checkIfAdmin(User user) throws DatabaseException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-        String sql = "SELECT * FROM roles WHERE user_id = ?";
+        String sql = "SELECT role FROM users WHERE user_id = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -172,7 +172,7 @@ public class UserMapper {
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
 
-                int role = rs.getInt("roles");
+                int role = rs.getInt("role");
                 return role;
 
             }

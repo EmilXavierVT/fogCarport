@@ -35,8 +35,8 @@ public class CarportMapper {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "SELECT * FROM carport WHERE id = ?";
 
-        try (Connection conection = connectionPool.getConnection();
-             PreparedStatement ps = conection.prepareStatement(sql)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, carportID);
             ResultSet rs = ps.executeQuery();
 
@@ -66,6 +66,24 @@ public class CarportMapper {
             throw new DatabaseException("Error: no carport found", e.getMessage());
         }
         throw new DatabaseException("No carport found " + carportID);
+    }
+
+    public static void deleteCarport(int carportID) throws DatabaseException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "DELETE FROM carport WHERE id = ?";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ps.setInt(1, carportID);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Error deleting carport " + carportID);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
 

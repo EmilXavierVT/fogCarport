@@ -1,20 +1,16 @@
 package app.entities;
 
-public class StandardCarport {
+public class StandardCarport extends Carport {
 int standardId;
 String name;
-int price;
+float price;
 int type;
 String description;
 int specification;
+
 String pdfFile;
-    public StandardCarport(int standardId, String name, int price, int type, String description, int specification, String pdf_file) {
-        this.standardId = standardId;
-        this.name = name;
-        this.price = price;
-        this.type = type;
-        this.description = description;
-        this.specification = specification;
+    public StandardCarport(int standardId, String name, float price, int type, String description, int specification, String pdf_file) {
+        super(standardId,name,price,type,description,specification);
         this.pdfFile = pdf_file;
     }
 }

@@ -55,7 +55,7 @@ package "Persistence" {
     class UserMapper
     {
     + createUser()
-    + getUser()
+    + getUserByID()
     + updateUser()
     + deleteUser()
     + login()

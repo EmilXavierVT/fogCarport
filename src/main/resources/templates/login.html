@@ -1,11 +1,24 @@
-<head th:replace="fragments :: head(~{::Forside})"><title>Forside</title></head>
+<head th:replace="fragments :: head(~{::login})"><title>Log ind</title>
+<title>Log ind</title>
+</head>
+<header th:replace="~{fragments :: header}"></header>
+
 <body>
-
-<section> </section>
-
-<section> </section>
-
-<section> </section>
-
+<main>
+    <section class="login_section">
+        <h1 id="title">Log ind</h1>
+        <div class="input_container">
+            <form class="login_form" th:action="@{/login}" method="POST">
+                <label for="email">e-mail:</label>
+                <input type="email" id="email" name="email" required />
+                <label for="password">Adgangskode:</label>
+                <input type="password" id="password" name="password"  required />
+                <button type="submit">Log ind</button>
+            </form>
+            <p th:if="${session.errorLogin != null}" th:text="${session.errorLogin}"></p>
+            <p>Har du ikke en konto? <a th:href="@{/registerPassword}">Opret en her</a></p>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
 </body>
-<footer th:replace="fragments :: footer"></footer>

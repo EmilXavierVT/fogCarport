@@ -34,54 +34,51 @@ public class OrderMapper {
         }
         return orderId;
     }
+    public static void saveOrder(int userID, LocalDate localDate) throws DatabaseException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
 
-
-    public void createOrder(int userId, LocalDate date, ConnectionPool connectionPool) throws DatabaseException
-    {
-        String sql = "INSERT INTO orders ( user_id, date, ) VALUES (?, ?, ?) RETURNING id";
-
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql))
-        {
-            //ps.setInt(1, orderId);
-            ps.setInt(1, userId);
-            ps.setDate(2, java.sql.Date.valueOf(date));
-
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, userID);
+            ps.setDate(2, java.sql.Date.valueOf(localDate));
             ps.executeQuery();
-        } catch (SQLException e)
-        {
-            throw new DatabaseException("SaveOrder Mapper", e.getMessage());
         }
     }
+
     // discount not added
+    public static Order getOrderByID(int orderID){
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "SELECT * FROM orders WHERE id = ?";
 
 
-    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
-    {
-        List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM orders";
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql))
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql))
         {
+            ps.setInt(1, orderID);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next())
-            {
-                int id = rs.getInt("id");
-                int userId = rs.getInt("user_id");
-                LocalDate date = rs.getDate("date").toLocalDate();
-                orders.add(new Order(id, userId, date));
+            if (rs.next()){
+                return new Order(rs.getInt("order_id"),UserMapper.getUserByID(rs.getInt("user_id")), rs.getDate("date").toLocalDate());
             }
-        } catch (SQLException e)
-        {
-            throw new DatabaseException("Error getting all orders", e.getMessage());
+        } catch (SQLException | DatabaseException e) {
+            throw new RuntimeException(e);
         }
-        return orders;
+        return null;
     }
+
+
 
     // get oders from last 7 days not implimented
 
+    public static void updateOrder (int userID, LocalDate localDate) throws DatabaseException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String  sql = "UPDATE orders SET date=? WHERE id=?";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)){
+        }
+    }
 
     // maybe we want to look into this later
     public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
@@ -99,13 +96,28 @@ public class OrderMapper {
         }
     }
 
-    public static void saveOrder(int userID, LocalDate localDate) throws DatabaseException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
 
-        try(Connection connection = connectionPool.getConnection();
-        PreparedStatement ps = connection.prepareStatement(sql)){
 
+
+
+    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
+    {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM orders";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                orders.add(new Order(rs.getInt("id"), UserMapper.getUserByID(rs.getInt("user_id")), rs.getDate("date").toLocalDate()));
+            }
+        } catch (SQLException e)
+        {
+            throw new DatabaseException("Error getting all orders", e.getMessage());
         }
+        return orders;
     }
 }

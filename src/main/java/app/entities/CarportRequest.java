@@ -5,4 +5,11 @@ public class CarportRequest {
     private User user;
     private Carport carport;
     private User salesRep;
+
+    public CarportRequest(int carportRequestID, User userByID, Carport carportByID, User salesRepByID) {
+        this.carportRequestID = carportRequestID;
+        this.user = userByID;
+        this.carport = carportByID;
+        this.salesRep = salesRepByID;
+    }
 }

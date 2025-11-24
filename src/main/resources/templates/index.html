@@ -1,11 +1,35 @@
 <head th:replace="fragments :: head(~{::index})"><title>Forside</title></head>
 <body>
 
-<section> </section>
+<section>
+<video class="video_container" controls>
+<source th:src="@{/videos/cover_video.mp4}">
+Din browser understøtter ikke videoer.
+</video>
+</section>
 
-<section> </section>
+<section>
+    <div class="display_container_horizontal">
+        <div>
+            <!--Slider til produkter + produkter-->
+        </div>
+    </div>
+</section>
 
-<section> </section>
+<section>
+    <h1 id="title">Log ind</h1>
+    <div class="display_container_vertical">
+        <form class="login_form" th:action="@{/login}" method="POST">
+            <label for="email">e-mail:</label>
+            <input type="email" id="email" name="email" required />
+            <label for="password">Adgangskode:</label>
+            <input type="password" id="password" name="password"  required />
+            <button type="submit">Log ind</button>
+        </form>
+        <p th:if="${session.errorLogin != null}" th:text="${session.errorLogin}"></p>
+        <p>Har du ikke en konto? <a th:href="@{/registerPassword}">Opret en her</a></p>
+    </div>
+</section>
 
 </body>
 <footer th:replace="fragments :: footer"></footer>

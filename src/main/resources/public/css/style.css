@@ -1,0 +1,28 @@
+:root {
+    --background_color: #F5F5F3;
+    --text: #0F1821;
+    --white_widget: #FFFFFF;
+    --dark_blue_widget: #134681;
+    --blue_widget: #013D76;
+    --light_blue_button_color: #2A6EC5;
+    --border_box_color: #868282;
+}
+
+
+.display_container_vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.display_container_horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.carport_slider {
+
+}

@@ -81,9 +81,9 @@ public class UserMapper {
     }
 
     public static User updateUser(int id, String firstName, String lastName, int zipCode,
-                                  String streetName, Integer houseNumber, String floor,
-                                  ConnectionPool connectionPool) throws DatabaseException
+                                  String streetName, Integer houseNumber, String floor) throws DatabaseException
     {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "UPDATE users SET first_name=?, last_name=?, zip_code=?, street_name=?, " +
                 "house_number=?, floor=? WHERE id=?";
 
@@ -182,7 +182,8 @@ public class UserMapper {
         return 0;
     }
 
-    public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
+    public static List<User> getAllUsers() throws DatabaseException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         List<User> userList = new ArrayList<>();
         String sql = "SELECT * FROM users";
 

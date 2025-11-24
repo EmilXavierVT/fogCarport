@@ -89,12 +89,13 @@ public class OrderMapper {
     }
 
     // maybe we want to look into this later
-    public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
+    public void removeOrder(int orderId) throws DatabaseException
     {
-        try (Connection connection = connectionPool.getConnection())
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "DELETE FROM orders WHERE order_id = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
         {
-            String sql = "DELETE FROM orders WHERE order_id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, orderId);
             ps.executeQuery();
 
@@ -108,8 +109,9 @@ public class OrderMapper {
 
 
 
-    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
+    public List<Order> getAllOrders() throws DatabaseException
     {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
 

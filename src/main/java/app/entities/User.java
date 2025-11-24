@@ -1,5 +1,10 @@
 package app.entities;
 
+
+import lombok.Data;
+
+@Data
+
 public class User {
 int userId;
 String firstName;
@@ -23,9 +28,5 @@ int role;
         this.email = email;
         this.password = password;
         this.role = role;
-    }
-
-    public int getId() {
-        return userId;
     }
 }

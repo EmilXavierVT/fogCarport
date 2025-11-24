@@ -71,12 +71,20 @@ public class OrderMapper {
 
     // get oders from last 7 days not implimented
 
-    public static void updateOrder (int userID, LocalDate localDate) throws DatabaseException, SQLException {
+    public static void updateOrder (int OrderID, LocalDate localDate) throws DatabaseException, SQLException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String  sql = "UPDATE orders SET date=? WHERE id=?";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)){
+
+            ps.setDate(1, java.sql.Date.valueOf(localDate));
+
+            int rowsAffected = ps.executeUpdate();
+            if ( rowsAffected != 1 )
+            {
+                throw new DatabaseException("Failed to update user with ID: " + OrderID);
+            }
         }
     }
 

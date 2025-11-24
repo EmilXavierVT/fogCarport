@@ -36,9 +36,9 @@ public class OrderMapper {
     }
 
 
-    public void createOrder(int userId, LocalDate date, int discountId, ConnectionPool connectionPool) throws DatabaseException
+    public void createOrder(int userId, LocalDate date, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "INSERT INTO orders ( user_id, date, applied_discount) VALUES (?, ?, ?, ?) RETURNING id";
+        String sql = "INSERT INTO orders ( user_id, date, ) VALUES (?, ?, ?) RETURNING id";
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -46,7 +46,7 @@ public class OrderMapper {
             //ps.setInt(1, orderId);
             ps.setInt(1, userId);
             ps.setDate(2, java.sql.Date.valueOf(date));
-            ps.setInt(3, discountId);
+
             ps.executeQuery();
         } catch (SQLException e)
         {
@@ -70,7 +70,6 @@ public class OrderMapper {
             {
                 int id = rs.getInt("id");
                 int userId = rs.getInt("user_id");
-                int discountId = rs.getInt("applied_discount");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 orders.add(new Order(id, userId, date));
             }
@@ -97,6 +96,16 @@ public class OrderMapper {
         } catch (SQLException e)
         {
             throw new DatabaseException("Error removing order", e.getMessage());
+        }
+    }
+
+    public static void saveOrder(int userID, LocalDate localDate) throws DatabaseException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
+
+        try(Connection connection = connectionPool.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)){
+
         }
     }
 }

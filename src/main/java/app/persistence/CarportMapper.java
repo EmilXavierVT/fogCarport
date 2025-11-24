@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class CarportMapper {
 
-    public static void putCarportInDB(String name, int price, int type, String productionDescription, int specification) throws DatabaseException {
+    public static void SaveCarportInDB(String name, int price, int type, String productionDescription, int specification) throws DatabaseException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "INSERT INTO carport (name, price, type, production_description, specification) VALUES (?, ?, ?, ?, ?)";
 
@@ -31,7 +31,7 @@ public class CarportMapper {
         }
     }
 
-    public static Carport CarportByID(int carportID) throws DatabaseException {
+    public static Carport getCarportByID(int carportID) throws DatabaseException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "SELECT * FROM carport WHERE id = ?";
 
@@ -83,9 +83,46 @@ public class CarportMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification){
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "UPDATE carports SET name=?, price=?, type=?, production_description=?, specification=? WHERE id=?";
+
+        try(Connection connection = connectionPool.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setInt(2, price);
+            ps.setInt(3, type);
+            ps.setString(4, productionDescription);
+            ps.setInt(5, specification);
+
+            ps.setInt(6, carportID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification, String pdfFile){
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        String sql = "UPDATE carports SET name=?, price=?, type=?, production_description=?, specification=?, pdf_file=? WHERE id=?";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setInt(2, price);
+            ps.setInt(3, type);
+            ps.setString(4, productionDescription);
+            ps.setInt(5, specification);
+            ps.setString(6, pdfFile);
+
+            ps.setInt(7, carportID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
+
 
 
 

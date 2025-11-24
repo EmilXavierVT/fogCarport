@@ -47,7 +47,7 @@ public class UserMapper {
     public static User getUserByID(int id) throws DatabaseException
     {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-        String sql = "SELECT * FROM users WHERE id = ?";
+        String sql = "SELECT * FROM users WHERE user_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -168,7 +168,7 @@ public class UserMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ){
-            ps.setInt(1, user.getId());
+            ps.setInt(1, user.getUserId());
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
 

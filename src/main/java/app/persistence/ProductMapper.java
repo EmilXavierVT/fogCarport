@@ -25,7 +25,7 @@ public class ProductMapper {
         }
     }
 
-    public static Product getProduct(int productID) throws DatabaseException, SQLException {
+    public static Product getProductByID(int productID) throws DatabaseException, SQLException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "SELECT * FROM products WHERE id=?";
 

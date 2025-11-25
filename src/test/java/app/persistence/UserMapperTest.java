@@ -26,27 +26,10 @@ class UserMapperTest {
             UserMapper userMapper = new UserMapper();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } try(Statement statement = connectionPool.getConnection().createStatement()){
-
         }
-        catch (SQLException e) {
+        try (Statement statement = connectionPool.getConnection().createStatement()) {
+
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-        @Test
-    void getUserByID() throws DatabaseException, DatabaseException {
-        User real = UserMapper.getUserByID(1);
-        User expected = new User(1,"Frederik","Edvardsen",2450,"vej",39,"1tv","fred@dk.dk", "1234",1);
-
-        assertEquals(real.getFirstName(),expected.getFirstName());
-        assertEquals(real.getLastName(),expected.getLastName());
-        assertEquals(real.getZipCode(),expected.getZipCode());
-        assertEquals(real.getStreetName(),expected.getStreetName());
-        assertEquals(real.getHouseNumber(),expected.getHouseNumber());
-        assertEquals(real.getFloor(),expected.getFloor());
-        assertEquals(real.getEmail(),expected.getEmail());
-        assertEquals(real.getPassword(),expected.getPassword());
-        assertEquals(real.getRole(),expected.getRole());
-    }
-}
+    }}

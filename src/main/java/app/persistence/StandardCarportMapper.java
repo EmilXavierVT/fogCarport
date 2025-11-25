@@ -43,10 +43,9 @@ public class StandardCarportMapper {
             ps.setString(1, description);
             ps.setInt(1, specification);
             ps.setString(1, pdf_file);
-
             ps.setInt(7, id);
-
             int rowsAffected = ps.executeUpdate();
+
             if ( rowsAffected != 1 )
             {
                 throw new DatabaseException("Failed to update user with ID: " + id);

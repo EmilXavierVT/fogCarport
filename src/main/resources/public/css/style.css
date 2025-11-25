@@ -2,10 +2,11 @@
     --background_color: #F5F5F3;
     --text: #0F1821;
     --white_widget: #FFFFFF;
-    --dark_blue_widget: #134681;
-    --blue_widget: #013D76;
+    --blue_widget: #134681;
+    --dark_blue_widget: #013D76;
     --light_blue_button_color: #2A6EC5;
     --border_box_color: #868282;
+    --hover_change_color: #4D94FF;
 
     font-family: Inter, sans-serif;
 }
@@ -17,12 +18,16 @@ header {
     bottom: 0;
     overflow: hidden;
     background: var(--background_color);
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.25))
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.25))
 }
 
 body {
     margin: 0;
     background: var(--background_color);
+}
+
+a {
+    text-decoration: none;
 }
 
 /*UTILITY*/
@@ -36,6 +41,43 @@ body {
 .display_container_horizontal {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.white_text {
+    color: var(--background_color);
+}
+
+input.input_no_border_white {
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    font-size: 22px;
+    text-align: center;
+}
+
+button.button_white, a.button_white_non_button {
+    width: 100%;
+    max-width: 197px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    background: var(--light_blue_button_color);
+    color: var(--background_color);
+    transition: all 0.5s ease;
+}
+
+button.button_white:hover, a.button_white_non_button:hover {
+    transform: translateY(-4px);
+    background: var(--hover_change_color);
+    box-shadow: inset 0 -2px 0 0 rgba(0, 0, 0, 0.65);
+}
+
+a.button_white_non_button {
+    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -90,13 +132,83 @@ nav p {
     height: 100px;
 }
 
-
-.carport_slider {
-
+/*VIDEO SECTION*/
+.video_container {
+    display: flex;
+    width: 100%;
+    height: 810px;
+    object-fit: fill;
 }
 
-.video_container {
+.cover_video_img {
+    position: absolute;
+    top: 600px;
+    width: 100%;
+    z-index: 1000;
+}
 
+/*CARPORT SLIDER SECTION*/
+
+.carport_slider_section {
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    background: var(--background_color);
+    box-shadow: 0 15px 30px 5px rgba(0,0,0,0.35), 0 -15px 30px 5px rgba(0,0,0,0.25);
+}
+
+.slider_container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+}
+
+.product_card_slider {
+    min-width: 220px;
+    background: var(--white_widget);
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.product_card_slider img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+/*LOGIN SECTION*/
+.login_section {
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    background: var(--blue_widget);
+    box-shadow: 0 15px 30px 5px rgba(0,0,0,0.25), 0 -15px 30px 5px rgba(0,0,0,0.25);
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    gap: 20px;
+    color: var(--background_color);
+}
+
+.button_row {
+    display: flex;
+    gap: 100px;
+    margin-top: 10px;
+    align-items: center;
 }
 
 .fragment_div {

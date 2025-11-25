@@ -1,6 +1,10 @@
 package app.entities;
 
-public class User {
+import lombok.Data;
+@Data
+
+public class User
+{
 int userId;
 String firstName;
 String lastName;
@@ -12,7 +16,8 @@ String email;
 String password;
 int role;
 
-    public User(int userId, String firstName, String lastName, int zip_code, String streetName, int houseNumber, String floor, String email, String password,int role) {
+    public User(int userId, String firstName, String lastName, int zip_code, String streetName, int houseNumber, String floor, String email, String password,int role)
+    {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,9 +28,5 @@ int role;
         this.email = email;
         this.password = password;
         this.role = role;
-    }
-
-    public int getId() {
-        return userId;
     }
 }

@@ -8,9 +8,8 @@ import java.sql.SQLException;
 
 public class StandardCarportMapper {
 
-    public static void createStandardCarport(String name, int price, int type, String description, int specification, String pdf_file) throws DatabaseException
+    public static void createStandardCarport(String name, int price, int type, String description, int specification, String pdf_file, ConnectionPool connectionPool) throws DatabaseException
     {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "INSERT INTO standard_carports (name, price, type, product_description, specificatons, pdf_file) " +
                 "VALUES (?, ? , ? , ? , ? , ? )";
 
@@ -31,9 +30,8 @@ public class StandardCarportMapper {
         }
     }
 
-    public static void updateStandardCarport(int id, String name, int price, int type, String description, int specification, String pdf_file) throws DatabaseException
+    public static void updateStandardCarport(int id, String name, int price, int type, String description, int specification, String pdf_file, ConnectionPool connectionPool) throws DatabaseException
     {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "UPDATE standard_carports SET name=?, price=?, type=?, product_description=?, specificatons=?, pdf_file=? WHERE standard_id=?";
 
         try (Connection connection = connectionPool.getConnection();
@@ -45,10 +43,9 @@ public class StandardCarportMapper {
             ps.setString(1, description);
             ps.setInt(1, specification);
             ps.setString(1, pdf_file);
-
             ps.setInt(7, id);
-
             int rowsAffected = ps.executeUpdate();
+
             if ( rowsAffected != 1 )
             {
                 throw new DatabaseException("Failed to update user with ID: " + id);

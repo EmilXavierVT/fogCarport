@@ -9,13 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SpecificationMapper {
+public class SpecificationMapper
+{
 
     public static void CreateSpecification(int EAN, String model, String roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                            int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
-                                           int parkingWidth, int shedDepth, int shedWidth) throws SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+                                           int parkingWidth, int shedDepth, int shedWidth,ConnectionPool connectionPool) throws SQLException
+    {
         String sql = "INSERT INTO specifications (EAN,model.room_for,shed,post,beam,rafter, roof, " +
                 "fascia_board, length, width, height_front, height_rear, roof_length, roof_width," +
                 " exterior_width_at_post, parking_length, parking_width,  shed_depth, shed_width)" +
@@ -47,16 +48,18 @@ public class SpecificationMapper {
         }
     }
 
-    public static Specification GetSpecifications(int specificationId) throws SQLException, DatabaseException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static Specification GetSpecifications(int specificationId,ConnectionPool connectionPool) throws SQLException, DatabaseException
+    {
         String sql = "SELECT * FROM specifications WHERE specification_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setInt(1, specificationId);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 return new Specification(
                         rs.getInt("specification_id"),
                         rs.getInt("EAN"),
@@ -79,7 +82,6 @@ public class SpecificationMapper {
                         rs.getInt("parking_width"),
                         rs.getInt("shed_depth"),
                         rs.getInt("shed_width"));
-
             } else
             {
                 throw new DatabaseException("No Specification found on id " + specificationId);

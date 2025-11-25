@@ -34,23 +34,22 @@ public class OrderMapper {
         }
         return orderId;
     }
-    public static void saveOrder(int userID, LocalDate localDate) throws DatabaseException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static void saveOrder(int userID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
+    {
         String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
 
         try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)){
+            PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setInt(1, userID);
             ps.setDate(2, java.sql.Date.valueOf(localDate));
             ps.executeQuery();
         }
     }
 
-    // discount not added
-    public static Order getOrderByID(int orderID){
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static Order getOrderByID(int orderID, ConnectionPool connectionPool)
+    {
         String sql = "SELECT * FROM orders WHERE id = ?";
-
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))
@@ -58,10 +57,12 @@ public class OrderMapper {
             ps.setInt(1, orderID);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()){
-                return new Order(rs.getInt("order_id"),UserMapper.getUserByID(rs.getInt("user_id")), rs.getDate("date").toLocalDate());
+            if (rs.next())
+            {
+                return new Order(rs.getInt("order_id"),UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate());
             }
-        } catch (SQLException | DatabaseException e) {
+        } catch (SQLException | DatabaseException e)
+        {
             throw new RuntimeException(e);
         }
         return null;
@@ -71,16 +72,17 @@ public class OrderMapper {
 
     // get oders from last 7 days not implimented
 
-    public static void updateOrder (int OrderID, LocalDate localDate) throws DatabaseException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+    public static void updateOrder (int OrderID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
+    {
         String  sql = "UPDATE orders SET date=? WHERE id=?";
 
         try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)){
-
+            PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setDate(1, java.sql.Date.valueOf(localDate));
-
             int rowsAffected = ps.executeUpdate();
+
             if ( rowsAffected != 1 )
             {
                 throw new DatabaseException("Failed to update user with ID: " + OrderID);
@@ -89,10 +91,10 @@ public class OrderMapper {
     }
 
     // maybe we want to look into this later
-    public void removeOrder(int orderId) throws DatabaseException
+    public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
     {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "DELETE FROM orders WHERE order_id = ?";
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
         {
@@ -105,13 +107,8 @@ public class OrderMapper {
         }
     }
 
-
-
-
-
-    public List<Order> getAllOrders() throws DatabaseException
+    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
     {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
 
@@ -122,7 +119,7 @@ public class OrderMapper {
 
             while (rs.next())
             {
-                orders.add(new Order(rs.getInt("id"), UserMapper.getUserByID(rs.getInt("user_id")), rs.getDate("date").toLocalDate()));
+                orders.add(new Order(rs.getInt("id"), UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate()));
             }
         } catch (SQLException e)
         {

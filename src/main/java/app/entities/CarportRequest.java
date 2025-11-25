@@ -1,12 +1,17 @@
 package app.entities;
 
-public class CarportRequest {
+import lombok.Data;
+@Data
+
+public class CarportRequest
+{
     private int carportRequestID;
     private User user;
     private Carport carport;
     private User salesRep;
 
-    public CarportRequest(int carportRequestID, User userByID, Carport carportByID, User salesRepByID) {
+    public CarportRequest(int carportRequestID, User userByID, Carport carportByID, User salesRepByID)
+    {
         this.carportRequestID = carportRequestID;
         this.user = userByID;
         this.carport = carportByID;

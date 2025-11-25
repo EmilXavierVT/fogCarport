@@ -1,6 +1,10 @@
 package app.entities;
 
-public class Specification {
+import lombok.Data;
+@Data
+
+public class Specification
+{
     int specificationId;
     int EAN;
     String model;
@@ -26,7 +30,8 @@ public class Specification {
     public Specification(int specificationId, int EAN, String model, String roomFor, boolean shed, int post,
                          int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                          int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
-                         int parkingWidth, int shedDepth, int shedWidth) {
+                         int parkingWidth, int shedDepth, int shedWidth)
+    {
         this.specificationId = specificationId;
         this.EAN = EAN;
         this.model = model;

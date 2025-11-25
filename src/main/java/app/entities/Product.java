@@ -1,6 +1,10 @@
 package app.entities;
 
-public class Product {
+import lombok.Data;
+@Data
+
+public class Product
+{
     private int productID;
     private String name;
     private String dimensions;
@@ -8,7 +12,8 @@ public class Product {
     private float price;
     private int type;
 
-public Product(int productID, String name, String dimensions, String description, float price, int type) {
+public Product(int productID, String name, String dimensions, String description, float price, int type)
+{
     this.productID = productID;
     this.name = name;
     this.dimensions = dimensions;

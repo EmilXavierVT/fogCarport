@@ -23,6 +23,22 @@
     justify-content: center;
 }
 
+footer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.footer_svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .carport_slider {
+
+}
+
+.video_container {
 
 }

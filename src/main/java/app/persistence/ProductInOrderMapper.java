@@ -13,9 +13,8 @@ import java.util.List;
 
 public class ProductInOrderMapper {
 
-    public void createProductInOrder(int orderId, Product product, int amount) throws DatabaseException {
+    public void createProductInOrder(int orderId, Product product, int amount, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO product_in_order (order_id, product_id, amount) VALUES (?, ?, ?)";
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, orderId);
@@ -27,9 +26,8 @@ public class ProductInOrderMapper {
         }
     }
 
-    public ProductInOrder getProductInOrderById(int productInOrderId) throws DatabaseException {
+    public ProductInOrder getProductInOrderById(int productInOrderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM product_in_order WHERE product_in_order_id = ?";
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, productInOrderId);
@@ -39,7 +37,7 @@ public class ProductInOrderMapper {
                 return new ProductInOrder(
                         rs.getInt("product_in_order_id"),
                         rs.getInt("order_id"),
-                        new ProductMapper().getProductByID(rs.getInt("product_id")),
+                        new ProductMapper().getProductByID(rs.getInt("product_id"),connectionPool),
                         rs.getInt("amount")
                 );
             }
@@ -49,9 +47,8 @@ public class ProductInOrderMapper {
         return null;
     }
 
-    public void updateProductInOrder(int productInOrderId, int amount) throws DatabaseException {
+    public void updateProductInOrder(int productInOrderId, int amount, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "UPDATE product_in_order SET amount = ? WHERE product_in_order_id = ?";
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -66,9 +63,9 @@ public class ProductInOrderMapper {
         }
     }
 
-    public void deleteProductInOrder(int productInOrderId) throws DatabaseException {
+    public void deleteProductInOrder(int productInOrderId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "DELETE FROM product_in_order WHERE product_in_order_id = ?";
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, productInOrderId);
@@ -78,10 +75,9 @@ public class ProductInOrderMapper {
         }
     }
 
-    public List<ProductInOrder> getAllProductsInOrder(int orderId) throws DatabaseException {
+    public List<ProductInOrder> getAllProductsInOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         List<ProductInOrder> productsInOrder = new ArrayList<>();
         String sql = "SELECT * FROM product_in_order WHERE order_id = ?";
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, orderId);
@@ -91,7 +87,7 @@ public class ProductInOrderMapper {
                 productsInOrder.add(new ProductInOrder(
                         rs.getInt("product_in_order_id"),
                         rs.getInt("order_id"),
-                        new ProductMapper().getProductByID(rs.getInt("product_id")),
+                        new ProductMapper().getProductByID(rs.getInt("product_id"),connectionPool),
                         rs.getInt("amount")
                 ));
             }

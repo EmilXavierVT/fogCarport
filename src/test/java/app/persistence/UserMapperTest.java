@@ -1,29 +1,15 @@
 package app.persistence;
 
-
-
-
 import app.entities.User;
 import app.exceptions.DatabaseException;
-import app.persistence.ConnectionPool;
-import app.persistence.Database;
-import app.persistence.UserMapper;
-import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import java.sql.DriverManager;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 class UserMapperTest {
 
     private final static String USER = "postgres";
@@ -31,9 +17,7 @@ class UserMapperTest {
     private final static String URL = "jdbc:postgresql://128.199.42.25:5432/%s?currentSchema=test_schema";
     private final static String DB = "carport";
 
-
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER,PASSWORD,URL,DB);
-
 
     @BeforeAll
     public static void setUpClass() throws SQLException {
@@ -49,8 +33,6 @@ class UserMapperTest {
             System.out.println(e.getMessage());
         }
     }
-
-
 
         @Test
     void getUserByID() throws DatabaseException, DatabaseException {

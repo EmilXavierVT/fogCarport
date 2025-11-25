@@ -85,8 +85,8 @@ public class CarportMapper {
         }
     }
 
-    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification){
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification, ConnectionPool connectionPool) {
+
         String sql = "UPDATE carports SET name=?, price=?, type=?, production_description=?, specification=? WHERE id=?";
 
         try(Connection connection = connectionPool.getConnection();
@@ -103,8 +103,8 @@ public class CarportMapper {
         }
     }
 
-    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification, String pdfFile){
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification, String pdfFile, ConnectionPool connectionPool){
+
         String sql = "UPDATE carports SET name=?, price=?, type=?, production_description=?, specification=?, pdf_file=? WHERE id=?";
 
         try(Connection connection = connectionPool.getConnection();

@@ -34,8 +34,7 @@ public class OrderMapper {
         }
         return orderId;
     }
-    public static void saveOrder(int userID, LocalDate localDate) throws DatabaseException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static void saveOrder(int userID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException {
         String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
 
         try(Connection connection = connectionPool.getConnection();
@@ -47,8 +46,7 @@ public class OrderMapper {
     }
 
     // discount not added
-    public static Order getOrderByID(int orderID){
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static Order getOrderByID(int orderID, ConnectionPool connectionPool){
         String sql = "SELECT * FROM orders WHERE id = ?";
 
 
@@ -71,8 +69,7 @@ public class OrderMapper {
 
     // get oders from last 7 days not implimented
 
-    public static void updateOrder (int OrderID, LocalDate localDate) throws DatabaseException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static void updateOrder (int OrderID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException {
         String  sql = "UPDATE orders SET date=? WHERE id=?";
 
         try(Connection connection = connectionPool.getConnection();
@@ -89,9 +86,8 @@ public class OrderMapper {
     }
 
     // maybe we want to look into this later
-    public void removeOrder(int orderId) throws DatabaseException
+    public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
     {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         String sql = "DELETE FROM orders WHERE order_id = ?";
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -109,9 +105,8 @@ public class OrderMapper {
 
 
 
-    public List<Order> getAllOrders() throws DatabaseException
+    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
     {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
 

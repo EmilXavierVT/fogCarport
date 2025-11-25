@@ -14,8 +14,7 @@ public class SpecificationMapper {
     public static void CreateSpecification(int EAN, String model, String roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                            int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
-                                           int parkingWidth, int shedDepth, int shedWidth) throws SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+                                           int parkingWidth, int shedDepth, int shedWidth,ConnectionPool connectionPool) throws SQLException {
         String sql = "INSERT INTO specifications (EAN,model.room_for,shed,post,beam,rafter, roof, " +
                 "fascia_board, length, width, height_front, height_rear, roof_length, roof_width," +
                 " exterior_width_at_post, parking_length, parking_width,  shed_depth, shed_width)" +
@@ -47,8 +46,7 @@ public class SpecificationMapper {
         }
     }
 
-    public static Specification GetSpecifications(int specificationId) throws SQLException, DatabaseException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+    public static Specification GetSpecifications(int specificationId,ConnectionPool connectionPool) throws SQLException, DatabaseException {
         String sql = "SELECT * FROM specifications WHERE specification_id = ?";
 
         try (Connection connection = connectionPool.getConnection();

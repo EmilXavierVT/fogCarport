@@ -15,7 +15,7 @@ public class UserMapper
     public static User createUser(String firstName, String lastName, int zipCode, String streetname, int houseNumber, String floor, String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "INSERT INTO users (first_name,last_name,zip_code,street_name,house_number,floor,email, password) " +
-                "VALUES (?, ? , ? , ? , ? , ? , ? , ? ) RETURNING id";
+                "VALUES (?, ? , ? , ? , ? , ? , ? , ? ) RETURNING user_id";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))

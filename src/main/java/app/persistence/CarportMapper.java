@@ -14,9 +14,28 @@ import java.sql.SQLException;
 public class CarportMapper
 {
 
-    public static void SaveCarportInDB(String name, int price, int type, String productionDescription, int specification, ConnectionPool connectionPool) throws DatabaseException
+    public static void SaveCarportInDB(String name, double price, int type, String productionDescription, int specification, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "INSERT INTO carport (name, price, type, production_description, specification) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO carports (name, price, type, product_description, specifications) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ps.setString(1, name);
+            ps.setDouble(2, (price));
+            ps.setInt(3, type);
+            ps.setString(4, productionDescription);
+            ps.setInt(5, specification);
+            ps.executeQuery();
+        } catch (SQLException e)
+        {
+            throw new DatabaseException("Error in creating a new carport", e.getMessage());
+        }
+    }
+
+    public static void SaveCarportInDB(String name, int price, int type, String productionDescription, int specification, String pdf, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "INSERT INTO carports (name, price, type, product_description, specifications, pdf_file) VALUES (?, ?, ?, ?, ? ,?)";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -26,6 +45,7 @@ public class CarportMapper
             ps.setInt(3, type);
             ps.setString(4, productionDescription);
             ps.setInt(5, specification);
+            ps.setString(6, pdf);
             ps.executeQuery();
         } catch (SQLException e)
         {

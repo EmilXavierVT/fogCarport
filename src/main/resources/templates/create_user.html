@@ -1,0 +1,30 @@
+<head th:replace="~{fragments :: head(registerInfo)}"> <title>Registrer Information</title></head>
+<header th:replace="~{fragments :: header}"></header>
+
+<body>
+<main>
+    <section>
+        <h1 id="title">Opret Konto</h1>
+        <div class=" ">
+            <form class="registerInfo_form" th:action="@{/registerInfo}" method="POST">
+                <label for="first_name">Indtast Fornavn:</label>
+                <input type="text" id="first_name" name="first_name" required />
+                <label for="last_name">Indtast Efternavn:</label>
+                <input type="text" id="last_name" name="last_name" required />
+                <label for="postcode">Indtast Postnummer:</label>
+                <input type="text" id="postcode" name="post_code" required />
+                <label for="street_name">Vejnavn:</label>
+                <input type="text" id="street_name" name="street_name" required />
+                <label for="street_number">Vejnummer:</label>
+                <input type="text" id="street_number" name="street_number" required />
+                <label for="floor">Etage:</label>
+                <input type="text" id="floor" name="floor" required />
+                <button type="submit">Velkommen</button>
+            </form>
+            <p>Har du allerede en konto? <a th:href="@{/login}" th:if="${session.currentUser == null}">Log ind</a>
+            </p>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>

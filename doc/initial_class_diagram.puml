@@ -1,0 +1,229 @@
+@startuml
+!pragma layout smetana
+'https://plantuml.com/class-diagram
+
+skinparam packageStyle rectangle
+
+
+title Carport product Diagram
+
+' --------------------------------------------------------------------
+' LAYERS
+' --------------------------------------------------------------------
+
+
+package "Application Layer" {
+    class Main
+    class App {
+    + initiate()
+    }
+}
+
+package "Configuration" {
+    class ThymeleafConfig
+}
+
+package "Controllers" {
+    class UserController
+    class CarportController
+    class OrderController
+    class RequestController
+    class CartController
+}
+
+package "Persistence" {
+    class ConnectionPool{
+    - DEFAULT_USER
+    - DEFAULT_PASSWORD
+    - DEFAULT_URL
+    - DEFAULT_DB
+    - userID
+    - ds
+
+    + getInstance()
+    + getConnection()
+    + createHikariConnectionPool()
+    }
+
+    class OrderMapper{
+    + getAvailableOrderId()
+    + createOrder()
+    + getAllOrders()
+    + removeOrder()
+    }
+
+    class UserMapper
+    {
+    + createUser()
+    + getUserByID()
+    + updateUser()
+    + deleteUser()
+    + login()
+    + checkIfAdmin()
+    + getAllUsers()
+    }
+
+    class CarportMapper{
+    + getCarportByID()
+    + putCarportInDB()
+    + deleteCarport()
+    + getSpecificationCarport()
+    }
+
+    class CarportRequestMapper {
+    + getCarportRequestByID()
+    + deleteCarportRequestByID()
+    + updateCarportRequestByID()
+    + saveCarportRequestByID()
+    }
+
+    class CarportInOrderMapper {
+    + getCarportInOrderByID()
+    + updateCarportInOrderByID()
+    + deleteCarportInOrderByID()
+    }
+
+    class SpecificationMapper{
+    + saveSpecification()
+    + GetSpecificationByID()
+    + updateSpecificationByID()
+    + deleteSpecificationByID()
+    }
+
+    class MaterialMapper {
+    + getMaterialByID()
+    + getMaterialByType()
+    + updateMaterialByID()
+    + deleteMaterialByID()
+    + saveMaterial()
+    }
+}
+
+package "Entities" {
+    abstract class Carport {
+    - carportID
+    - name
+    - price
+    - type
+    - productDescription
+    - specification
+    }
+    class StandardCarport {
+    - pdfPath
+
+    }
+    class UserDefinedCarport {
+    - svg
+    - svgCreator(int length, int width)
+    }
+
+    class Order{
+    - orderID
+    - User user
+    - date
+    }
+
+    class Material{
+    - materialID
+    - name
+    - dimensions
+    - description
+    - price
+    - type
+    }
+
+    class User {
+    - userID
+    - firstName
+    - lastName
+    - zipCode
+    - streetName
+    - houseNumber
+    - floor
+    - email
+    - password
+    - role
+    }
+    class Admin
+
+    class Specification {
+    - ean
+    - model
+    - roomFor
+    - shed
+    - post
+    - beam
+    - rafter
+    - roof
+    - fasciaBoard
+    - length
+    - width
+    - heightFront
+    - heightRear
+    - roofLength
+    - roofWidth
+    - exteriorWidthAtPost
+    - parkingLength
+    - parkingWidth
+    - shedDepth
+    - shedWidth
+    }
+
+    class CarportRequest {
+    - Order order
+    - carportRequestID
+    - User user
+    - Carport carport
+    }
+
+    class CarportInOrder {
+    - carportInOrderID
+    - Order order
+    - Carport carport
+    - amount
+    }
+}
+
+package "Utilities" {
+    class FileIO
+    class JakartaMail
+}
+
+package "Errors" {
+    class DatabaseException
+    class FileException
+}
+
+' --------------------------------------------------------------------
+' HIGH-LEVEL RELATIONSHIPS (cleaned)
+' --------------------------------------------------------------------
+
+Main --> App
+
+App --> Controllers
+App --> ThymeleafConfig
+
+Controllers --> Persistence
+Persistence --> Entities
+
+Utilities --> Controllers
+Errors --> Persistence
+Errors --> Utilities
+
+' --------------------------------------------------------------------
+' Entities
+' --------------------------------------------------------------------
+Carport *--right- Specification
+User --* CarportRequest
+CarportRequest --* Order
+Order *-- CarportInOrder
+CarportInOrder --* Carport
+Material -left-* Specification
+' --------------------------------------------------------------------
+' KEY INHERITANCE ONLY (kept simple)
+' --------------------------------------------------------------------
+
+Carport <|-- StandardCarport
+Carport <|-- UserDefinedCarport
+User <|-right- Admin
+@enduml

@@ -1,8 +1,8 @@
-<head th:replace="fragments :: head(~{::index})"><title>Forside</title></head>
+<head th:replace="~{fragments :: head(~{::index})}"><title>Forside</title></head>
 <header th:replace="~{fragments :: header}"></header>
 <body>
 <section>
-<video class="video_container" loop autoplay>
+<video class="video_container" loop autoplay muted>
 <source th:src="@{/videos/cover_video.mp4}">
 Din browser understøtter ikke videoer.
 </video>
@@ -23,12 +23,7 @@ Din browser understøtter ikke videoer.
         </div>
     </div>
 </section>
-                                                                        <!-- slider
-<div class="slidecontainer">
-<p>Custom range slider:</p>
-<input type="range" min="1" max="10" value="2" class="slider" id="myRange">
-</div>
--->
+
 
 <section class="login_section">
     <div class="display_container_vertical">

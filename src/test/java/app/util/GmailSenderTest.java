@@ -10,7 +10,7 @@ class GmailSenderTest {
     public void testSendEmail(){
       GmailSender sender = new GmailSender();
 
-        String to = "danielhalawi22@gmail.com";  // Erstat med din modtager
+        String to = "luke_persson@yahoo.dk";  // Erstat med din modtager
         String subject = "Testmail fra Java";
         String body = "Hej! Dette er en simpel testmail sendt med Java og Jakarta Mail.";
 

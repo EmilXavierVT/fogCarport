@@ -19,7 +19,7 @@ public class UserController {
     }
 
 
-    public static void login(Context ctx,ConnectionPool connectionPool)
+    public static boolean login(Context ctx,ConnectionPool connectionPool)
     {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
@@ -37,6 +37,7 @@ public class UserController {
 
                 ctx.redirect("/adminIndex");
                 ctx.render("adminPages/adminIndex.html", Map.of("message", "Du er nu logget ind som admin."));
+                return true;
             }
             else
             {
@@ -44,14 +45,17 @@ public class UserController {
                 ctx.sessionAttribute("loginMessage", "Du er nu logget ind");
                 ctx.redirect("/profile-page");
                 ctx.render("/profile-page", Map.of("loginMessage", "Du er nu logget ind"));
+                return true;
             }
         }
         catch (DatabaseException e)
         {
+
             ctx.sessionAttribute("errorLogin", "login fejlede!");
             System.out.println("login logs errors");
             ctx.redirect("/login");
             ctx.render("/login",Map.of("errorLogin", "login fejlede!"));
+            return false;
         }
     }
 

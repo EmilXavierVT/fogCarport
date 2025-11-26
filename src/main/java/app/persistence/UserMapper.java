@@ -127,7 +127,7 @@ public class UserMapper
 
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "select id from users where email=? and password=?";
+        String sql = "select user_id from users where email=? and password=?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)
@@ -139,7 +139,7 @@ public class UserMapper
 
             if ( rs.next() )
             {
-                int id = rs.getInt("id");
+                int id = rs.getInt("user_id");
 
                 return getUserByID(id,connectionPool);
             } else

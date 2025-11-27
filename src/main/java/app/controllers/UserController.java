@@ -37,16 +37,16 @@ public class UserController {
                 ctx.sessionAttribute("admin", true);
                 ctx.attribute("message", "Du er nu logget ind som admin.");
 
-                ctx.redirect("/adminIndex");
-                ctx.render("adminPages/adminIndex.html", Map.of("message", "Du er nu logget ind som admin."));
+                ctx.redirect("/admin/alert");
+                ctx.render("/admin/alert.html", Map.of("message", "Du er nu logget ind som admin."));
                 return true;
             }
             else
             {
                 ctx.sessionAttribute("admin", false);
                 ctx.sessionAttribute("loginMessage", "Du er nu logget ind");
-                ctx.redirect("/profile-page");
-                ctx.render("/profile-page", Map.of("loginMessage", "Du er nu logget ind"));
+                ctx.redirect("/");
+                ctx.render("/index.html", Map.of("loginMessage", "Du er nu logget ind"));
                 return true;
             }
         }

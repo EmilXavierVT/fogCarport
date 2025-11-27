@@ -19,7 +19,6 @@ public class App {
         // Routing
 
         app.get("/", ctx -> ctx.render("index.html"));
-
         // add controllers here
         UserController.addRoutes(app);
 

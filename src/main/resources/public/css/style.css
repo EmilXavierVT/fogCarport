@@ -189,8 +189,8 @@ nav p {
 
 /*LOGIN SECTION*/
 .login_section {
-    margin-top: 10rem;
-    margin-bottom: 10rem;
+    margin-top: 10%;
+    margin-bottom: 10%;
     background: var(--blue_widget);
     box-shadow: 0 15px 30px 5px rgba(0,0,0,0.25), 0 -15px 30px 5px rgba(0,0,0,0.25);
 }
@@ -209,6 +209,33 @@ nav p {
     display: flex;
     gap: 100px;
     margin-top: 10px;
+    align-items: center;
+}
+
+/*CREATE USER*/
+.register_form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    gap: 15px;
+    color: var(--background_color);
+}
+
+.register_section {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 30px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    background: var(--blue_widget);
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25), 0 -5px 20px 0 rgba(0,0,0,0.25);
+}
+
+.register_section_container {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 

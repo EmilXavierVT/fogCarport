@@ -55,8 +55,8 @@ public class UserController {
 
             ctx.sessionAttribute("errorLogin", "login fejlede!");
             System.out.println("login logs errors");
-            ctx.redirect("/login");
-            ctx.render("/login",Map.of("errorLogin", "login fejlede!"));
+            ctx.redirect("/");
+            ctx.render("/index.html",Map.of("errorLogin", "login fejlede!"));
             return false;
         }
     }

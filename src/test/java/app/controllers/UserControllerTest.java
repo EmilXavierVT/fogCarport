@@ -24,7 +24,7 @@ class UserControllerTest {
     private final static Dotenv dotenv = Dotenv.load();
     private final static String USER = dotenv.get("DB-USER");
     private final static String PASSWORD = dotenv.get("DB-PASSWORD");
-    private final static String URL = "jdbc:postgresql://128.199.42.25:5432/%s?currentSchema=test_schema";
+    private final static String URL = dotenv.get("DB-URL");
     private final static String DB = "carport";
 
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER,PASSWORD,URL,DB);

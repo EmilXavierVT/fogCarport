@@ -81,7 +81,7 @@ public class UserMapper
                                   String streetName, Integer houseNumber, String floor ,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "UPDATE users SET first_name=?, last_name=?, zip_code=?, street_name=?, " +
-                "house_number=?, floor=? WHERE id=?";
+                "house_number=?, floor=? WHERE user_id=?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -108,7 +108,7 @@ public class UserMapper
 
     public static void deleteUser(int id,ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "DELETE FROM users WHERE id=?";
+        String sql = "DELETE FROM users WHERE user_id=?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))

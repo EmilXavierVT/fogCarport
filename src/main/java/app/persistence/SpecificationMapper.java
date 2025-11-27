@@ -91,4 +91,6 @@ public class SpecificationMapper
             throw new DatabaseException("Error retrieving user", e.getMessage());
         }
     }
+
+
 }

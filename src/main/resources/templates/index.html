@@ -1,17 +1,25 @@
 <head th:replace="fragments :: head(~{::index})"><title>Forside</title></head>
+<header th:replace="~{fragments :: header}"></header>
 <body>
-
 <section>
-<video class="video_container" controls>
+<video class="video_container" loop autoplay>
 <source th:src="@{/videos/cover_video.mp4}">
 Din browser understøtter ikke videoer.
 </video>
+    <img class="cover_video_img" th:src="@{/images/cover_object.png}" alt="cover image" >
 </section>
 
-<section>
-    <div class="display_container_horizontal">
-        <div>
-            <!--Slider til produkter + produkter-->
+<section class="carport_slider_section">
+    <div class="slider_container">
+        <h1>SLIDE HERE</h1>
+        <div class="slider">
+            <div class="product_card_slider" th:each="product : ${standardCarport}">
+                <img th:src="@{${product./images/ + .png}}" alt="Carport Billede">
+                <h3 th:text="${product.name}"></h3>
+                <span class="slider_product_price" th:text="${product.price} + 'kr.'"></span>
+            </div>
+            SLIDE HERE
+            <h1>SLIDE HERE</h1>
         </div>
     </div>
 </section>
@@ -22,18 +30,22 @@ Din browser understøtter ikke videoer.
 </div>
 -->
 
-<section>
-    <h1 id="title">Log ind</h1>
+<section class="login_section">
     <div class="display_container_vertical">
+        <h1 class="white_text">Log ind</h1>
+        <p class="white_text">Log ind med din Email adresse</p>
         <form class="login_form" th:action="@{/login}" method="POST">
-            <label for="email">e-mail:</label>
-            <input type="email" id="email" name="email" required />
-            <label for="password">Adgangskode:</label>
-            <input type="password" id="password" name="password"  required />
-            <button type="submit">Log ind</button>
+            <label for="email" hidden>e-mail:</label>
+            <input class="input_no_border_white" type="email" id="email" name="email" placeholder="Email Adresse" required />
+            <label for="password" hidden>Adgangskode:</label>
+            <input class="input_no_border_white" type="password" id="password" name="password" placeholder="Adgangskode" required />
+
+            <div class="button_row">
+            <button class="button_white" type="submit">Log ind</button>
+            <a class="button_white_non_button" th:href="@{/register_password}">Opret dig</a>
+            </div>
         </form>
         <p th:if="${session.errorLogin != null}" th:text="${session.errorLogin}"></p>
-        <p>Har du ikke en konto? <a th:href="@{/registerPassword}">Opret en her</a></p>
     </div>
 </section>
 

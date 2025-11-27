@@ -63,7 +63,7 @@ public class OrderMapperTest {
     }
     @Test
     public void createOrderTest() throws SQLException, DatabaseException {
-        User temp = new User(2,"Frederik","Edvardsen",2450,"Offensbachvej",39,"1tv","Fred@dk.dk","1234",0);
+        User temp = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",0);
         Order expectedOrder = new Order(2,temp, LocalDate.parse("2025-11-27"));
         OrderMapper.saveOrder(temp.getUserId(),LocalDate.parse("2025-11-27"),connectionPool);
         Order real = OrderMapper.getOrderByID(2,connectionPool);

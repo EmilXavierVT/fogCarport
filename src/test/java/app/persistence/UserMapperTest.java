@@ -61,7 +61,7 @@ class UserMapperTest {
 
                 // Insert rows
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2tv','ex@tv.dk','1234')");
+                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234')");
 
 
                 // Set sequence to continue from the largest member_id

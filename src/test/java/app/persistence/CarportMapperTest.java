@@ -2,7 +2,6 @@ package app.persistence;
 
 import app.entities.Carport;
 import app.entities.StandardCarport;
-import app.entities.User;
 import app.exceptions.DatabaseException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,8 +36,8 @@ public class CarportMapperTest {
 
                 stmt.execute("CREATE SEQUENCE test_schema.carports_carport_id_seq");
                 stmt.execute("ALTER TABLE test_schema.carports ALTER COLUMN carport_id SET DEFAULT nextval('test_schema.carports_carport_id_seq')");
-
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

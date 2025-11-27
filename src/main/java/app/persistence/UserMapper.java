@@ -42,6 +42,30 @@ public class UserMapper
             throw new DatabaseException("Error creating user", e.getMessage());
         }
     }
+    public static User createUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "INSERT INTO users (email, password) " +
+                "VALUES (?, ?) RETURNING user_id";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+            {
+                return getUserByID(rs.getInt(1),connectionPool);
+            } else
+            {
+                throw new DatabaseException("Failed to create new user");
+            }
+        } catch (SQLException e)
+        {
+            throw new DatabaseException("Error creating user", e.getMessage());
+        }
+    }
     public static User getUserByID(int id,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "SELECT * FROM users WHERE user_id = ?";

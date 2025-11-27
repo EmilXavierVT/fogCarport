@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserMapper
 {
-    public static User createUser(String firstName, String lastName, int zipCode, String streetname, int houseNumber, String floor, String email, String password, ConnectionPool connectionPool) throws DatabaseException
+    public static User createUser(String firstName, String lastName, int zipCode, String streetName, int houseNumber, String floor, String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "INSERT INTO users (first_name,last_name,zip_code,street_name,house_number,floor,email, password) " +
                 "VALUES (?, ? , ? , ? , ? , ? , ? , ? ) RETURNING user_id";
@@ -23,7 +23,7 @@ public class UserMapper
             ps.setString(1, firstName);
             ps.setString(2, lastName);
             ps.setInt(3, zipCode);
-            ps.setString(4, streetname);
+            ps.setString(4, streetName);
             ps.setInt(5, houseNumber);
             ps.setString(6, floor);
             ps.setString(7, email);

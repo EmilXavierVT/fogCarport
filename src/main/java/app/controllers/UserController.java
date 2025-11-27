@@ -16,8 +16,8 @@ public class UserController {
 
         app.get("logout", ctx -> logout(ctx));
         app.post("/login", ctx -> login(ctx,connectionPool));
-        app.post("/register_password", ctx -> createUser(ctx));
         app.get("/register_password", ctx -> ctx.render("register_password.html"));
+        app.post("/register_password", ctx -> createUser(ctx, connectionPool));
     }
 
 
@@ -67,9 +67,33 @@ public class UserController {
 
         ctx.redirect("/");
     }
-    private static void createUser(Context ctx)
+
+    private static void createUser(Context ctx, ConnectionPool connectionPool)
     {
-        ctx.redirect("/register_password");
-        ctx.render("register_password.html");
+        String email = ctx.formParam("email");
+        String password = ctx.formParam("password");
+        String confirmPassword = ctx.formParam("confirm_password");
+
+        if (password.equals(confirmPassword))
+        {
+            try
+            {
+                User user = UserMapper.createUser(email, password, connectionPool);
+                ctx.sessionAttribute("currentUser", user);
+                ctx.attribute("message", "Du er hermed oprettet med email: " + email + ". Nu skal du logge på.");
+                ctx.render("create_user.html", Map.of("currentUser", user));
+            }
+
+            catch (DatabaseException e)
+            {
+                ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+                ctx.render("register_password.html");
+            }
+        } else
+        {
+            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+            ctx.render("register_password.html");
+        }
+
     }
 }

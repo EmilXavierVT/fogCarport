@@ -2,20 +2,21 @@ package app.persistence;
 
 import app.entities.User;
 import app.exceptions.DatabaseException;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapperTest {
 
-    private final static String USER = "postgres";
-    private final static String PASSWORD = "postgres1234";
-    private final static String URL = "jdbc:postgresql://128.199.42.25:5432/%s?currentSchema=test_schema";
+    private final static Dotenv dotenv = Dotenv.load();
+    private final static String USER = dotenv.get("DB-USER");
+    private final static String PASSWORD = dotenv.get("DB-PASSWORD");
+    private final static String URL = dotenv.get("DB-URL");
     private final static String DB = "carport";
 
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
@@ -61,7 +62,7 @@ class UserMapperTest {
 
                 // Insert rows
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234')");
+                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',1)");
 
 
                 // Set sequence to continue from the largest member_id
@@ -72,8 +73,10 @@ class UserMapperTest {
         }
     }
     @Test
-    public void findUserByIDTest(){
-        User expected = new User(1,"Emil,")
+    public void findUserByIDTest() throws DatabaseException {
+        User expected = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",1);
+        User Real = UserMapper.getUserByID(1,connectionPool);
+        assertEquals(expected,Real);
     }
 
     @Test

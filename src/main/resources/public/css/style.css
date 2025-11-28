@@ -239,6 +239,22 @@ nav p {
     align-items: center;
 }
 
+.create_user_section {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 30px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    background: var(--blue_widget);
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,0.25), 0 -5px 20px 0 rgba(0,0,0,0.25);
+}
+
+.button_row_info_page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .fragment_div {
     height: 100vh;
     display: flex;

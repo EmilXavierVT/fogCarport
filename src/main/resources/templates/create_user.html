@@ -3,28 +3,30 @@
 
 <body>
 <main>
-    <section>
-        <h1 id="title">Opret Konto</h1>
-        <div class=" ">
-            <form class="registerInfo_form" th:action="@{/registerInfo}" method="POST">
-                <label for="first_name">Indtast Fornavn:</label>
-                <input type="text" id="first_name" name="first_name" required />
-                <label for="last_name">Indtast Efternavn:</label>
-                <input type="text" id="last_name" name="last_name" required />
-                <label for="postcode">Indtast Postnummer:</label>
-                <input type="text" id="postcode" name="post_code" required />
-                <label for="street_name">Vejnavn:</label>
-                <input type="text" id="street_name" name="street_name" required />
-                <label for="street_number">Vejnummer:</label>
-                <input type="text" id="street_number" name="street_number" required />
-                <label for="floor">Etage:</label>
-                <input type="text" id="floor" name="floor" required />
-                <button type="submit">Velkommen</button>
+    <div class="register_section_container">
+    <section class="create_user_section">
+        <div class="display_container_vertical">
+            <h1 class="white_text">Indtast Information</h1>
+            <form class="register_form" th:action="@{/create_user}" method="POST">
+                <label for="first_name" hidden>Indtast Fornavn:</label>
+                <input class="input_no_border_white" type="text" id="first_name" name="first_name" placeholder="Navn" required />
+                <label for="last_name" hidden>Indtast Efternavn:</label>
+                <input class="input_no_border_white" type="text" id="last_name" name="last_name" placeholder="Efternavn" required />
+                <label for="postcode" hidden>Indtast Postnummer:</label>
+                <input class="input_no_border_white" type="text" id="postcode" name="post_code" placeholder="Postnummer" required />
+                <label for="street_name" hidden>Vejnavn:</label>
+                <input class="input_no_border_white" type="text" id="street_name" name="street_name" placeholder="Vejnavn" required />
+                <label for="street_number" hidden>Vejnummer:</label>
+                <input class="input_no_border_white" type="text" id="street_number" name="street_number" placeholder="Vejnummer" required />
+                <label for="floor" hidden>Etage:</label>
+                <input class="input_no_border_white" type="text" id="floor" name="floor" placeholder="Etage" required />
+                <div class="button_row_info_page">
+                <button class="button_white" type="submit">Velkommen</button>
+                </div>
             </form>
-            <p>Har du allerede en konto? <a th:href="@{/login}" th:if="${session.currentUser == null}">Log ind</a>
-            </p>
         </div>
     </section>
+    </div>
 </main>
 <footer th:replace="~{fragments :: footer}"></footer>
 </body>

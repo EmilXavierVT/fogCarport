@@ -71,13 +71,17 @@ class UserMapperTest {
             }
         }
     }
-            @Test
+    @Test
+    public void findUserByIDTest(){
+        User expected = new User(1,"Emil,")
+    }
+
+    @Test
     public void createUserTest() throws DatabaseException
     {
         User user = UserMapper.createUser("Frederik", "Edvardsen", 2450, "Offensbachvej", 39, "1tv", "Fred@dk.dk", "1234", connectionPool);
         assertNotNull(user);
         assertEquals("Frederik", user.getFirstName());
         assertEquals(2,user.getUserId());
-
     }
 }

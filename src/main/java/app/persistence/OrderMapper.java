@@ -43,13 +43,13 @@ public class OrderMapper {
         {
             ps.setInt(1, userID);
             ps.setDate(2, java.sql.Date.valueOf(localDate));
-            ps.executeQuery();
+            ps.executeUpdate();
         }
     }
 
     public static Order getOrderByID(int orderID, ConnectionPool connectionPool)
     {
-        String sql = "SELECT * FROM orders WHERE id = ?";
+        String sql = "SELECT * FROM orders WHERE order_id = ?";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))

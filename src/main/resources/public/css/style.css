@@ -141,11 +141,10 @@ nav p {
 }
 
 .cover_video_img {
-    position: relative;
-    top: 200px;
+    position: absolute;
+    top: 600px;
     width: 100%;
     height: auto;
-    /*z-index: 1000;*/
 }
 
 /*CARPORT SLIDER SECTION*/

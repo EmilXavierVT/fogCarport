@@ -18,6 +18,8 @@ public class UserController {
         app.post("/login", ctx -> login(ctx,connectionPool));
         app.get("/register_password", ctx -> ctx.render("register_password.html"));
         app.post("/register_password", ctx -> createUser(ctx, connectionPool));
+        app.get("/create_user", ctx -> ctx.render("create_user.html"));
+        app.post("/create_user", ctx -> registerInfo(ctx, connectionPool));
     }
 
 
@@ -94,6 +96,22 @@ public class UserController {
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("register_password.html");
         }
+    }
+    public static void registerInfo(Context ctx, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String firstName = ctx.formParam("first_name");
+        String lastName = ctx.formParam("last_name");
+        String streetName = ctx.formParam("street_name");
+        String floor = ctx.formParam("floor");
+        int zipCode = Integer.parseInt(ctx.formParam("post_code"));
+        int streetNumber = Integer.parseInt(ctx.formParam("street_number"));
+        User user = ctx.sessionAttribute("currentUser");
+        int userId = user.getUserId();
 
+        user = UserMapper.updateUser(userId,firstName,lastName,zipCode,streetName,streetNumber,floor,connectionPool);
+
+        ctx.sessionAttribute("currentUser",user);
+        ctx.sessionAttribute("message","Du har opdateret din profil !");
+        ctx.render("index.html");
     }
 }

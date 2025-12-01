@@ -3,7 +3,7 @@ package app.entities;
 import lombok.Data;
 @Data
 
-public class Specification
+public abstract class Specification
 {
     int specificationId;
     int EAN;
@@ -26,6 +26,8 @@ public class Specification
     int parkingWidth;
     int shedDepth;
     int shedWidth;
+
+
 
     public Specification(int specificationId, int EAN, String model, String roomFor, boolean shed, int post,
                          int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,

@@ -4,6 +4,8 @@ import app.entities.Product;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductMapper
 {
@@ -89,4 +91,31 @@ public class ProductMapper
             }
         }
     }
+
+    public static List<Product> getAllProducts(ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM products";
+        List<Product> products = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                products.add(new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("name"),
+                        rs.getString("dimensions"),
+                        rs.getString("description"),
+                        rs.getFloat("price"),
+                        rs.getInt("type"),
+                        rs.getInt("gap"),
+                        rs.getInt("min"),
+                        rs.getInt("max")));
+            }
+            return products;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error getting all products from database", e.getMessage());
+        }
+    }
+
+
 }

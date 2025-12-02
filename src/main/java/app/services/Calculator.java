@@ -12,6 +12,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class Calculator {
@@ -31,10 +32,17 @@ public class Calculator {
     private Product fasciaBoard;
     private Product wallCovering;
 
-    public Calculator(int width, int length, Specification specification) {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+    public Calculator( Specification specification) {
         this.specification = specification;
         this.width = specification.getWidth();
         this.length = specification.getLength();
+        calcPost();
+        calcBeams();
+        calcRafters();
+        calcRoof();
+        calcFasciaBoard();
     }
 
 //public void calcPostv2()
@@ -71,7 +79,6 @@ public class Calculator {
         }
     }
 
-
     public void calcRafters()
     {
         amountOfRafters = (int)(length/59.5);
@@ -90,8 +97,10 @@ public class Calculator {
     public List<ProductInOrder> setItemList() throws DatabaseException {
         List<ProductInOrder> itemList = new ArrayList<>();
 
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+
         List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
+
     List<Product> beams = allProducts.stream().filter(product -> product.getType() == 3).toList();
     List<Product> posts = allProducts.stream().filter(product -> product.getType() == 4).toList();
     List<Product> rafters = allProducts.stream().filter(product -> product.getType() == 3).toList();
@@ -123,8 +132,10 @@ public class Calculator {
 
 //    post
         itemList.add(new ProductInOrder(0,post,amountOfPosts,0));
+
 //    rafters
         itemList.add(new ProductInOrder(0,rafter,amountOfRafters,width));
+
 //    roof
         if(length<600)
         {
@@ -149,11 +160,16 @@ public class Calculator {
             itemList.add(new ProductInOrder(0,fasciaBoard,2,600));
             itemList.add(new ProductInOrder(0,fasciaBoard,1,360));
         }
-//    wallCovering
+
+
+
+
+
+//    All shed calculations
         if(specification.isShed()) {
             int amountOfPlanks = (int) Math.ceil((double) specification.getShedWidth()/8)*2 + (int) Math.ceil((double) specification.getShedDepth()/8)*2;
             itemList.add(new ProductInOrder(0, wallCovering, amountOfPlanks, 0));
-            itemList.add(new ProductInOrder(0, post, 2, 0));
+            itemList.add(new ProductInOrder(0, post, 3, 0));
         }
 
         return itemList;
@@ -162,33 +178,15 @@ public class Calculator {
 
 
 
-    public int getCostprice()
-    {
-        int costPrice =0;
+    public double getCostPrice() throws DatabaseException {
+        double totalCost = 0;
 
-        if (checkMaxBeamSize())
-        {
-            costPrice+= (int) ((beam.getPrice()*(length/100)) + (beam.getPrice()*3));
-        } else
-        {
-            costPrice += (int) (beam.getPrice() * (length/100));
-        }
+         for(ProductInOrder productInOrder : setItemList())
+         {
+             totalCost += (productInOrder.getProduct().getPrice()*(double)productInOrder.getAmount());
 
-        costPrice+= (int) (post.getPrice()*amountOfPosts);
-
-        costPrice+= (int) ((rafter.getPrice()*length)*amountOfRafters);
-//    our roofs come in 109 cm
-        costPrice+= (int) (roof.getPrice()*(specification.getRoofLength()* (int) Math.ceil((double) specification.getRoofWidth() /109)));
-
-        costPrice+= (int) (fasciaBoard.getPrice()*lengthOfFasciaBoard);
-
-    return costPrice;
-
-    }
-
-    private boolean checkMaxBeamSize()
-    {
-        return length > 600;
+         }
+        return totalCost;
     }
 
 

@@ -3,18 +3,18 @@ package app.entities;
 import lombok.Data;
 @Data
 
-public abstract class Specification
+public class Specification
 {
     int specificationId;
-    int EAN;
+    long EAN;
     String model;
-    String roomFor;
+    int roomFor;
     boolean shed;
-    int post;
-    int beam;
-    int rafter;
-    int roof;
-    int fasciaBoard;
+    Product post;
+    Product beam;
+    Product rafter;
+    Product roof;
+    Product fasciaBoard;
     int length;
     int width;
     int heightFront;
@@ -29,8 +29,8 @@ public abstract class Specification
 
 
 
-    public Specification(int specificationId, int EAN, String model, String roomFor, boolean shed, int post,
-                         int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
+    public Specification(int specificationId, long EAN, String model, int roomFor, boolean shed, Product post,
+                         Product beam, Product rafter, Product roof, Product fasciaBoard, int length, int width, int heightFront,
                          int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
                          int parkingWidth, int shedDepth, int shedWidth)
     {

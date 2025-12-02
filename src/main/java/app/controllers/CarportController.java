@@ -17,7 +17,11 @@ public class CarportController {
     public static void addRoutes(Javalin app) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         app.get("/", ctx -> showCarports(ctx, connectionPool));
+        app.post("/carport_selected", ctx -> displayProductPage(ctx,connectionPool));
+    }
 
+    private static void displayProductPage(Context ctx, ConnectionPool connectionPool) {
+        C;
     }
 
     public static void showCarports(Context ctx, ConnectionPool connectionPool) throws DatabaseException {

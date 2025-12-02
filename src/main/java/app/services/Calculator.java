@@ -101,11 +101,11 @@ public class Calculator {
 
         List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
 
-    List<Product> beams = allProducts.stream().filter(product -> product.getType() == 3).toList();
-    List<Product> posts = allProducts.stream().filter(product -> product.getType() == 4).toList();
-    List<Product> rafters = allProducts.stream().filter(product -> product.getType() == 3).toList();
-    List<Product> roofs = allProducts.stream().filter(product -> product.getType() == 6).toList();
-    List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getType() == 1 && product.getType()==2).toList();
+    List<Product> beams = allProducts.stream().filter(product -> product.getProductID() == specification.getBeam().getProductID()).toList();
+    List<Product> posts = allProducts.stream().filter(product -> product.getProductID() == specification.getPost().getProductID()).toList();
+    List<Product> rafters = allProducts.stream().filter(product -> product.getProductID()== specification.getRafter().getProductID()).toList();
+    List<Product> roofs = allProducts.stream().filter(product -> product.getProductID() == specification.getRoof().getProductID()).toList();
+    List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getProductID() == specification.getFasciaBoard().getProductID()).toList();
     List<Product> wallCoverings = allProducts.stream().filter(product -> product.getType() == 9).toList();
 
     beam = beams.get(0);
@@ -114,6 +114,9 @@ public class Calculator {
     roof = roofs.get(0);
     fasciaBoard= fasciaBoards.get(0);
     wallCovering = wallCoverings.get(0);
+
+//    kill your darling emil
+
 
 //    beams
     if(length<=600)

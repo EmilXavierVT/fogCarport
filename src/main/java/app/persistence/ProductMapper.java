@@ -10,9 +10,9 @@ import java.util.List;
 public class ProductMapper
 {
 
-    public static void saveProduct(String name, String dimensions, String description, float price, int type, ConnectionPool connectionPool)
+    public static void saveProduct(String name, String dimensions, String description, double price, int type, ConnectionPool connectionPool)
     {
-        String sql = "INSERT INTO products (name, dimensions, description, price, type VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO products (name, dimensions, description, price, type) VALUES(?,?,?,?,?)";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))
@@ -20,7 +20,7 @@ public class ProductMapper
             ps.setString(1, name);
             ps.setString(2, dimensions);
             ps.setString(3, description);
-            ps.setFloat(4, price);
+            ps.setDouble(4, price);
             ps.setInt(5, type);
             ps.executeUpdate();
 
@@ -32,7 +32,7 @@ public class ProductMapper
 
     public static Product getProductByID(int productID, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
-        String sql = "SELECT * FROM products WHERE id=?";
+        String sql = "SELECT * FROM products WHERE product_id=?";
 
         try(Connection connection = connectionPool.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql))

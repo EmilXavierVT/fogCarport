@@ -48,7 +48,7 @@ public class SpecificationMapper
         }
     }
 
-    public static Specification GetSpecifications(int specificationId,ConnectionPool connectionPool) throws SQLException, DatabaseException
+    public static Specification getSpecificationByID(int specificationId,ConnectionPool connectionPool) throws SQLException, DatabaseException
     {
         String sql = "SELECT * FROM specifications WHERE specification_id = ?";
 

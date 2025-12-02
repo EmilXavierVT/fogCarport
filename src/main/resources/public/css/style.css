@@ -12,6 +12,10 @@
 }
 
 /*MAIN ELEMENTS*/
+html {
+    scroll-behavior: smooth;
+}
+
 header {
     position: relative;
     width: 100%;
@@ -123,14 +127,32 @@ nav ul {
     align-items: center;
 }
 
-nav p {
-    font-size: 2rem;
-}
-
 .nav_logo {
     width: 174px;
     height: 100px;
 }
+
+nav a {
+    font-size: 2rem;
+    color: var(--text);
+    transform: scale(100%);
+    transition: all 0.25s ease;
+}
+
+nav a:hover {
+    font-size: 1.8rem;
+    transform: scale(55%);
+}
+
+.nav_icon svg {
+    transform: scale(100%);
+    transition: transform 0.25s ease;
+}
+
+.nav_icon:hover svg {
+    transform: scale(90%);
+}
+
 
 /*VIDEO SECTION*/
 .video_container {
@@ -162,28 +184,67 @@ nav p {
     overflow: hidden;
     display: flex;
     align-items: center;
+    height: 450px;
 }
 
 .slider {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 10px;
+    width: 100%;
+    height: 400px;
 }
 
 .product_card_slider {
-    min-width: 220px;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    min-width: 250px;
+    width: 100%;
     background: var(--white_widget);
     padding: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
+    transition: 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product_card_slider:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.product_card_slider p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 35px;
 }
 
 .product_card_slider img {
     width: 100%;
     height: 150px;
     object-fit: cover;
+}
+
+.slider_view_button {
+    margin: -5px 0 auto auto;
+    padding: 8px 10px;
+    background: var(--dark_blue_widget);
+    color: var(--white_widget);
+    border-radius: 10px;
+    display: inline-block;
+    transition: background 0.2s ease;
+}
+
+.slider_view_button:hover {
+    background: var(--hover_change_color);
+}
+
+.product_card_link {
+    color: var(--text);
 }
 
 /*LOGIN SECTION*/

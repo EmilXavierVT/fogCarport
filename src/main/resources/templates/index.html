@@ -11,15 +11,12 @@ Din browser understøtter ikke videoer.
 
 <section class="carport_slider_section">
     <div class="slider_container">
-        <h1>SLIDE HERE</h1>
         <div class="slider">
-            <div class="product_card_slider" th:each="product : ${standardCarport}">
-                <img th:src="@{${product./images/ + .png}}" alt="Carport Billede">
-                <h3 th:text="${product.name}"></h3>
-                <span class="slider_product_price" th:text="${product.price} + 'kr.'"></span>
+            <div class="product_card_slider" th:each="carport : ${standard_carports}" th:value="${carport.carportID}">
+                <!--<img th:src="@{'/images/' + ${carport.image} + '.png'}" alt="Carport Billede">-->
+                <h3 th:text="${carport.name}"></h3>
+                <span class="slider_product_price" th:text="${carport.price} + 'kr.'"></span>
             </div>
-            SLIDE HERE
-            <h1>SLIDE HERE</h1>
         </div>
     </div>
 </section>

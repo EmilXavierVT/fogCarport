@@ -1,6 +1,7 @@
 package app.persistence;
 
 
+import app.entities.Product;
 import app.entities.Specification;
 import app.exceptions.DatabaseException;
 
@@ -12,21 +13,21 @@ import java.sql.SQLException;
 public class SpecificationMapper
 {
 
-    public static void CreateSpecification(int EAN, String model, String roomFor,boolean shed, int post,
+    public static void CreateSpecification(long EAN, String model, int roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                            int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
                                            int parkingWidth, int shedDepth, int shedWidth,ConnectionPool connectionPool) throws SQLException
     {
-        String sql = "INSERT INTO specifications (EAN,model.room_for,shed,post,beam,rafter, roof, " +
+        String sql = "INSERT INTO specifications (EAN,model,room_for,shed,post,beam,rafter, roof, " +
                 "fascia_board, length, width, height_front, height_rear, roof_length, roof_width," +
                 " exterior_width_at_post, parking_length, parking_width,  shed_depth, shed_width)" +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
         {
-            ps.setInt(1, EAN);
+            ps.setLong(1, EAN);
             ps.setString(2, model);
-            ps.setString(3, roomFor);
+            ps.setInt(3, roomFor);
             ps.setBoolean(4, shed);
             ps.setInt(5, post);
             ps.setInt(6, beam);
@@ -62,15 +63,15 @@ public class SpecificationMapper
             {
                 return new Specification(
                         rs.getInt("specification_id"),
-                        rs.getInt("EAN"),
+                        rs.getLong("EAN"),
                         rs.getString("model"),
-                        rs.getString("room_for"),
+                        rs.getInt("room_for"),
                         rs.getBoolean("shed"),
-                        rs.getInt("post"),
-                        rs.getInt("beam"),
-                        rs.getInt("rafter"),
-                        rs.getInt("roof"),
-                        rs.getInt("fascia_board"),
+                        ProductMapper.getProductByID(rs.getInt("post"),connectionPool),
+                        ProductMapper.getProductByID(rs.getInt("beam"),connectionPool),
+                        ProductMapper.getProductByID(rs.getInt("rafter"),connectionPool),
+                        ProductMapper.getProductByID(rs.getInt("roof"),connectionPool),
+                        ProductMapper.getProductByID(rs.getInt("fascia_board"),connectionPool),
                         rs.getInt("length"),
                         rs.getInt("width"),
                         rs.getInt("height_front"),

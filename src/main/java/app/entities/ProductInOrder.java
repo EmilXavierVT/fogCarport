@@ -9,6 +9,7 @@ public class ProductInOrder
     private int orderID;
     private Product product;
     private int amount;
+    private int length;
 
     public ProductInOrder(int productInOrderID, int orderID, Product product, int amount)
     {
@@ -16,5 +17,12 @@ public class ProductInOrder
         this.orderID = orderID;
         this.product = product;
         this.amount = amount;
+    }
+
+    public ProductInOrder(int orderID, Product product, int amount, int length) {
+        this.orderID = orderID;
+        this.product = product;
+        this.amount = amount;
+        this.length = length;
     }
 }

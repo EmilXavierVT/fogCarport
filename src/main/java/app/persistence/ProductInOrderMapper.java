@@ -92,7 +92,7 @@ public class ProductInOrderMapper
         }
     }
 
-    public List<ProductInOrder> getAllProductsInOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
+    public List<ProductInOrder> getAllProductsInOrderByOrderID(int orderId, ConnectionPool connectionPool) throws DatabaseException
     {
         List<ProductInOrder> productsInOrder = new ArrayList<>();
         String sql = "SELECT * FROM product_in_order WHERE order_id = ?";
@@ -118,4 +118,5 @@ public class ProductInOrderMapper
         }
         return productsInOrder;
     }
+
 }

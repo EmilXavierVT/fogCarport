@@ -17,8 +17,5 @@ String pdfFile;
         super(standardId,name,price,type,description,specification);
         this.pdfFile = pdf_file;
     }
-    public StandardCarport(int standardId, String name, float price, int type)
-    {
-        super(standardId,name,price,type);
-    }
+
 }

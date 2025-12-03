@@ -12,7 +12,6 @@ import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapperTest {
-
     private final static Dotenv dotenv = Dotenv.load();
     private final static String USER = dotenv.get("DB-USER");
     private final static String PASSWORD = dotenv.get("DB-PASSWORD");
@@ -21,6 +20,8 @@ class UserMapperTest {
 
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
+    User expectedUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",1);
+    User expectedUser2 = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",1);
     @BeforeAll
     public static void setUpClass()
     {
@@ -64,6 +65,10 @@ class UserMapperTest {
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
                         "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',1)");
 
+                stmt.execute("INSERT INTO test_schema.users VALUES " +
+                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',1)");
+
+
 
                 // Set sequence to continue from the largest member_id
                 stmt.execute("SELECT setval('test_schema.users_user_id_seq', COALESCE((SELECT MAX(user_id)+1 FROM test_schema.users), 1), false)");
@@ -73,18 +78,23 @@ class UserMapperTest {
         }
     }
     @Test
-    public void findUserByIDTest() throws DatabaseException {
-        User expected = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",1);
+    public void getUserByIDTest() throws DatabaseException {
         User Real = UserMapper.getUserByID(1,connectionPool);
-        assertEquals(expected,Real);
+        assertEquals(expectedUser,Real);
     }
 
     @Test
-    public void createUserTest() throws DatabaseException
-    {
-        User user = UserMapper.createUser("Frederik", "Edvardsen", 2450, "Offensbachvej", 39, "1tv", "Fred@dk.dk", "1234", connectionPool);
-        assertNotNull(user);
-        assertEquals("Frederik", user.getFirstName());
-        assertEquals(2,user.getUserId());
+    public void createUserTest() throws DatabaseException, SQLException {
+        assertEquals(2,TestMapper.count("users",connectionPool));
+        User user = UserMapper.createUser("Daniel", "Halawi", 2450, "Offensbachvej", 39, "1tv", "lawi@dk.dk", "1234", connectionPool);
+        assertEquals(3,TestMapper.count("users",connectionPool));
+    }
+
+    @Test
+    public void updateUserTest() throws DatabaseException {
+        assertEquals(expectedUser2,UserMapper.getUserByID(2,connectionPool));
+        UserMapper.updateUser(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"",connectionPool);
+        User userAfterUpdate = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"","fred@dk.dk","1234",1);
+        assertEquals(userAfterUpdate,UserMapper.getUserByID(2,connectionPool));
     }
 }

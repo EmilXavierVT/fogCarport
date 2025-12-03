@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class SpecificationMapper
 {
 
-    public static void CreateSpecification(long EAN, String model, int roomFor,boolean shed, int post,
+    public static void createSpecification(long EAN, String model, int roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                            int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
                                            int parkingWidth, int shedDepth, int shedWidth,ConnectionPool connectionPool) throws SQLException

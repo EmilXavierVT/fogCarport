@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapperTest {
@@ -21,7 +23,7 @@ class UserMapperTest {
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     User expectedUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",1);
-    User expectedUser2 = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",1);
+    User expectedUser2 = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",0);
     @BeforeAll
     public static void setUpClass()
     {
@@ -66,7 +68,7 @@ class UserMapperTest {
                         "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',1)");
 
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',1)");
+                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',0)");
 
 
 
@@ -94,7 +96,26 @@ class UserMapperTest {
     public void updateUserTest() throws DatabaseException {
         assertEquals(expectedUser2,UserMapper.getUserByID(2,connectionPool));
         UserMapper.updateUser(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"",connectionPool);
-        User userAfterUpdate = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"","fred@dk.dk","1234",1);
+        User userAfterUpdate = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"","fred@dk.dk","1234",0);
         assertEquals(userAfterUpdate,UserMapper.getUserByID(2,connectionPool));
+    }
+
+    @Test
+    public void deleteUserTest() throws DatabaseException, SQLException {
+        assertEquals(2, TestMapper.count("users",connectionPool));
+        UserMapper.deleteUser(2,connectionPool);
+        assertEquals(1,TestMapper.count("users",connectionPool));
+    }
+
+    @Test
+    public void getAllUsersTest() throws DatabaseException {
+        List<User> userList = UserMapper.getAllUsers(connectionPool);
+        assertEquals(2,userList.size());
+    }
+
+    @Test
+    public void checkIfAdminTest() throws DatabaseException {
+        assertEquals(1,UserMapper.checkIfAdmin(expectedUser,connectionPool));
+        assertEquals(0,UserMapper.checkIfAdmin(expectedUser2,connectionPool));
     }
 }

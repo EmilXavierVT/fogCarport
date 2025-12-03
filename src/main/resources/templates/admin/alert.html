@@ -1,7 +1,47 @@
 <head th:replace="admin_fragments :: head(~{::alert})"><title>Kunde Information</title></head>
 <body>
 
-<section> </section>
+
+<section class="dashboard_section">
+
+    <h1>Dashboard</h1>
+
+<form class="search_form" th:action="@{search_carport}" method="get">
+    <input type="text" name="q" placeholder="Søg efter carport" class="search_input"/>
+</form>
+
+<div class="tabs_container">
+    <button class="tab active">Produkter</button>
+    <button class="tab">Materialer</button>
+    <button class="tab">Notifikation</button>
+</div>
+
+
+<div class="table_container">
+    <table class="dashboard_table">
+        <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Kategori</th>
+            <th>Pris</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="item : ${products}">
+            <td th:text="${item.name}">Produktnavn</td>
+            <td th:text="${item.category}">Kategori</td>
+            <td th:text="${item.price} + ' DKK'">Pris</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</section>
+
+</body>
+
+
 
 <section> </section>
 

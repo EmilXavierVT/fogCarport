@@ -13,11 +13,11 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public int getAvailableOrderId(ConnectionPool connectionPool) throws DatabaseException
+    public static int getAvailableOrderId(ConnectionPool connectionPool) throws DatabaseException
     {
         int orderId = 0;
         ConnectionPool.getInstance();
-        String sql = "SELECT nextval('orders_id_seq')";
+        String sql = "SELECT nextval('orders_order_id_seq')";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))

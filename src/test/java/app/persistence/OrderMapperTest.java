@@ -115,5 +115,11 @@ public class OrderMapperTest {
         List<Order> orders = OrderMapper.getAllOrders(connectionPool);
         assertEquals(2,orders.size());
     }
+
+    @Test
+    public void nextAvailableIdTest() throws SQLException, DatabaseException {
+        assertEquals(3,OrderMapper.getAvailableOrderId(connectionPool));
+
+    }
 }
 

@@ -27,7 +27,7 @@ public class CarportRequestMapper
             throw new DatabaseException(e.getMessage()+ "problem with saving carport request");
         }
     }
-    public static CarportRequest getCarportbyID(int id, ConnectionPool connectionPool) throws DatabaseException, SQLException
+    public static CarportRequest getCarportbyRequestID(int id, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
         String sql ="SELECT * FROM carport_requests WHERE carport_request_id = ?";
 

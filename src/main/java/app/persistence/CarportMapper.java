@@ -75,7 +75,7 @@ public class CarportMapper
                             rs.getFloat("price"),
                             rs.getInt("type"),
                             rs.getString("product_description"),
-                            rs.getInt("specifications"),
+                            SpecificationMapper.getSpecificationByID(rs.getInt("specifications"),connectionPool),
                             rs.getString("pdf_file"));
                 }
                 if (rs.getString("pdf_file") == null)
@@ -85,7 +85,7 @@ public class CarportMapper
                             rs.getFloat("price"),
                             rs.getInt("type"),
                             rs.getString("production_description"),
-                            rs.getInt("specification"));
+                            SpecificationMapper.getSpecificationByID(rs.getInt("specifications"),connectionPool));
                 }
             }
         } catch (SQLException e)
@@ -175,7 +175,7 @@ public class CarportMapper
                             rs.getFloat("price"),
                             rs.getInt("type"),
                             rs.getString("product_description"),
-                            rs.getInt("specifications"),
+                            SpecificationMapper.getSpecificationByID(rs.getInt("specifications"),connectionPool),
                             rs.getString("pdf_file"));
                     carports.add(carport);
                 }

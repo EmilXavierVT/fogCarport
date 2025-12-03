@@ -37,6 +37,15 @@ public Product(int productID, String name, String dimensions, String description
         this.min = min;
     }
 
+    public String getSpecificName()
+    {
+    return dimensions + " " + name;
+    }
+    public String getSpecificNameRoof()
+    {
+        return name;
+    }
+
     public int getProductID() {
         return productID;
     }

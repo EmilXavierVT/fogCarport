@@ -5,12 +5,13 @@
 <section>
 <div class="display_container_vertical">
 <div class="display_container_horizontal">
-    <img class="product_page_image" th:src="@{'/images/' + ${carport.carportID} + 'carport.png'}" alt="Carport image" />
+
     <div class="content_holder">
+        <img class="product_page_image" th:src="@{'/images/' + ${carport.carportID} + 'carport.png'}" alt="Carport image" />
     <div class="product_text_field">
     <h3 th:text="${carport.name}"></h3>
     <p th:text="${carport.productionDescription}"></p>
-    </div>
+        <div class="row_price_content_holder">
         <div class="row_price">
         <span class="slider_product_page_price" th:text="${carport.price}"></span>
         <span class="slider_product_page_price_addition"> pr.stk + evt. fragt</span>
@@ -18,7 +19,7 @@
         <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST">
             <div class="add_amount_row">
                 <button class="product_page_button" type="button" onclick="decreaseOne()">-</button>
-                <input class="product_page_counter" type="number" min="1" max="100" id="counter_number" name="amount" value="1" required />
+                <input class="product_page_counter" type="number" min="1" max="100" id="counter_number" name="amount" value="1" readonly required />
                 <button class="product_page_button" type="button" onclick="increaseOne()">+</button>
             </div>
             <button class="add_to_cart_button">Læg i kurv
@@ -26,6 +27,8 @@
                 <path d="M18 12L5 12M18 12L14 16M18 12L14 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg></button>
         </form>
+        </div>
+    </div>
     </div>
 </div>
 </div>
@@ -40,7 +43,7 @@
         <button class="product_description_button">+</button>
         </div>
         <div class="product_description_content">
-        <p th:text="${carport.productionDescription}"></p>
+        <p th:text="${carport.productionDescription}" style="font-size: 13px;"></p>
         </div>
     </div>
 
@@ -50,7 +53,53 @@
             <button class="product_description_button">+</button>
         </div>
         <div class="product_description_content">
-            <p th:text="${carport.specification}"></p>
+            <p th:text="'EAN: ' + ${carport.specification.EAN}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <h3 style="font-size: 13px;">Produktdetaljer</h3>
+            <p th:text="'Model: ' + ${carport.specification.model}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Plads til: ' + ${carport.specification.roomFor} + ' biler'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Redskabsrum: ' + ${carport.specification.shed}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <h3 style="font-size: 13px;">Materialer</h3>
+            <hr class="specification_hr"/>
+            <p th:text="'Stolper: ' + ${carport.specification.post.getSpecificName()}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Rem spærtre: ' + ${carport.specification.beam.getSpecificName()}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Spær spærtre: ' + ${carport.specification.rafter.getSpecificName()}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Tag: ' + ${carport.specification.roof.getSpecificNameRoof()}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Stern: ' + ${carport.specification.fasciaBoard.getSpecificName()}" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <h3 style="font-size: 13px;">Carport Mål</h3>
+            <hr class="specification_hr"/>
+            <p th:text="'Længde: ' + ${carport.specification.length} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Bredde: ' + ${carport.specification.width} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Højde (forside): ' + ${carport.specification.heightFront} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Højde (bagside): ' + ${carport.specification.heightRear} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Tag længde: ' + ${carport.specification.roofLength} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Tag bredde: ' + ${carport.specification.roofWidth} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Udvendig bredde på stolper: ' + ${carport.specification.exteriorWidthAtPost} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Parkeringsareal længde: ' + ${carport.specification.parkingLength} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Parkeringsareal bredde: ' + ${carport.specification.parkingWidth} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <h3 style="font-size: 13px;">Redskabsrum</h3>
+            <hr class="specification_hr"/>
+            <p th:text="'Dybde: ' + ${carport.specification.shedDepth} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
+            <p th:text="'Bredde: ' + ${carport.specification.shedWidth} + ' cm'" style="font-size: 12px;"></p>
+            <hr class="specification_hr"/>
         </div>
     </div>
 
@@ -60,7 +109,11 @@
             <button class="product_description_button">+</button>
         </div>
         <div class="product_description_content">
-            <p>LOREM LOREM LOREM LOREM LOREM LOREM LOREM</p>
+            <h3 style="font-size: 13px;">Leveringstype: Levering med lastbil</h3>
+            <p style="font-size: 12px;">Levering/forsendelse<br>
+                Levering med lastbil på fredage.<br>
+                Sjælland: Gratis levering<br>
+                Fyn og Jylland: 2.500,- pr. bestilt enhed.</p>
         </div>
     </div>
 
@@ -70,11 +123,12 @@
             <button class="product_description_button">+</button>
         </div>
         <div class="product_description_content">
-            <p>LOREM LOREM LOREM LOREM LOREM LOREM LOREM</p>
+            <a th:href="@{/product/pdf/{EAN}(EAN=${carport.specification.EAN})}" target="_blank">Se og Download PDF</a>
         </div>
     </div>
 </div>
 </section>
+
 
 <section id="carport_section" class="carport_slider_section">
     <div class="slider_container">

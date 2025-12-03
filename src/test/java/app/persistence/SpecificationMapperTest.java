@@ -106,6 +106,27 @@ public class SpecificationMapperTest {
                 210, 530,connectionPool);
         assertEquals(2,TestMapper.count("specifications",connectionPool));
         }
+
+        @Test
+    public void updateSpecification() throws SQLException, DatabaseException {
+        assertEquals(expectedSpecification,SpecificationMapper.getSpecificationByID(1,connectionPool));
+        Specification updatedSpecification = new Specification (1, 2000000710762L, "Carport", 1, true,
+                    post, beam, rafter, roof, fasciaBoard, 780, 600, 380,
+                    380, 780, 600, 530, 540, 505,
+                    210, 530);
+        SpecificationMapper.updateSpecification(1,2000000710762L, "Carport", 1, true,
+                22, 3, 26, 28, 1, 780, 600, 380,
+                380, 780, 600, 530, 540, 505,
+                210, 530,connectionPool);
+        assertEquals(updatedSpecification,SpecificationMapper.getSpecificationByID(1,connectionPool));
+    }
+
+    @Test
+    public void deleteSpecification() throws SQLException, DatabaseException {
+        assertEquals(1,TestMapper.count("specifications",connectionPool));
+        SpecificationMapper.deleteSpecification(1,connectionPool);
+        assertEquals(0,TestMapper.count("specifications",connectionPool));
+        }
     }
 
 

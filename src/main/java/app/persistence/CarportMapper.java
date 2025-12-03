@@ -84,7 +84,7 @@ public class CarportMapper
                             rs.getString("name"),
                             rs.getFloat("price"),
                             rs.getInt("type"),
-                            rs.getString("production_description"),
+                            rs.getString("product_description"),
                             SpecificationMapper.getSpecificationByID(rs.getInt("specifications"),connectionPool));
                 }
             }
@@ -115,9 +115,9 @@ public class CarportMapper
         }
     }
 
-    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification, ConnectionPool connectionPool)
+    public static void updateCarport(int carportID, String name, int price, int type, String product_description, int specifications, ConnectionPool connectionPool)
     {
-        String sql = "UPDATE carports SET name=?, price=?, type=?, production_description=?, specification=? WHERE id=?";
+        String sql = "UPDATE carports SET name=?, price=?, type=?, product_description=?, specifications=? WHERE carport_id=?";
 
         try(Connection connection = connectionPool.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql))
@@ -125,19 +125,20 @@ public class CarportMapper
             ps.setString(1, name);
             ps.setInt(2, price);
             ps.setInt(3, type);
-            ps.setString(4, productionDescription);
-            ps.setInt(5, specification);
+            ps.setString(4, product_description);
+            ps.setInt(5, specifications);
 
             ps.setInt(6, carportID);
+            ps.executeUpdate();
         } catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
     }
 
-    public static void updateCarport(int carportID, String name, int price, int type, String productionDescription, int specification, String pdfFile, ConnectionPool connectionPool)
+    public static void updateCarport(int carportID, String name, int price, int type, String product_description, int specifications, String pdfFile, ConnectionPool connectionPool)
     {
-        String sql = "UPDATE carports SET name=?, price=?, type=?, production_description=?, specification=?, pdf_file=? WHERE id=?";
+        String sql = "UPDATE carports SET name=?, price=?, type=?, product_description=?, specifications=?, pdf_file=? WHERE carport_id=?";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))
@@ -145,11 +146,11 @@ public class CarportMapper
             ps.setString(1, name);
             ps.setInt(2, price);
             ps.setInt(3, type);
-            ps.setString(4, productionDescription);
-            ps.setInt(5, specification);
+            ps.setString(4, product_description);
+            ps.setInt(5, specifications);
             ps.setString(6, pdfFile);
             ps.setInt(7, carportID);
-
+            ps.executeUpdate();
         } catch (SQLException e)
         {
             throw new RuntimeException(e);

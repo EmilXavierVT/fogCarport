@@ -34,7 +34,8 @@ public class CarportMapperTest {
             210, 530);
 
     StandardCarport expectedcarport = new StandardCarport(1, "CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING", 54998, 2, "Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.", temp, "2000000710761.pdf");
-    UserDefinedCarport expectedUDC = new UserDefinedCarport(2,"carport",10000,3,"its a special carport",temp);
+    UserDefinedCarport expectedUDC = new UserDefinedCarport(2, "CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING", 54998, 2, "Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.", temp);
+
 
     @BeforeAll
     public static void setUpClass() {
@@ -90,6 +91,10 @@ public class CarportMapperTest {
                 stmt.execute("INSERT INTO test_schema.carports VALUES " +
                         "(1,'CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING',54998,2,'Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.',1,'2000000710761.pdf')");
 
+                //carport 2
+                stmt.execute("INSERT INTO test_schema.carports VALUES " +
+                        "(2,'CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING',54998,2,'Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.',1)");
+
                 //specification 1
                 stmt.execute("INSERT INTO test_schema.specifications VALUES " +
                         "(1,2000000710761,'Carport',2,true,22,3,26,28,1,780,600,380,380,780,600,530,540,505,210,530)");
@@ -115,7 +120,6 @@ public class CarportMapperTest {
             }
         }
     }
-
     @Test
     public void findCarportByIdTest() throws DatabaseException {
         Carport real = CarportMapper.getCarportByID(1, connectionPool);
@@ -124,21 +128,42 @@ public class CarportMapperTest {
 
     @Test
     public void createStandardCarportTest() throws DatabaseException, SQLException {
-        assertEquals(1, TestMapper.count("carports", connectionPool));
-        CarportMapper.SaveCarportInDB(expectedcarport.getName(), expectedcarport.getPrice(), expectedcarport.getType(), expectedcarport.getProductionDescription(), expectedcarport.getSpecification().getSpecificationId(), expectedcarport.getPdf(), connectionPool);
         assertEquals(2, TestMapper.count("carports", connectionPool));
+        CarportMapper.SaveCarportInDB(expectedcarport.getName(), expectedcarport.getPrice(), expectedcarport.getType(), expectedcarport.getProductionDescription(), expectedcarport.getSpecification().getSpecificationId(), expectedcarport.getPdf(), connectionPool);
+        assertEquals(3, TestMapper.count("carports", connectionPool));
     }
 
     @Test
     public void createUDCTest() throws SQLException, DatabaseException {
-        assertEquals(1,TestMapper.count("carports",connectionPool));
-        CarportMapper.SaveCarportInDB(expectedUDC.getName(),expectedUDC.getPrice(),expectedUDC.getType(),expectedUDC.getProductionDescription(),expectedUDC.getSpecification().getSpecificationId(),connectionPool);
         assertEquals(2,TestMapper.count("carports",connectionPool));
+        CarportMapper.SaveCarportInDB(expectedUDC.getName(),expectedUDC.getPrice(),expectedUDC.getType(),expectedUDC.getProductionDescription(),expectedUDC.getSpecification().getSpecificationId(),connectionPool);
+        assertEquals(3,TestMapper.count("carports",connectionPool));
     }
     @Test
     public void deletCarportTest() throws DatabaseException, SQLException {
-        assertEquals(1, TestMapper.count("carports", connectionPool));
+        assertEquals(2, TestMapper.count("carports", connectionPool));
         CarportMapper.deleteCarport(1,connectionPool);
-        assertEquals(0, TestMapper.count("carports", connectionPool));
+        assertEquals(1, TestMapper.count("carports", connectionPool));
     }
+
+    @Test
+    public void updateUDCarportTest() throws DatabaseException {
+        assertEquals(CarportMapper.getCarportByID(1,connectionPool), expectedcarport);
+        CarportMapper.updateCarport(1, "CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING", 60000, 2, "Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.", temp.getSpecificationId(), "2000000710761.pdf",connectionPool);
+        Carport carportAfterUpdate = new StandardCarport(1, "CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING", 60000, 2, "Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.", temp, "2000000710761.pdf");
+        assertEquals(carportAfterUpdate,CarportMapper.getCarportByID(1,connectionPool));
+    }
+
+
+@Test
+public void updateStandardCarportTest() throws DatabaseException {
+    assertEquals(CarportMapper.getCarportByID(2,connectionPool), expectedUDC);
+
+    CarportMapper.updateCarport(2, "CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING", 60000, 2, "Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.", temp.getSpecificationId(),connectionPool);
+    Carport carportAfterUpdate = new UserDefinedCarport(2, "CARPORT CP02HUR DOBBELT 6,0X7,8M MED REDSKABSRUM 2,1X5,1M HØJ REJSNING", 60000, 2, "Bred byg selv-carport 6,00 x 7,80 m. med høj rejsning og plads til 2 biler Stort redskabsrum bagerst i carport Carporten er åben på begge sider, men kan lukkes efter ønske. Leveres med trykimprægnerede stolper, stern og vindskeder, færdigsamlede spær direkte fra fabrik, lodret beklædning på gavle og skur, samt BogC sort dobbelt-S til tagbeklædning. Alle skruer, bolte og beslag, samt udførlig byggevejledning medfølger. Carporten kan også oplevelses i Fog Helsinge. NB! Leveres som Byg-selv sæt - usamlet og ubehandlet. Passer målene på denne carport ikke med dine ønsker? Vi kan skræddersy en carport på specialmål til dig. Klik på linket Bestil tilbud på carport i specialmål, som du finder under Links og dokumenter nedenfor.", temp );
+    assertEquals(carportAfterUpdate,CarportMapper.getCarportByID(2,connectionPool));
+
+
+
+}
 }

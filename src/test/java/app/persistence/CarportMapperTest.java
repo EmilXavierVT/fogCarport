@@ -30,7 +30,7 @@ public class CarportMapperTest {
     Product roof = new Product(28,"B&C dobbelt-S sort beton tagsten m/ 30 års garant","0","tag",50,23);
     Product fasciaBoard = new Product(1,"trykimp. Bræt","25x200 mm","understernbrædder til for- & bagende",15,1);
 
-    Specification temp = new Specification(1, 2000000710761L,"Carport",2,true,
+    Specification temp = new Specification(2, 2000000710761L,"Carport2",2,true,
             post,beam,rafter,roof,fasciaBoard,780,600,380,
             380,780,600,530,540,505,
             210,530);
@@ -95,9 +95,12 @@ public class CarportMapperTest {
 
 
                 stmt.execute("INSERT INTO test_schema.carports VALUES " +
-                        "(1,'Carport1',200,1,'This is a carport',1,'pdf')");
+                        "(1,'Carport1',200,1,'This is a carport',2,'pdf')");
+
                 stmt.execute("INSERT INTO test_schema.specifications VALUES " +
-                        "(1,2000000710761,'Carport',2,true,22,3,26,28,1,780,600,380,380,780,600,530,540,505,210,530)");
+                        "(1,2000000710760,'Carport',2,true,22,3,26,28,1,780,600,380,380,780,600,530,540,505,210,530)");
+                stmt.execute("INSERT INTO test_schema.specifications VALUES " +
+                        "(2,2000000710761,'Carport2',2,true,22,3,26,28,1,780,600,380,380,780,600,530,540,505,210,530)");
 
                 stmt.execute("SELECT setval('test_schema.carports_carport_id_seq', COALESCE((SELECT MAX (carport_id)+1 FROM test_schema.carports), 1), false)");
                 stmt.execute("SELECT setval('test_schema.specifications_specification_id_seq', COALESCE((SELECT MAX (specification_id)+1 FROM test_schema.specifications), 1), false)");
@@ -107,6 +110,15 @@ public class CarportMapperTest {
             }
         }
     }
+    @Test
+    public void findCarportByIdTest() throws DatabaseException {
+        StandardCarport expected = new StandardCarport(1,"Carport1",200,1,"This is a carport",temp,"pdf");
+        Carport real = CarportMapper.getCarportByID(1,connectionPool);
+        assertEquals(expected,real);
+
+    }
+
+
 
     @Test
     public void createCarportTest() throws DatabaseException {

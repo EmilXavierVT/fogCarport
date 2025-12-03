@@ -101,18 +101,18 @@ public class Calculator {
 
         List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
 
-    List<Product> beams = allProducts.stream().filter(product -> product.getProductID() == specification.getBeam().getProductID()).toList();
-    List<Product> posts = allProducts.stream().filter(product -> product.getProductID() == specification.getPost().getProductID()).toList();
-    List<Product> rafters = allProducts.stream().filter(product -> product.getProductID()== specification.getRafter().getProductID()).toList();
-    List<Product> roofs = allProducts.stream().filter(product -> product.getProductID() == specification.getRoof().getProductID()).toList();
-    List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getProductID() == specification.getFasciaBoard().getProductID()).toList();
+//    List<Product> beams = allProducts.stream().filter(product -> product.getProductID() == specification.getBeam().getProductID()).toList();
+//    List<Product> posts = allProducts.stream().filter(product -> product.getProductID() == specification.getPost().getProductID()).toList();
+//    List<Product> rafters = allProducts.stream().filter(product -> product.getProductID()== specification.getRafter().getProductID()).toList();
+//    List<Product> roofs = allProducts.stream().filter(product -> product.getProductID() == specification.getRoof().getProductID()).toList();
+//    List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getProductID() == specification.getFasciaBoard().getProductID()).toList();
     List<Product> wallCoverings = allProducts.stream().filter(product -> product.getType() == 9).toList();
 
-    beam = beams.get(0);
-    post = posts.get(0);
-    rafter = rafters.get(0);
-    roof = roofs.get(0);
-    fasciaBoard= fasciaBoards.get(0);
+    beam = specification.getBeam();
+    post = specification.getPost();
+    rafter = specification.getRafter();
+    roof = specification.getRoof();
+    fasciaBoard= specification.getFasciaBoard();
     wallCovering = wallCoverings.get(0);
 
 //    kill your darling emil

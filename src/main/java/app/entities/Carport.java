@@ -10,9 +10,9 @@ public abstract class Carport
    float price;
    int type;
    String productionDescription;
-   int specification;
+   Specification specification;
 
-   Carport(int carportID, String name, float price, int type, String productionDescription, int specification)
+   Carport(int carportID, String name, float price, int type, String productionDescription, Specification specification)
    {
        this.carportID = carportID;
        this.name = name;

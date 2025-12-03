@@ -107,7 +107,7 @@ public class OrderMapper {
         }
     }
 
-    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
+    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
     {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";

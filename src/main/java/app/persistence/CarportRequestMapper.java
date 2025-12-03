@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarportRequestMapper
 {
@@ -78,6 +80,31 @@ public class CarportRequestMapper
         } catch (SQLException e)
         {
             throw new DatabaseException(e.getMessage() + "problem with deleting carport request with id: " + id);
+        }
+    }
+
+    public static List<CarportRequest> getAllCarportRequests(ConnectionPool connectionPool) throws DatabaseException
+    {
+        List<CarportRequest> requests = new ArrayList<>();
+        String sql = "SELECT * FROM carport_requests";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                requests.add(new CarportRequest(
+                        rs.getInt("carport_request_id"),
+                        UserMapper.getUserByID(rs.getInt("user_id"), connectionPool),
+                        CarportMapper.getCarportByID(rs.getInt("carport_id"), connectionPool),
+                        UserMapper.getUserByID(rs.getInt("sales_rep_id"), connectionPool)
+                ));
+            }
+            return requests;
+        } catch (SQLException e)
+        {
+            throw new DatabaseException(e.getMessage() + " problem with getting all carport requests");
         }
     }
 }

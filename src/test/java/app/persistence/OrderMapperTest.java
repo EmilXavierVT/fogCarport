@@ -14,6 +14,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,6 +101,19 @@ public class OrderMapperTest {
         OrderMapper.updateOrder(1,LocalDate.parse("2025-11-26"),connectionPool);
         Order orderAfterUpdate = new Order(1,tempUser,LocalDate.parse("2025-11-26"));
         assertEquals(orderAfterUpdate,OrderMapper.getOrderByID(1,connectionPool));
+    }
+
+    @Test
+    public void deleteOrderTest() throws SQLException, DatabaseException {
+        assertEquals(2,TestMapper.count("orders",connectionPool));
+        OrderMapper.deleteOrder(1,connectionPool);
+        assertEquals(1,TestMapper.count("orders",connectionPool));
+    }
+
+    @Test
+    public void getAllOrders() throws DatabaseException {
+        List<Order> orders = OrderMapper.getAllOrders(connectionPool);
+        assertEquals(2,orders.size());
     }
 }
 

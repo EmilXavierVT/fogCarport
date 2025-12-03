@@ -92,7 +92,7 @@ public class OrderMapper {
     }
 
     // maybe we want to look into this later
-    public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
+    public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "DELETE FROM orders WHERE order_id = ?";
 
@@ -100,7 +100,7 @@ public class OrderMapper {
              PreparedStatement ps = connection.prepareStatement(sql))
         {
             ps.setInt(1, orderId);
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (SQLException e)
         {
@@ -108,7 +108,7 @@ public class OrderMapper {
         }
     }
 
-    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
+    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
     {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
@@ -120,7 +120,7 @@ public class OrderMapper {
 
             while (rs.next())
             {
-                orders.add(new Order(rs.getInt("id"), UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate()));
+                orders.add(new Order(rs.getInt("order_id"), UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate()));
             }
         } catch (SQLException e)
         {

@@ -11,6 +11,7 @@ import io.javalin.http.Context;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CarportController {
 
@@ -31,6 +32,7 @@ public class CarportController {
 
 
     }
+
 
     public static void showCarports(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         try {

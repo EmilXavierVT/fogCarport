@@ -11,10 +11,10 @@ public class UserDefinedCarport extends Carport
     float price;
     int type;
     String productionDescription;
-    int specification;
+    Specification specification;
     List itemList = new ArrayList();
 
-    public UserDefinedCarport(int carportID, String name, float price, int type, String productionDescription, int specification)
+    public UserDefinedCarport(int carportID, String name, float price, int type, String productionDescription, Specification specification)
     {
         super(carportID,name,price,type,productionDescription,specification);
     }

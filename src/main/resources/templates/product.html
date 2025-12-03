@@ -1,15 +1,99 @@
 <head th:replace="fragments :: head(~{::product})"><title>Produkt</title></head>
+<header th:replace="~{fragments :: header}"></header>
 <body>
 
 <section>
+<div class="display_container_vertical">
 <div class="display_container_horizontal">
-
+    <img class="product_page_image" th:src="@{'/images/' + ${carport.carportID} + 'carport.png'}" alt="Carport image" />
+    <div class="content_holder">
+    <div class="product_text_field">
+    <h3 th:text="${carport.name}"></h3>
+    <p th:text="${carport.productionDescription}"></p>
+    </div>
+        <div class="row_price">
+        <span class="slider_product_page_price" th:text="${carport.price}"></span>
+        <span class="slider_product_page_price_addition"> pr.stk + evt. fragt</span>
+        </div>
+        <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST">
+            <div class="add_amount_row">
+                <button class="product_page_button" type="button" onclick="decreaseOne()">-</button>
+                <input class="product_page_counter" type="number" min="1" max="100" id="counter_number" name="amount" value="1" required />
+                <button class="product_page_button" type="button" onclick="increaseOne()">+</button>
+            </div>
+            <button class="add_to_cart_button">Læg i kurv
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 -6 24 24" fill="none">
+                <path d="M18 12L5 12M18 12L14 16M18 12L14 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg></button>
+        </form>
+    </div>
+</div>
 </div>
 </section>
 
-<section> </section>
+<section class="product_page_info_section">
+<div class="display_container_vertical">
 
-<section> </section>
+    <div class="product_info_box">
+        <div class="product_description_header">
+        <h3>Produktbeskrivelse</h3>
+        <button class="product_description_button">+</button>
+        </div>
+        <div class="product_description_content">
+        <p th:text="${carport.productionDescription}"></p>
+        </div>
+    </div>
 
+    <div class="product_info_box">
+        <div class="product_description_header">
+            <h3>Specifikationer</h3>
+            <button class="product_description_button">+</button>
+        </div>
+        <div class="product_description_content">
+            <p th:text="${carport.specification}"></p>
+        </div>
+    </div>
+
+    <div class="product_info_box">
+        <div class="product_description_header">
+            <h3>Levering</h3>
+            <button class="product_description_button">+</button>
+        </div>
+        <div class="product_description_content">
+            <p>LOREM LOREM LOREM LOREM LOREM LOREM LOREM</p>
+        </div>
+    </div>
+
+    <div class="product_info_box">
+        <div class="product_description_header">
+            <h3>Dokumenter og Links</h3>
+            <button class="product_description_button">+</button>
+        </div>
+        <div class="product_description_content">
+            <p>LOREM LOREM LOREM LOREM LOREM LOREM LOREM</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section id="carport_section" class="carport_slider_section">
+    <div class="slider_container">
+        <div class="slider">
+            <div class="product_card_slider" th:each="carport : ${standard_carports}"
+                 th:value="${carport.carportID}">
+                <a class="product_card_link" th:href="@{${carport.carportID}}">
+                    <img th:src="@{'/images/' + ${carport.carportID} + 'carport.png'}" alt="Carport Billede">
+                    <h3 th:text="${carport.name}"></h3>
+                    <p th:text="${carport.productionDescription}"></p>
+                    <span class="slider_product_price" th:text="${carport.price} + ' kr.'"></span>
+                    <a class="slider_view_button" th:href="@{${carport.carportID}}">
+                        SE PRODUKT
+                    </a>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/script.js"></script>
 </body>
 <footer th:replace="fragments :: footer"></footer>

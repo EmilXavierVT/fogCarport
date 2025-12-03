@@ -315,6 +315,142 @@ nav a:hover {
     justify-content: center;
 }
 
+/*PRODUCT PAGE*/
+
+.product_page_image {
+    max-width: 793px;
+    width: 100%;
+    min-width: 793px;
+    margin: 10% 5% 0 1%;
+}
+
+.product_text_field p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.add_amount_row {
+
+}
+
+.product_page_button {
+    width: 46.51px;
+    height: 45px;
+    margin-right: -1%;
+    margin-left: -1%;
+    background: #D9D9D9;
+    border: 1px solid var(--border_box_color);
+}
+
+.product_page_counter {
+    width: 56.98px;
+    height: 45px;
+    text-align: center;
+    background: #D9D9D9;
+    border: 1px solid var(--border_box_color);
+}
+
+input[type=number] {
+    -webkit-appearance: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.add_to_cart_button {
+    width: 150px;
+    height: 53px;
+    background: var(--blue_widget);
+    border: none;
+    margin-top: 5%;
+    color: var(--white_widget);
+    font-size: 18px;
+}
+
+.product_info_box {
+
+}
+
+.slider_product_page_price {
+    font-size: 24px;
+}
+
+.slider_product_page_price_addition {
+    margin-left: 2%;
+}
+
+.add_to_cart_form {
+
+}
+
+.content_holder {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5% 0 0;
+}
+
+.row_price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product_info_box {
+    width: 100%;
+    max-width: 1360px;
+    background: var(--white_widget);
+    color: var(--text);
+    border: 2px solid var(--border_box_color);
+    border-radius: 10px;
+    margin-bottom: 0.5%;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.product_page_info_section {
+    margin-top: 5%;
+}
+
+.product_description_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+.product_description_header h3 {
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.product_description_button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.product_description_content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.product_info_box.open .product_description_content {
+    max-height: 1000px;
+    padding: 15px 20px;
+}
+
+.product_info_box.open .product_description_button {
+    transform: rotate(45deg);
+}
+
 .fragment_div {
     height: 100vh;
     display: flex;

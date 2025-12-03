@@ -17,11 +17,19 @@ public class CarportController {
     public static void addRoutes(Javalin app) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         app.get("/", ctx -> showCarports(ctx, connectionPool));
-        app.post("/carport_selected", ctx -> displayProductPage(ctx,connectionPool));
+        app.get("/product/{id}", ctx -> displayProductPage(ctx,connectionPool));
     }
 
-    private static void displayProductPage(Context ctx, ConnectionPool connectionPool) {
-        C;
+    private static void displayProductPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    Carport actualCarport = CarportMapper.getCarportByID(Integer.parseInt(ctx.pathParam("id")),connectionPool);
+    List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
+
+        ctx.render("product.html", Map.of(
+                "carport", actualCarport,
+                "standard_carports", standardCarports
+        ));
+
+
     }
 
     public static void showCarports(Context ctx, ConnectionPool connectionPool) throws DatabaseException {

@@ -321,3 +321,62 @@ nav a:hover {
     align-items: center;
     justify-content: center;
 }
+
+/* USER DEFINED CARPORT*/
+
+.user_defined_title {
+    font-size: 35px;
+    text-align: center;
+    margin: 100px ;
+}
+
+.content_holder_user_defined {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    justify-content: center;
+}
+
+.carport_type_picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #EDEDED;
+    text-align: center;
+}
+.carport_name {
+    font-size: 15px;
+}
+.carport_type_description {
+
+font-size: 12px;
+}
+.user_defined_description_text {
+    width: 50%;
+    margin: 200px 0 100px 0;
+
+}
+
+.user_defined_body_text {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.user_defined_picture_section {
+    display: flex;
+    justify-content: center;
+}
+
+img.user_defined_picture {
+    width:100%;
+    height: 1250px;
+    max-width: 2400px;
+}
+.blue_arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

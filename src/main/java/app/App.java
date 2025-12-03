@@ -3,6 +3,7 @@ package app;
 import app.config.ThymeleafConfig;
 import app.controllers.CarportController;
 import app.controllers.UserController;
+import app.controllers.UserDefinedController;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
@@ -22,6 +23,7 @@ public class App {
         // add controllers here
         UserController.addRoutes(app);
         CarportController.addRoutes(app);
+        UserDefinedController.addRoutes(app);
 
 
     }

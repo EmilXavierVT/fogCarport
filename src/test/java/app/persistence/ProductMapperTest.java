@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -92,6 +93,11 @@ public class ProductMapperTest {
         assertEquals(4,TestMapper.count("products",connectionPool));
         ProductMapper.deleteProduct(3,connectionPool);
         assertEquals(3,TestMapper.count("products",connectionPool));
+    }
+    @Test
+    public void getallProductsTest() throws SQLException, DatabaseException {
+        List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
+        assertEquals(4,allProducts.size());
     }
 }
 

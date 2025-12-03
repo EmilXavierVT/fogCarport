@@ -134,6 +134,12 @@ public class CarportMapperTest {
         CarportMapper.SaveCarportInDB(expectedcarport.getName(), expectedcarport.getPrice(), expectedcarport.getType(), expectedcarport.getProductionDescription(), expectedcarport.getSpecification().getSpecificationId(), expectedcarport.getPdf(), connectionPool);
         assertEquals(2, TestMapper.count("carports", connectionPool));
 
+    }
 
+    @Test
+    public void deletCarportTest() throws DatabaseException, SQLException {
+        assertEquals(1, TestMapper.count("carports", connectionPool));
+        CarportMapper.deleteCarport(1,connectionPool);
+        assertEquals(0, TestMapper.count("carports", connectionPool));
     }
 }

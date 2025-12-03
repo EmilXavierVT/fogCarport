@@ -97,7 +97,7 @@ public class CarportMapper
 
     public static void deleteCarport(int carportID,ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "DELETE FROM carport WHERE id = ?";
+        String sql = "DELETE FROM carports WHERE carport_id = ?";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))

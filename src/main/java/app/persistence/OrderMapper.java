@@ -75,12 +75,13 @@ public class OrderMapper {
 
     public static void updateOrder (int OrderID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
-        String  sql = "UPDATE orders SET date=? WHERE id=?";
+        String  sql = "UPDATE orders SET date=? WHERE order_id=?";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))
         {
             ps.setDate(1, java.sql.Date.valueOf(localDate));
+            ps.setInt(2, OrderID);
             int rowsAffected = ps.executeUpdate();
 
             if ( rowsAffected != 1 )

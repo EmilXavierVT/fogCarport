@@ -92,8 +92,13 @@ public class OrderMapperTest {
         assertEquals(2,TestMapper.count("orders",connectionPool));
         OrderMapper.saveOrder(tempUser.getUserId(),LocalDate.parse("2025-11-27"),connectionPool);
         assertEquals(3,TestMapper.count("orders",connectionPool));
-
-
-
+    }
+    @Test
+    public void updateOrderTest() throws SQLException, DatabaseException {
+        assertEquals(expectedOrder,OrderMapper.getOrderByID(1,connectionPool));
+        OrderMapper.updateOrder(1,LocalDate.parse("2025-11-26"),connectionPool);
+        Order orderAfterUpdate = new Order(1,tempUser,LocalDate.parse("2025-11-26"));
+        assertEquals(orderAfterUpdate,OrderMapper.getOrderByID(1,connectionPool));
     }
 }
+

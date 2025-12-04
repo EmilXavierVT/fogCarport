@@ -161,7 +161,7 @@ public class CarportMapper
     public static List<Carport> getAllStandardCarport(ConnectionPool connectionPool) throws DatabaseException
     {
         ArrayList<Carport> carports = new ArrayList<>();
-        String sql = "SELECT * FROM carports";
+        String sql = "SELECT * FROM carports ORDER BY type ASC";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -188,7 +188,6 @@ public class CarportMapper
             throw new DatabaseException("Error: no carport found", e.getMessage());
         }
     }
-
 }
 
 

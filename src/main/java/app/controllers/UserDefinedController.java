@@ -1,7 +1,9 @@
 package app.controllers;
 
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.Calculator;
+import app.services.SpecificationWizard;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
@@ -11,14 +13,13 @@ public class UserDefinedController {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
        app.get("userdefined",ctx -> ctx.render("userdefined.html"));
        app.get("flat",ctx->ctx.render("flat.html"));
-//       app.post("flat",ctx-> sendRequest(ctx,connectionPool));
+       app.post("flat",ctx-> sendRequest(ctx,connectionPool));
 
     }
 
-    private static void sendRequest(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int width = Integer.parseInt(ctx.formParam("width"));
-        int height = Integer.parseInt(ctx.formParam("height"));
+        int length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
         int shedWidth = Integer.parseInt(ctx.formParam("shed_width"));
         int shedLength = Integer.parseInt(ctx.formParam("shed_length"));
@@ -27,11 +28,16 @@ public class UserDefinedController {
         String address = ctx.formParam("address");
         int zipCode = Integer.parseInt(ctx.formParam("zip_code"));
         String city = ctx.formParam("city");
-        String phoneNumberr = ctx.formParam("phone_number");
+        String phoneNumber = ctx.formParam("phone_number");
         String email = ctx.formParam("email");
 
-        Calculator calculator
+        boolean roof = !roofType.equals("Ingen tag");
 
+
+
+        Calculator calculator = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
+
+        System.out.println(calculator.setItemList());
     }
 
 }

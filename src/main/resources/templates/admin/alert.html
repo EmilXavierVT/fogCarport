@@ -1,9 +1,8 @@
-<head th:replace="admin_fragments :: head(~{::alert})"><title>Kunde Information</title></head>
+<head th:replace="admin_fragments :: head(~{::alert})" xmlns="http://www.w3.org/1999/html"><title>Kunde Information</title></head>
 <body>
 
 
 <section class="Dashboard">
-<section class = products_section>
     <h1>Dashboard</h1>
 
 <form class="search_form" th:action="@{search_carport}" method="get">
@@ -41,9 +40,12 @@
             </div>
         </section>
 
-</section>
 
     <section class="materials_section">
+
+            <div class="materials_container">
+                <table class="dashboard_table">
+                    <thead>
                     <tr>
                         <th>Navn</th>
                         <th>Dimension</th>
@@ -51,29 +53,28 @@
                         <th>Beskrivelse</th>
                         <th>Pris</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     <tr th:each="material : ${all_materials}">
                         <td th:text="${material.name}"></td>
                         <td th:text="${material.dimensions}"></td>
                         <td th:text="${material.description}"></td>
                         <td th:text="${material.price} + ' DKK'"></td>
                     </tr>
-
-
-
                     <tr th:if="${#lists.isEmpty(all_materials)}">
                         <td> Ingen materialer fundet</td>
                     </tr>
                     </tbody>
+                </table>
+            </div>
         </section>
 
 
 
-    </section>
 
 
     <section class="notification_section">
 
-        <section class="requests_section">
             <h2>Forespørgsler</h2>
             <div class="table_container">
                 <table class="dashboard_table">
@@ -97,8 +98,8 @@
                         <td th:text="${req.user.zipCode}">Postnummer</td>
                         <td th:text="${req.user.streetName + ' ' + req.user.houseNumber}">Adresse</td>
                         <td th:text="${req.carport.name}">Forespørgsel</td>
-                        <td th:text="${req.id}">Request ID</td> <!-- replace `id` with your CarportRequest id field if different -->
-                        <td th:text="${req.carport.length}">Længde</td>   <!-- adjust field names to match Carport entity -->
+                        <td th:text="${req.id}">Request ID</td>
+                        <td th:text="${req.carport.length}">Længde</td>
                         <td th:text="${req.carport.width}">Bredde</td>
                         <td th:text="${req.carport.shed ? 'Ja' : 'Nej'}">Skur</td>
                         <td th:text="${req.carport.shedDepth}">Skur dybde</td>

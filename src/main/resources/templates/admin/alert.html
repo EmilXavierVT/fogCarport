@@ -113,8 +113,34 @@
                 </table>
             </div>
         </section>
+<section class="notification_section">
 
-    </section>
+            <h2>Users</h2>
+            <div class="table_container">
+                <table class="dashboard_table">
+                    <thead>
+                    <tr>
+                        <th>Kunde Navn</th>
+                        <th>email</th>
+                        <th>role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${all_users}">
+
+                        <td th:text="${user.firstName} + ' ' + ${user.lastName}">Kunde Navn</td>
+                        <td th:text="${user.email}">email</td>
+                        <td th:text="${user.role == 0 ? 'bruger' : (user.role == 1 ? 'admin' : 'Ukendt')}">Kategori</td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(all_users)}">
+                        <td colspan="4">Ingen brugere fundet</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+</section>
 
 
 

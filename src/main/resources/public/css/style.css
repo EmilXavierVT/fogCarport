@@ -380,3 +380,48 @@ img.user_defined_picture {
     justify-content: center;
     align-items: center;
 }
+
+/*FLAT ROOF SECTION*/
+.user_defined_form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    border-radius: 10px;
+}
+.content_holder_flat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.flat_section_container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    gap:10px;
+    border-radius: 10px;
+    border: 3px solid var(--border_box_color);
+
+}
+.form_submit_button {
+    background: var(--dark_blue_widget);
+    color: var(--white_widget);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.form_submit_button:hover {
+    background: var(--hover_change_color);
+}
+.flat_line {
+    border: 2px solid var(--text);
+    width: 80%;
+}

@@ -479,3 +479,64 @@ nav a:hover {
     align-items: center;
     justify-content: center;
 }
+
+<!-- Test CSS i Alert -->
+
+/* DASHBOARD LAYOUT */
+.Dashboard {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+
+.search_input {
+    width: 160px;
+    height: 30px;
+    border: 1px solid var(--border_box_color);
+    border-radius: 6px;
+    padding-left: 8px;
+}
+
+
+.tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 12px;
+    color: var(--text);
+}
+
+.tab.active {
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+/* TABLE WRAPPER */
+.table_container {
+    margin-top: 15px;
+    background: white;
+    border: 1px solid var(--border_box_color);
+    border-radius: 6px;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* TABLE */
+.dashboard_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.dashboard_table th,
+.dashboard_table td {
+    border: 1px solid  var(--border_box_color);
+    padding: 10px 14px;
+    font-size: 15px;
+}
+
+.dashboard_table thead th {
+    background: var(--background_color);
+    font-weight: bold;
+}

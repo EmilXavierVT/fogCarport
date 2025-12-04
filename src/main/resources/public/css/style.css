@@ -503,7 +503,7 @@ nav a:hover {
     pointer-events: none;
 }
 
-.cart_overlay_content {
+.cart_items_container {
     display: flex;
     gap: 15px;
     align-items: center;

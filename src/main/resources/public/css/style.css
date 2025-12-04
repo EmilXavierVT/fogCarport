@@ -479,3 +479,168 @@ nav a:hover {
     align-items: center;
     justify-content: center;
 }
+
+/* USER DEFINED CARPORT*/
+
+.user_defined_title {
+    font-size: 35px;
+    text-align: center;
+    margin: 100px ;
+}
+
+.content_holder_user_defined {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    justify-content: center;
+}
+
+.carport_type_picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #EDEDED;
+    text-align: center;
+}
+.carport_name {
+    font-size: 15px;
+}
+.carport_type_description {
+
+font-size: 12px;
+}
+.user_defined_description_text {
+    width: 50%;
+    margin: 200px 0 100px 0;
+
+}
+
+.user_defined_body_text {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.user_defined_picture_section {
+    display: flex;
+    justify-content: center;
+}
+
+img.user_defined_picture {
+    width:100%;
+    height: 1250px;
+    max-width: 2400px;
+}
+.blue_arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*FLAT ROOF SECTION*/
+.user_defined_form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    border-radius: 10px;
+}
+.content_holder_flat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.flat_section_container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    gap:10px;
+    border-radius: 10px;
+    border: 3px solid var(--border_box_color);
+
+}
+.form_submit_button {
+    background: var(--dark_blue_widget);
+    color: var(--white_widget);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.form_submit_button:hover {
+    background: var(--hover_change_color);
+}
+.flat_line {
+    border: 2px solid var(--text);
+    width: 80%;
+}
+
+<!-- Test CSS i Alert -->
+
+/* DASHBOARD LAYOUT */
+.Dashboard {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+
+.search_input {
+    width: 160px;
+    height: 30px;
+    border: 1px solid var(--border_box_color);
+    border-radius: 6px;
+    padding-left: 8px;
+}
+
+
+.tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 12px;
+    color: var(--text);
+}
+
+.tab.active {
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+/* TABLE WRAPPER */
+.table_container {
+    margin-top: 15px;
+    background: white;
+    border: 1px solid var(--border_box_color);
+    border-radius: 6px;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* TABLE */
+.dashboard_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.dashboard_table th,
+.dashboard_table td {
+    border: 1px solid  var(--border_box_color);
+    padding: 10px 14px;
+    font-size: 15px;
+}
+
+.dashboard_table thead th {
+    background: var(--background_color);
+    font-weight: bold;
+}

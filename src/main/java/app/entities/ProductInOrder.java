@@ -1,8 +1,7 @@
 package app.entities;
-
 import lombok.Data;
-@Data
 
+@Data
 public class ProductInOrder
 {
     private int productInOrderID;

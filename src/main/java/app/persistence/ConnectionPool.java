@@ -2,12 +2,10 @@ package app.persistence;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /***
  * Singleton pattern applied to handling a Hikari ConnectionPool
  */
@@ -62,7 +60,9 @@ public class ConnectionPool
                         System.getenv("JDBC_PASSWORD"),
                         System.getenv("JDBC_CONNECTION_STRING"),
                         System.getenv("JDBC_DB"));
-            } else {
+            }
+            else
+            {
                 ds = createHikariConnectionPool(user, password, url, db);
             }
             instance = new ConnectionPool();
@@ -113,8 +113,6 @@ public class ConnectionPool
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         return new HikariDataSource(config);
-
-
     }
 
 }

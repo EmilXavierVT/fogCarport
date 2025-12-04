@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class Calculator {
-
+public class Calculator
+{
     private Specification specification;
     private int width;
     private int length;
@@ -31,10 +31,10 @@ public class Calculator {
     private Product roof;
     private Product fasciaBoard;
     private Product wallCovering;
-
     ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-    public Calculator( Specification specification) {
+    public Calculator( Specification specification)
+    {
         this.specification = specification;
         this.width = specification.getWidth();
         this.length = specification.getLength();
@@ -51,8 +51,8 @@ public class Calculator {
 //    int actualpost= (tmplength*2)+4;
 //}
 
-    public void calcPost() {
-
+    public void calcPost()
+    {
         if (length > 440 && length < 750)
         {
             amountOfPosts = 6;
@@ -94,18 +94,11 @@ public class Calculator {
         lengthOfFasciaBoard = length*2+width;
     }
 
-    public List<ProductInOrder> setItemList() throws DatabaseException {
+    public List<ProductInOrder> setItemList() throws DatabaseException
+    {
         List<ProductInOrder> itemList = new ArrayList<>();
-
-
-
         List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
 
-//    List<Product> beams = allProducts.stream().filter(product -> product.getProductID() == specification.getBeam().getProductID()).toList();
-//    List<Product> posts = allProducts.stream().filter(product -> product.getProductID() == specification.getPost().getProductID()).toList();
-//    List<Product> rafters = allProducts.stream().filter(product -> product.getProductID()== specification.getRafter().getProductID()).toList();
-//    List<Product> roofs = allProducts.stream().filter(product -> product.getProductID() == specification.getRoof().getProductID()).toList();
-//    List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getProductID() == specification.getFasciaBoard().getProductID()).toList();
     List<Product> wallCoverings = allProducts.stream().filter(product -> product.getType() == 9).toList();
 
     beam = specification.getBeam();
@@ -114,6 +107,21 @@ public class Calculator {
     roof = specification.getRoof();
     fasciaBoard= specification.getFasciaBoard();
     wallCovering = wallCoverings.get(0);
+
+    int bottomScrewsAmount;
+    int holeBandAmount;
+    int rightFittingAmount;
+    int leftFittingAmount;
+    int fourSixScrewsAmount;
+    int coveringScrewsAmount;
+    int boltAmount;
+    int squareWasherAmount;
+    int fourSevenScrewsAmount;
+    int fourFiveScrewsAmount;
+    int handleAmount;
+    int tHingeAmount;
+    int angleHingeAmount;
+
 
 //    kill your darling emil
 
@@ -164,12 +172,9 @@ public class Calculator {
             itemList.add(new ProductInOrder(0,fasciaBoard,1,360));
         }
 
-
-
-
-
 //    All shed calculations
-        if(specification.isShed()) {
+        if(specification.isShed())
+        {
             int amountOfPlanks = (int) Math.ceil((double) specification.getShedWidth()/8)*2 + (int) Math.ceil((double) specification.getShedDepth()/8)*2;
             itemList.add(new ProductInOrder(0, wallCovering, amountOfPlanks, 0));
             itemList.add(new ProductInOrder(0, post, 3, 0));
@@ -178,10 +183,8 @@ public class Calculator {
         return itemList;
     }
 
-
-
-
-    public double getCostPrice() throws DatabaseException {
+    public double getCostPrice() throws DatabaseException
+    {
         double totalCost = 0;
 
          for(ProductInOrder productInOrder : setItemList())

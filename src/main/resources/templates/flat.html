@@ -1,11 +1,89 @@
 <head th:replace="fragments :: head(~{::flat})"><title>Fladt Tag</title></head>
 <body>
+<header th:replace="~{fragments :: header}"></header>
+<div class="content_holder_flat">
+
+<section class="user_defined_title"> Bestil Quick-byg tilbud -
+    Carport med fladt tag
+</section>
+
+<section class="flat_section_container">
+        <br>
+        <strong>Carport med fladt tag</strong>
+    <br>
+
+        Udfyld nedenstående omhyggeligt og tryk "Bestil tilbud".  Så vender vi hurtigst muligt tilbage med et tilbud til dig.
+    <br>
+    <form class="user_defined_form" th:action="@{/flat}" method="POST">
+        <label for="width">Carport bredde</label><select name="width" id="width" th:required="true">
+            <option value="1">300</option>
+            <option value="2">360</option>
+            <option value="3">420</option>
+            <option value="4">480</option>
+            <option value="5">540</option>
+            <option value="6">600</option>
+        </select>
+        <label for="length">Carport længde</label><select name="length" id="length" th:required="true">
+            <option value="1">300</option>
+            <option value="2">360</option>
+            <option value="3">420</option>
+            <option value="4">480</option>
+            <option value="5">540</option>
+            <option value="6">600</option>
+            <option value="7">660</option>
+            <option value="6">720</option>
+            <option value="6">780</option>
+        </select>
+        <label for="roof"></label> Carport trapeztag<select name="roof" id="roof"th:required="true">
+            <option value="1">Ingen tag</option>
+            <option value="1">Plast tag</option>
+        </select>
+<br>
+            <strong>Redskabsrum</strong>
+        <p>
+        NB! der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet
+        </p>
+
+        <label for="shed_width">Redskabsrum bredde</label><select name="shed_width" id="shed_width">
+            <option value="1">300</option>
+            <option value="2">360</option>
+            <option value="3">420</option>
+            <option value="4">480</option>
+            <option value="5">540</option>
+            <option value="6">600</option>
+        </select>
+        <label for="shed_length">Redskabsrum længde</label><select name="shed_length" id="shed_length">
+            <option value="1">300</option>
+            <option value="2">360</option>
+            <option value="3">420</option>
+            <option value="4">480</option>
+            <option value="5">540</option>
+            <option value="6">600</option>
+            <option value="7">660</option>
+            <option value="6">720</option>
+            <option value="6">780</option>
+        </select>
+        <label for="remarks">Evt. bemærkning / særlige ønsker</label><input type="text" name="remarks" id="remarks">
+<br>
+<hr class="flat_line">
+        <label for="name">Navn</label><input type="text" name="name" id="name" th:required="true" placeholder="Fornavn og Efternavn">
+        <label for="address"> Adresse</label><input type="text" name="address" id="address" th:required="true" placeholder=" vejnavn og husnummer">
+        <label for="zip_code">Postnummer</label><input type="text" name="zip_code" id="zip_code" th:required="true" placeholder="Postnummer">
+        <label for="city"></label>By<input type="text" name="city" id="city" th:required="true" placeholder="By">
+        <label for="phone_number">Telefon</label><input type="text" name="phone_number" id="phone_number" th:required="true" placeholder="Telefonnummer">
+        <label for="email"></label>Email<input type="text" name="email" id="email" th:required="true" placeholder="Email">
+    <br>
+        <strong>Kontakt Samtykke</strong>
+        <input type="checkbox" id="compliance_check" name="compliance_check">
+        <label for="compliance_check">Fog må benytte de afgivne oplysninger til at kontakte
+            mig i forbindelse med tilbud på QuickByg carport</label>
+
+        <button class="form_submit_button" type="submit" th:required="true">Bestil tilbud</button>
+
+    </form>
+</section>
 
 <section> </section>
-
-<section> </section>
-
-<section> </section>
-
+</div>
 </body>
 <footer th:replace="fragments :: footer"></footer>

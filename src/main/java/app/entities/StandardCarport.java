@@ -1,6 +1,5 @@
 package app.entities;
 
-
 public class StandardCarport extends Carport
 {
 String pdfFile;

@@ -2,14 +2,12 @@ package app.persistence;
 
 import app.entities.Product;
 import app.exceptions.DatabaseException;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductMapper
 {
-
     public static void saveProduct(String name, String dimensions, String description, double price, int type, ConnectionPool connectionPool)
     {
         String sql = "INSERT INTO products (name, dimensions, description, price, type) VALUES(?,?,?,?,?)";
@@ -24,7 +22,8 @@ public class ProductMapper
             ps.setInt(5, type);
             ps.executeUpdate();
 
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
@@ -44,7 +43,8 @@ public class ProductMapper
             {
                 return new Product(rs.getInt("product_id"),rs.getString("name"),rs.getString("dimensions"),rs.getString("description"),rs.getFloat("price"),rs.getInt("type"));
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
@@ -68,9 +68,10 @@ public class ProductMapper
 
             if ( rowsAffected != 1 )
             {
-                throw new DatabaseException("Failed to update user with ID: " + ProductID);
+                throw new DatabaseException("Failed to update product with ID: " + ProductID);
             }
-        } catch (SQLException |DatabaseException e)
+        }
+        catch (SQLException |DatabaseException e)
         {
             throw new RuntimeException(e);
         }
@@ -87,19 +88,23 @@ public class ProductMapper
 
             if (rowsAffected != 1)
             {
-                throw new DatabaseException("Failed to delete user with ID: " + ProductID);
+                throw new DatabaseException("Failed to delete product with ID: " + ProductID);
             }
         }
     }
 
-    public static List<Product> getAllProducts(ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "SELECT * FROM products ORDER BY name ASC";
+    public static List<Product> getAllProducts(ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "SELECT * FROM products";
         List<Product> products = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+
+            while (rs.next())
+            {
                 products.add(new Product(
                         rs.getInt("product_id"),
                         rs.getString("name"),
@@ -112,10 +117,9 @@ public class ProductMapper
                         rs.getInt("max")));
             }
             return products;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new DatabaseException("Error getting all products from database", e.getMessage());
         }
     }
-
-
 }

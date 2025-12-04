@@ -4,8 +4,6 @@ import app.entities.Carport;
 import app.entities.StandardCarport;
 import app.entities.UserDefinedCarport;
 import app.exceptions.DatabaseException;
-
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +13,6 @@ import java.util.List;
 
 public class CarportMapper
 {
-
     public static void SaveCarportInDB(String name, double price, int type, String productionDescription, int specification, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "INSERT INTO carports (name, price, type, product_description, specifications) VALUES (?, ?, ?, ?, ?)";
@@ -29,7 +26,8 @@ public class CarportMapper
             ps.setString(4, productionDescription);
             ps.setInt(5, specification);
             ps.executeUpdate();
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error in creating a new carport", e.getMessage());
         }
@@ -49,7 +47,8 @@ public class CarportMapper
             ps.setInt(5, specification);
             ps.setString(6, pdf);
             ps.executeUpdate();
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error in creating a new carport", e.getMessage());
         }
@@ -88,7 +87,8 @@ public class CarportMapper
                             SpecificationMapper.getSpecificationByID(rs.getInt("specifications"),connectionPool));
                 }
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error: no carport found", e.getMessage());
         }
@@ -109,7 +109,8 @@ public class CarportMapper
             {
                 throw new DatabaseException("Error deleting carport " + carportID);
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
@@ -130,7 +131,8 @@ public class CarportMapper
 
             ps.setInt(6, carportID);
             ps.executeUpdate();
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
@@ -151,12 +153,12 @@ public class CarportMapper
             ps.setString(6, pdfFile);
             ps.setInt(7, carportID);
             ps.executeUpdate();
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
     }
-
 
     public static List<Carport> getAllStandardCarport(ConnectionPool connectionPool) throws DatabaseException
     {
@@ -168,8 +170,10 @@ public class CarportMapper
         {
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                if (rs.getString("pdf_file") != null) {
+            while (rs.next())
+            {
+                if (rs.getString("pdf_file") != null)
+                {
                     Carport carport = new StandardCarport(
                             rs.getInt("carport_id"),
                             rs.getString("name"),
@@ -183,7 +187,8 @@ public class CarportMapper
             }
                 return carports;
 
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error: no carport found", e.getMessage());
         }

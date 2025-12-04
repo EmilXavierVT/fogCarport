@@ -1,4 +1,5 @@
-<head th:replace="admin_fragments :: head(~{::alert})" xmlns="http://www.w3.org/1999/html"><title>Kunde Information</title></head>
+<head th:replace="~{fragments :: head(~{::Alert})}"><title>Alert</title></head>
+<header th:replace="~{fragments :: header}"></header>
 <body>
 
 
@@ -49,7 +50,6 @@
                     <tr>
                         <th>Navn</th>
                         <th>Dimension</th>
-                        <th>Kategori</th>
                         <th>Beskrivelse</th>
                         <th>Pris</th>
                     </tr>

@@ -1,0 +1,59 @@
+<svg  xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+
+      width="200" height="200" viewBox="0 200 210">
+
+    <rect x="10" y="50" height="80" width="100"
+          style="stroke:#000000; fill: #ffffff"/>
+
+    <rect x="20" y="60" height="60" width="78"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <!-- rem-->
+    <rect x="20.5" y="65" height="1" width="78"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <rect x="20.5" y="114" height="1" width="78"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <!-- spær-->
+    <rect x="20" y="60" height="60" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+    <rect x="98" y="60" height="60" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <!-- dash lines-->
+    <line x1="25" x2="80" y1="66" y2="114" stroke="black" stroke-width="0.1"
+    stroke-dasharray="1"/>
+    <line x1="80" x2="25" y1="66" y2="114" stroke="black" stroke-width="0.1"
+          stroke-dasharray="1"/>
+
+    <!-- stolper-->
+    <rect x="30" y="64.5" height="2" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <rect x="60" y="64.5" height="2" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+    <rect x="90" y="64.5" height="2" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <rect x="30" y="113.5" height="2" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <rect x="60" y="113.5" height="2" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+
+    <rect x="90" y="113.5" height="2" width="1"
+          style="stroke:#000000; fill: #ffffff"
+          stroke-width="0.1"/>
+</svg>

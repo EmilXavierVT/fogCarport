@@ -13,11 +13,11 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public int getAvailableOrderId(ConnectionPool connectionPool) throws DatabaseException
+    public static int getAvailableOrderId(ConnectionPool connectionPool) throws DatabaseException
     {
         int orderId = 0;
         ConnectionPool.getInstance();
-        String sql = "SELECT nextval('orders_id_seq')";
+        String sql = "SELECT nextval('orders_order_id_seq')";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -75,12 +75,13 @@ public class OrderMapper {
 
     public static void updateOrder (int OrderID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
-        String  sql = "UPDATE orders SET date=? WHERE id=?";
+        String  sql = "UPDATE orders SET date=? WHERE order_id=?";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql))
         {
             ps.setDate(1, java.sql.Date.valueOf(localDate));
+            ps.setInt(2, OrderID);
             int rowsAffected = ps.executeUpdate();
 
             if ( rowsAffected != 1 )
@@ -91,7 +92,7 @@ public class OrderMapper {
     }
 
     // maybe we want to look into this later
-    public void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
+    public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "DELETE FROM orders WHERE order_id = ?";
 
@@ -99,7 +100,7 @@ public class OrderMapper {
              PreparedStatement ps = connection.prepareStatement(sql))
         {
             ps.setInt(1, orderId);
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (SQLException e)
         {
@@ -119,7 +120,7 @@ public class OrderMapper {
 
             while (rs.next())
             {
-                orders.add(new Order(rs.getInt("id"), UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate()));
+                orders.add(new Order(rs.getInt("order_id"), UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate()));
             }
         } catch (SQLException e)
         {

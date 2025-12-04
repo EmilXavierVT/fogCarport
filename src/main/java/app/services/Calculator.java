@@ -45,6 +45,19 @@ public class Calculator
     private Product roof;
     private Product fasciaBoard;
     private Product wallCovering;
+    private Product bottomScrew;
+    private Product holeBand;
+    private Product rightFitting;
+    private Product leftFitting;
+    private Product coveringScrew;
+    private Product bolt;
+    private Product squareWasher;
+    private Product fourSixScrew;
+    private Product fourSevenScrew;
+    private Product fourFiveScrew;
+    private Product handle;
+    private Product tHinge;
+    private Product angleHinge;
     ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public Calculator( Specification specification)
@@ -122,6 +135,20 @@ public class Calculator
         List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
 
     List<Product> wallCoverings = allProducts.stream().filter(product -> product.getType() == 9).toList();
+    List<Product> bottomScrews = allProducts.stream().filter(product -> product.getType() == 10).toList();
+    List<Product> holeBands = allProducts.stream().filter(product -> product.getType() == 11 ).toList();
+    List<Product>  rightFittings= allProducts.stream().filter(product -> product.getType() == 12 ).toList();
+    List<Product>  leftFittings= allProducts.stream().filter(product -> product.getType() == 12).toList();
+    List<Product>  fourSixScrews= allProducts.stream().filter(product -> product.getType() == 13).toList();
+    List<Product>  coveringScrews= allProducts.stream().filter(product -> product.getType() == 14).toList();
+    List<Product>  bolts = allProducts.stream().filter(product -> product.getType() == 15).toList();
+    List<Product> squarewashers = allProducts.stream().filter(product -> product.getType() == 16).toList();
+    List<Product> fourSevenScrews = allProducts.stream().filter(product -> product.getType() == 17).toList();
+    List<Product> fourFiveScrews = allProducts.stream().filter(product -> product.getType() == 18).toList();
+    List<Product>  handles = allProducts.stream().filter(product -> product.getType() == 19).toList();
+    List<Product> tHinges = allProducts.stream().filter(product -> product.getType() == 20).toList();
+    List<Product> angleHinges = allProducts.stream().filter(product -> product.getType() == 21).toList();
+
 
     beam = specification.getBeam();
     post = specification.getPost();
@@ -129,9 +156,19 @@ public class Calculator
     roof = specification.getRoof();
     fasciaBoard= specification.getFasciaBoard();
     wallCovering = wallCoverings.get(0);
-
-
-
+    bottomScrew =bottomScrews.get(0);
+    holeBand = holeBands.get(0);
+    rightFitting = rightFittings.get(0);
+    leftFitting = leftFittings.get(0);
+    coveringScrew = coveringScrews.get(0);
+    bolt = bolts.get(0);
+    squareWasher = squarewashers.get(0);
+    fourSevenScrew = fourSevenScrews.get(0);
+    fourSixScrew =fourSixScrews.get(0);
+    fourFiveScrew = fourFiveScrews.get(0);
+    handle = handles.get(0);
+    tHinge = tHinges.get(0);
+    angleHinge = angleHinges.get(0);
 
 
 //    beams
@@ -187,6 +224,22 @@ public class Calculator
             itemList.add(new ProductInOrder(0, wallCovering, amountOfPlanks, 0));
             itemList.add(new ProductInOrder(0, post, 3, 0));
         }
+
+//        all Screws
+
+        itemList.add(new ProductInOrder(0,bottomScrew,bottomScrewsAmount,0));
+        itemList.add(new ProductInOrder(0,holeBand,holeBandAmount,0));
+        itemList.add(new ProductInOrder(0,rightFitting,rightFittingAmount,0));
+        itemList.add(new ProductInOrder(0,leftFitting,leftFittingAmount,0));
+        itemList.add(new ProductInOrder(0,fourSixScrew,fourSixScrewsAmount,0));
+        itemList.add(new ProductInOrder(0, coveringScrew, coveringScrewsAmount, 0));
+        itemList.add(new ProductInOrder(0, bolt, boltAmount, 0));
+        itemList.add(new ProductInOrder(0, squareWasher, squareWasherAmount, 0));
+        itemList.add(new ProductInOrder(0, fourSevenScrew, fourSevenScrewsAmount, 0));
+        itemList.add(new ProductInOrder(0, fourFiveScrew, fourFiveScrewsAmount, 0));
+        itemList.add(new ProductInOrder(0, handle, handleAmount, 0));
+        itemList.add(new ProductInOrder(0, tHinge, tHingeAmount, 0));
+        itemList.add(new ProductInOrder(0, angleHinge, angleHingeAmount, 0));
 
         return itemList;
     }

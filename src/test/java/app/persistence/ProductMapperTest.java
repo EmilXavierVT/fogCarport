@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +24,8 @@ public class ProductMapperTest {
     private final static String DB = "carport";
 
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+
+    Product expectedProduct = new Product(3,"spærtræ","45x195 mm","Remme i sider, sadles ned i stolper",100,3);
 
     @BeforeAll
     public static void setUpClass() throws SQLException {
@@ -51,7 +54,13 @@ public class ProductMapperTest {
                 stmt.execute("SELECT setval('test_schema.products_product_id_seq',1)");
 
                 stmt.execute("INSERT INTO test_schema.products VALUES " +
-                        "(1,'screw','2x2','it s a screw', 100,1)");
+                        "(3,'spærtræ','45x195 mm','Remme i sider, sadles ned i stolper',100,3)");
+                stmt.execute("INSERT INTO test_schema.products VALUES " +
+                        "(26,'spærtræ færdigsamlede 25 gr','145x145 mm','spær monteres på remme',70,3)");
+                stmt.execute("INSERT INTO test_schema.products VALUES " +
+                        "(28,'B&C dobbelt-S sort beton tagsten m/ 30 års garant','0','tag',50,23)");
+                stmt.execute("INSERT INTO test_schema.products VALUES " +
+                        "(1,'trykimp. Bræt','25x200 mm','understernbrædder til for- & bagende',15,1)");
 
                 stmt.execute("SELECT setval('test_schema.products_product_id_seq', COALESCE((SELECT MAX (product_id)+1 FROM test_schema.products), 1), false)");
             } catch (SQLException e) {
@@ -60,12 +69,35 @@ public class ProductMapperTest {
         }
     }
     @Test
-    void createOrderTest() throws SQLException, DatabaseException {
-    Product expected = new Product(2,"wood","10*200","its a pice of wood",200,2);
-    ProductMapper.saveProduct("wood","10*200","its a pice of wood",200,2,connectionPool);
-    Product real = ProductMapper.getProductByID(2,connectionPool);
+    public void findOrder() throws SQLException, DatabaseException {
+    assertEquals(expectedProduct,ProductMapper.getProductByID(3,connectionPool));
+    }
 
-    assertEquals(expected,real);
+    @Test
+    public void createOrderTest() throws SQLException, DatabaseException {
+        assertEquals(4,TestMapper.count("products",connectionPool));
+        ProductMapper.saveProduct("wood","10*200","its a pice of wood",200,2,connectionPool);
+        assertEquals(5,TestMapper.count("products",connectionPool));
+    }
+
+    @Test
+    public void updateOrderTest() throws SQLException, DatabaseException {
+        assertEquals(expectedProduct,ProductMapper.getProductByID(3,connectionPool));
+        ProductMapper.updateOrder(3,"spærtræ","50x195 mm","Remme i sider, sadles ned i stolper",100,3,connectionPool);
+        Product productAfterUpdate = new Product(3,"spærtræ","50x195 mm","Remme i sider, sadles ned i stolper",100,3);
+        assertEquals(productAfterUpdate,ProductMapper.getProductByID(3,connectionPool));
+    }
+
+    @Test
+    public void deleteProductTest() throws SQLException, DatabaseException {
+        assertEquals(4,TestMapper.count("products",connectionPool));
+        ProductMapper.deleteProduct(3,connectionPool);
+        assertEquals(3,TestMapper.count("products",connectionPool));
+    }
+    @Test
+    public void getallProductsTest() throws SQLException, DatabaseException {
+        List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
+        assertEquals(4,allProducts.size());
     }
 }
 

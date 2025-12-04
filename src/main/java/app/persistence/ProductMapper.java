@@ -51,9 +51,9 @@ public class ProductMapper
         return null;
     }
 
-    public static void updateOrder(int orderID,String name, String dimensions, String description, float price, int type, ConnectionPool connectionPool)
+    public static void updateOrder(int ProductID,String name, String dimensions, String description, float price, int type, ConnectionPool connectionPool)
     {
-        String sql ="UPDATE orders SET name=?, dimensions=?,description=?,price=?,type=? WHERE id=?";
+        String sql ="UPDATE products SET name=?, dimensions=?,description=?,price=?,type=? WHERE product_id =?";
 
         try(Connection connection = connectionPool.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql))
@@ -63,12 +63,12 @@ public class ProductMapper
             ps.setString(3, description);
             ps.setFloat(4, price);
             ps.setInt(5, type);
-            ps.setInt(6, orderID);
+            ps.setInt(6, ProductID);
             int rowsAffected = ps.executeUpdate();
 
             if ( rowsAffected != 1 )
             {
-                throw new DatabaseException("Failed to update user with ID: " + orderID);
+                throw new DatabaseException("Failed to update user with ID: " + ProductID);
             }
         } catch (SQLException |DatabaseException e)
         {
@@ -76,18 +76,18 @@ public class ProductMapper
         }
     }
 
-    public static void deleteOrder(int orderID, ConnectionPool connectionPool) throws DatabaseException, SQLException
+    public static void deleteProduct(int ProductID, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
-        String sql = "DELETE FROM orders WHERE id=?";
+        String sql = "DELETE FROM products WHERE product_id=?";
         try(Connection connection = connectionPool.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql))
         {
-            ps.setInt(1, orderID);
+            ps.setInt(1, ProductID);
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected != 1)
             {
-                throw new DatabaseException("Failed to delete user with ID: " + orderID);
+                throw new DatabaseException("Failed to delete user with ID: " + ProductID);
             }
         }
     }

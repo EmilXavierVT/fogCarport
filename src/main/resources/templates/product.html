@@ -16,7 +16,11 @@
         <span class="slider_product_page_price" th:text="${carport.price}"></span>
         <span class="slider_product_page_price_addition"> pr.stk + evt. fragt</span>
         </div>
-        <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST">
+        <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST" onsubmit="showCartOverlay(event)">
+            <input type="hidden" name="productName" th:value="${carport.name}"/>
+            <input type="hidden" name="productThumbnail" th:value="'/images/' + ${carport.carportID} + 'carport.png'"/>
+            <input type="hidden" name="productPrice" th:value="${carport.price}"/>
+
             <div class="add_amount_row">
                 <button class="product_page_button" type="button" onclick="decreaseOne()">-</button>
                 <input class="product_page_counter" type="number" min="1" max="100" id="counter_number" name="amount" value="1" readonly required />

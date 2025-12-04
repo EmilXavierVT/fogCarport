@@ -2,7 +2,6 @@ package app.persistence;
 
 import app.entities.Order;
 import app.exceptions.DatabaseException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderMapper {
-
+public class OrderMapper
+{
     public static int getAvailableOrderId(ConnectionPool connectionPool) throws DatabaseException
     {
         int orderId = 0;
@@ -28,12 +27,14 @@ public class OrderMapper {
             {
                 orderId = rs.getInt(1);
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
-            throw new DatabaseException("getAvailableOrderid OrderMapper", e.getMessage());
+            throw new DatabaseException("Error in getAvailableOrderid OrderMapper", e.getMessage());
         }
         return orderId;
     }
+
     public static void saveOrder(int userID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
         String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
@@ -61,17 +62,13 @@ public class OrderMapper {
             {
                 return new Order(rs.getInt("order_id"),UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate());
             }
-        } catch (SQLException | DatabaseException e)
+        }
+        catch (SQLException | DatabaseException e)
         {
             throw new RuntimeException(e);
         }
         return null;
     }
-
-
-
-    // get oders from last 7 days not implimented
-
 
     public static void updateOrder (int OrderID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
@@ -86,12 +83,11 @@ public class OrderMapper {
 
             if ( rowsAffected != 1 )
             {
-                throw new DatabaseException("Failed to update user with ID: " + OrderID);
+                throw new DatabaseException("Failed to update order with ID: " + OrderID);
             }
         }
     }
 
-    // maybe we want to look into this later
     public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "DELETE FROM orders WHERE order_id = ?";
@@ -102,7 +98,8 @@ public class OrderMapper {
             ps.setInt(1, orderId);
             ps.executeUpdate();
 
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error removing order", e.getMessage());
         }
@@ -122,7 +119,8 @@ public class OrderMapper {
             {
                 orders.add(new Order(rs.getInt("order_id"), UserMapper.getUserByID(rs.getInt("user_id"),connectionPool), rs.getDate("date").toLocalDate()));
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error getting all orders", e.getMessage());
         }

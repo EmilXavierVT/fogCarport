@@ -97,15 +97,8 @@ public class Calculator {
     public List<ProductInOrder> setItemList() throws DatabaseException {
         List<ProductInOrder> itemList = new ArrayList<>();
 
-
-
         List<Product> allProducts = ProductMapper.getAllProducts(connectionPool);
 
-//    List<Product> beams = allProducts.stream().filter(product -> product.getProductID() == specification.getBeam().getProductID()).toList();
-//    List<Product> posts = allProducts.stream().filter(product -> product.getProductID() == specification.getPost().getProductID()).toList();
-//    List<Product> rafters = allProducts.stream().filter(product -> product.getProductID()== specification.getRafter().getProductID()).toList();
-//    List<Product> roofs = allProducts.stream().filter(product -> product.getProductID() == specification.getRoof().getProductID()).toList();
-//    List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getProductID() == specification.getFasciaBoard().getProductID()).toList();
     List<Product> wallCoverings = allProducts.stream().filter(product -> product.getType() == 9).toList();
 
     beam = specification.getBeam();
@@ -114,6 +107,21 @@ public class Calculator {
     roof = specification.getRoof();
     fasciaBoard= specification.getFasciaBoard();
     wallCovering = wallCoverings.get(0);
+
+    int bottomScrewsAmount;
+    int holeBandAmount;
+    int rightFittingAmount;
+    int leftFittingAmount;
+    int fourSixScrewsAmount;
+    int coveringScrewsAmount;
+    int boltAmount;
+    int squareWasherAmount;
+    int fourSevenScrewsAmount;
+    int fourFiveScrewsAmount;
+    int handleAmount;
+    int tHingeAmount;
+    int angleHingeAmount;
+
 
 //    kill your darling emil
 

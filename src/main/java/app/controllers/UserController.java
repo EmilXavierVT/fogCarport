@@ -107,7 +107,7 @@ public class UserController
         int userId = user.getUserId();
         user = UserMapper.updateUser(userId,firstName,lastName,zipCode,streetName,streetNumber,floor,connectionPool);
         ctx.sessionAttribute("currentUser",user);
-        ctx.sessionAttribute("message","Du har opdateret din profil !");
+        ctx.sessionAttribute("message","Du har opdateret din profil!");
         ctx.render("index.html");
     }
 }

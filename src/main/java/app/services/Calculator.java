@@ -24,7 +24,21 @@ public class Calculator
     private int amountOfBeams;
     private int amountOfRafters;
     private int amountOfRoof;
+    private int amountOfWallCovering;
     private int lengthOfFasciaBoard;
+    private int bottomScrewsAmount;
+    private int holeBandAmount;
+    private int rightFittingAmount;
+    private int leftFittingAmount;
+    private int fourSixScrewsAmount;
+    private int coveringScrewsAmount;
+    private int boltAmount;
+    private int squareWasherAmount;
+    private int fourSevenScrewsAmount;
+    private int fourFiveScrewsAmount;
+    private int handleAmount;
+    private int tHingeAmount;
+    private int angleHingeAmount;
     private Product beam;
     private Product post;
     private Product rafter;
@@ -43,13 +57,9 @@ public class Calculator
         calcRafters();
         calcRoof();
         calcFasciaBoard();
+        calcAmountOfWallCovering();
+        calcScrews();
     }
-
-//public void calcPostv2()
-//{
-//    int tmplength = (length-130)/310;
-//    int actualpost= (tmplength*2)+4;
-//}
 
     public void calcPost()
     {
@@ -67,17 +77,7 @@ public class Calculator
         }
     }
 
-    public void calcBeams()
-    {
-        if (length < 600 )
-        {
-            amountOfBeams = 4;
-        }
-        else
-        {
-            amountOfBeams = 6;
-        }
-    }
+    public void calcBeams() {amountOfBeams = (length < 600) ? 6:4;}
 
     public void calcRafters()
     {
@@ -94,6 +94,28 @@ public class Calculator
         lengthOfFasciaBoard = length*2+width;
     }
 
+    private void calcAmountOfWallCovering()
+    {
+       amountOfWallCovering = ((specification.getShedDepth() * 2 + specification.getShedWidth() * 2) / 8);
+    }
+
+    private void calcScrews()
+    {
+        bottomScrewsAmount = amountOfRoof/2;
+        rightFittingAmount = amountOfRafters;
+        leftFittingAmount = amountOfRafters;
+        fourSixScrewsAmount = 1;
+        coveringScrewsAmount = amountOfRafters/5;
+        boltAmount = amountOfRafters/2 + amountOfPosts;
+        squareWasherAmount = amountOfPosts +1;
+        fourSevenScrewsAmount = amountOfWallCovering/100;
+        fourFiveScrewsAmount = amountOfWallCovering/100;
+        handleAmount = (amountOfWallCovering > 0) ? 1 : 0;
+        tHingeAmount = ((amountOfWallCovering > 0) ? 2 : 0);
+        angleHingeAmount = (amountOfWallCovering > 0) ? 35 : 0;
+    }
+
+
     public List<ProductInOrder> setItemList() throws DatabaseException
     {
         List<ProductInOrder> itemList = new ArrayList<>();
@@ -108,22 +130,8 @@ public class Calculator
     fasciaBoard= specification.getFasciaBoard();
     wallCovering = wallCoverings.get(0);
 
-    int bottomScrewsAmount;
-    int holeBandAmount;
-    int rightFittingAmount;
-    int leftFittingAmount;
-    int fourSixScrewsAmount;
-    int coveringScrewsAmount;
-    int boltAmount;
-    int squareWasherAmount;
-    int fourSevenScrewsAmount;
-    int fourFiveScrewsAmount;
-    int handleAmount;
-    int tHingeAmount;
-    int angleHingeAmount;
 
 
-//    kill your darling emil
 
 
 //    beams
@@ -194,6 +202,7 @@ public class Calculator
          }
         return totalCost;
     }
+
 
 
 }

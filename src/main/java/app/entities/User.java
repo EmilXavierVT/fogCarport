@@ -1,8 +1,8 @@
 package app.entities;
 
 import lombok.Data;
-@Data
 
+@Data
 public class User
 {
 int userId;

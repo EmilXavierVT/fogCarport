@@ -40,11 +40,11 @@ Din browser understøtter ikke videoer.
             <input class="input_no_border_white" type="password" id="password" name="password" placeholder="Adgangskode" required />
 
             <div class="button_row">
-            <button class="button_white" type="submit">Log ind</button>
-            <a class="button_white_non_button" th:href="@{/register_password}">Opret dig</a>
+                <button class="button_white" type="submit">Log ind</button>
+                <a class="button_white_non_button" th:href="@{/register_password}">Opret dig</a>
             </div>
         </form>
-        <p th:if="${session.errorLogin != null}" th:text="${session.errorLogin}"></p>
+        <p th:if="${session.error_login != null}" th:text="${session.error_login}" style="color: red; font-weight: bold"></p>
     </div>
 </section>
 <script src="/js/script.js"></script>

@@ -33,15 +33,18 @@ public class UserMapper
             if (rs.next())
             {
                 return getUserByID(rs.getInt(1), connectionPool);
-            } else
+            }
+            else
             {
                 throw new DatabaseException("Failed to create new user");
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error creating user", e.getMessage());
         }
     }
+
     public static User createUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "INSERT INTO users (email, password) " +
@@ -57,15 +60,18 @@ public class UserMapper
             if (rs.next())
             {
                 return getUserByID(rs.getInt(1),connectionPool);
-            } else
+            }
+            else
             {
                 throw new DatabaseException("Failed to create new user");
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error creating user", e.getMessage());
         }
     }
+
     public static User getUserByID(int id,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "SELECT * FROM users WHERE user_id = ?";
@@ -91,11 +97,13 @@ public class UserMapper
                         rs.getInt("role")
 
                 );
-            } else
+            }
+            else
             {
                 throw new DatabaseException("No user found with ID: " + id);
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error retrieving user", e.getMessage());
         }
@@ -124,7 +132,8 @@ public class UserMapper
                 throw new DatabaseException("Failed to update user with ID: " + id);
             }
             return getUserByID(id,connectionPool);
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error updating user", e.getMessage());
         }
@@ -144,7 +153,8 @@ public class UserMapper
             {
                 throw new DatabaseException("Failed to delete user with ID: " + id);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new DatabaseException("Error deleting user", e.getMessage());
         }
     }
@@ -154,8 +164,7 @@ public class UserMapper
         String sql = "select user_id from users where email=? and password=?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)
-        )
+             PreparedStatement ps = connection.prepareStatement(sql))
         {
             ps.setString(1, email);
             ps.setString(2, password);
@@ -166,7 +175,8 @@ public class UserMapper
                 int id = rs.getInt("user_id");
 
                 return getUserByID(id,connectionPool);
-            } else
+            }
+            else
             {
                 throw new DatabaseException("Fejl i login. Prøv igen");
             }
@@ -182,8 +192,8 @@ public class UserMapper
         String sql = "SELECT role FROM users WHERE user_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)
-        ){
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setInt(1, user.getUserId());
             ResultSet rs = ps.executeQuery();
 
@@ -192,7 +202,8 @@ public class UserMapper
                 int role = rs.getInt("role");
                 return role;
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("something admin login", e.getMessage());
         }
@@ -225,7 +236,8 @@ public class UserMapper
                 ));
             }
             return userList;
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error retrieving all users", e.getMessage());
         }

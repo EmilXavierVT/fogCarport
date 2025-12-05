@@ -55,6 +55,7 @@ function renderCartOverlay() {
 
     if (!container || !overlay) return;
 
+    const overlay = document.getElementById("cart_overlay");
     overlay.classList.remove("hidden");
     overlay.classList.add("show");
 

@@ -3,7 +3,6 @@ package app.persistence;
 import app.entities.Product;
 import app.entities.ProductInOrder;
 import app.exceptions.DatabaseException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +25,8 @@ public class ProductInOrderMapper
             ps.setInt(3, amount);
             ps.executeUpdate();
 
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error creating product in order", e.getMessage());
         }
@@ -51,7 +51,8 @@ public class ProductInOrderMapper
                         rs.getInt("amount")
                 );
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error getting product in order", e.getMessage());
         }
@@ -73,7 +74,8 @@ public class ProductInOrderMapper
             {
                 throw new DatabaseException("Failed to update product in order with ID: " + productInOrderId);
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new DatabaseException("Error updating product in order", e.getMessage());
         }
     }
@@ -87,7 +89,8 @@ public class ProductInOrderMapper
         {
             ps.setInt(1, productInOrderId);
             ps.executeUpdate();
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error deleting product in order", e.getMessage());
         }
@@ -113,7 +116,8 @@ public class ProductInOrderMapper
                         rs.getInt("amount")
                 ));
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error getting all products in order", e.getMessage());
         }

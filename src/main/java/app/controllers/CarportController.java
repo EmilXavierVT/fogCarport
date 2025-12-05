@@ -9,22 +9,24 @@ import io.javalin.http.Context;
 import java.util.List;
 import java.util.Map;
 
-public class CarportController {
-
-    public static void addRoutes(Javalin app) {
+public class CarportController
+{
+    public static void addRoutes(Javalin app)
+    {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         app.get("/", ctx -> showCarports(ctx, connectionPool));
         app.get("/product/{id}", ctx -> displayProductPage(ctx, connectionPool));
         app.get("/product/pdf/{EAN}", ctx -> displayPdfPage(ctx));
     }
 
-    private static void displayPdfPage(Context ctx) {
+    private static void displayPdfPage(Context ctx)
+    {
         String ean = ctx.pathParam("EAN");
         String resourcePath = "/public/carportPdf/" + ean + ".pdf";
-
         java.io.InputStream pdfStream = CarportController.class.getResourceAsStream(resourcePath);
 
-            if(pdfStream == null){
+            if(pdfStream == null)
+            {
                 ctx.status(404).result("PDF not found for EAN" + ean);
                 return;
             }
@@ -32,23 +34,27 @@ public class CarportController {
             ctx.result(pdfStream);
     }
 
-    private static void displayProductPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void displayProductPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException
+    {
     Carport actualCarport = CarportMapper.getCarportByID(Integer.parseInt(ctx.pathParam("id")),connectionPool);
     List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
 
-        ctx.render("product.html", Map.of(
+        ctx.render("product.html", Map.of
+                (
                 "carport", actualCarport,
                 "standard_carports", standardCarports
         ));
     }
 
-    public static void showCarports(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void showCarports(Context ctx, ConnectionPool connectionPool) throws DatabaseException
+    {
         try {
             List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
-
             ctx.render("index.html", Map.of("standard_carports", standardCarports));
 
-        } catch (DatabaseException e) {
+        }
+        catch (DatabaseException e)
+        {
             System.out.println("showCarport signature: Could not get all standard carports" + e.getMessage());
             ctx.redirect("/");
         }

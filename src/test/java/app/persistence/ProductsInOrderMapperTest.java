@@ -104,27 +104,31 @@ public class ProductsInOrderMapperTest {
                 stmt.execute("SELECT setval('test_schema.orders_order_id_seq', COALESCE((SELECT MAX (order_id)+1 FROM test_schema.orders), 1), false)");
                 stmt.execute("SELECT setval('test_schema.users_user_id_seq', COALESCE((SELECT MAX(user_id)+1 FROM test_schema.users), 1), false)");
                 stmt.execute("SELECT setval('test_schema.products_product_id_seq', COALESCE((SELECT MAX (product_id)+1 FROM test_schema.products), 1), false)");
-
-            } catch (SQLException e) {
+            }
+            catch (SQLException e)
+            {
                 throw new RuntimeException(e);
             }
         }
     }
 
     @Test
-    public void findProductInOrder() throws DatabaseException {
+    public void findProductInOrder() throws DatabaseException
+    {
         assertEquals(expectedProductInOrder,ProductInOrderMapper.getProductInOrderById(1,connectionPool));
     }
 
     @Test
-    public void createProductInOrder() throws DatabaseException, SQLException {
+    public void createProductInOrder() throws DatabaseException, SQLException
+    {
         assertEquals(3,TestMapper.count("products_in_orders",connectionPool));
         ProductInOrderMapper.createProductInOrder(tempOrder.getId(),tempProduct,2,connectionPool);
         assertEquals(4,TestMapper.count("products_in_orders",connectionPool));
     }
 
     @Test
-    public void updateProductInOrder() throws DatabaseException, SQLException {
+    public void updateProductInOrder() throws DatabaseException
+    {
     assertEquals(expectedProductInOrder,ProductInOrderMapper.getProductInOrderById(1,connectionPool));
     ProductInOrder updatedProductInOrder = new ProductInOrder(1,tempOrder.getId(),tempProduct,1);
     ProductInOrderMapper.updateProductInOrder(1,1,connectionPool);
@@ -132,7 +136,8 @@ public class ProductsInOrderMapperTest {
     }
 
     @Test
-    public void deleteProductInOrder() throws DatabaseException, SQLException {
+    public void deleteProductInOrder() throws DatabaseException, SQLException
+    {
         assertEquals(3,TestMapper.count("products_in_orders",connectionPool));
         ProductInOrderMapper.deleteProductInOrder(1,connectionPool);
         assertEquals(2,TestMapper.count("products_in_orders",connectionPool));

@@ -1,10 +1,7 @@
 package app.persistence;
 
-
-import app.entities.Product;
 import app.entities.Specification;
 import app.exceptions.DatabaseException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +9,6 @@ import java.sql.SQLException;
 
 public class SpecificationMapper
 {
-
     public static void createSpecification(long EAN, String model, int roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                            int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
@@ -22,6 +18,7 @@ public class SpecificationMapper
                 "fascia_board, length, width, height_front, height_rear, roof_length, roof_width," +
                 " exterior_width_at_post, parking_length, parking_width,  shed_depth, shed_width)" +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
         {
@@ -83,11 +80,13 @@ public class SpecificationMapper
                         rs.getInt("parking_width"),
                         rs.getInt("shed_depth"),
                         rs.getInt("shed_width"));
-            } else
+            }
+            else
             {
                 throw new DatabaseException("No Specification found on id " + specificationId);
             }
-        } catch (SQLException e)
+        }
+        catch (SQLException e)
         {
             throw new DatabaseException("Error retrieving user", e.getMessage());
         }
@@ -126,27 +125,32 @@ public class SpecificationMapper
             ps.setInt(20, shedWidth);
             ps.setInt(21, SpecificationID);
             int rowsAffected = ps.executeUpdate();
+
         if ( rowsAffected != 1 )
         {
             throw new DatabaseException("Failed to update specification with ID: " + SpecificationID);
         }
-    } catch (DatabaseException e) {
+    }
+        catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void deleteSpecification(int SpecificationID, ConnectionPool connectionPool) throws SQLException {
+    public static void deleteSpecification(int SpecificationID, ConnectionPool connectionPool) throws SQLException
+    {
         String sql = "DELETE FROM specifications WHERE specification_id = ?";
 
         try(Connection connection = connectionPool.getConnection();
-        PreparedStatement ps = connection.prepareStatement(sql)){
+        PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setInt(1,SpecificationID);
             int rowsAffected = ps.executeUpdate();
             if ( rowsAffected != 1 )
             {
                 throw new DatabaseException("Failed to delet user with ID: " + SpecificationID);
             }
-        } catch (DatabaseException e) {
+        }
+        catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
     }

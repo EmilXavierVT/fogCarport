@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.Carport;
-import app.entities.CarportRequest;
-import app.entities.Order;
-import app.entities.Product;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import io.javalin.Javalin;
@@ -16,12 +13,53 @@ import java.util.Map;
 public class AdminController {
     public static void addRoutes(Javalin app) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
+//
+//        app.get("/admin/alert", ctx -> {showAllCarports(ctx, connectionPool);
+//            showAllMaterials(ctx, connectionPool);
+//        showAllOrders(ctx, connectionPool);
+//        showAllUsers(ctx, connectionPool);});
+        app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
 
-        app.get("/admin/alert", ctx -> {showAllCarports(ctx, connectionPool);
-            showAllMaterials(ctx, connectionPool);
-        showAllOrders(ctx, connectionPool);});
+
+    }
 
 
+
+    private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
+    {try
+        {
+            List<User> users = UserMapper.getAllUsers(connectionPool);
+            List<CarportRequest> orders = CarportRequestMapper.getAllCarportRequests(connectionPool);
+            List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
+            List<Product> products = ProductMapper.getAllProducts(connectionPool);
+
+            ctx.render("admin/alert.html", Map.of("all_users", users,
+                    "all_carport_requests", orders,
+                    "all_standard_carports", standardCarports,
+                    "all_materials", products));
+
+        } catch (DatabaseException e)
+        {
+            System.out.println("showAdminDashboard signature: Could not show admin dashboard" + e.getMessage());
+            ctx.redirect("/");
+        }
+
+    }
+
+
+    private static void showAllUsers(Context ctx, ConnectionPool connectionPool)
+    {
+        try
+        {
+            List<User> users = UserMapper.getAllUsers(connectionPool);
+
+            ctx.render("admin/alert.html", Map.of("all_users", users));
+
+        } catch (DatabaseException e)
+        {
+            System.out.println("showAllUsers signature: Could not show all users" + e.getMessage());
+            ctx.redirect("/");
+        }
     }
 
     private static void showAllOrders(Context ctx, ConnectionPool connectionPool)

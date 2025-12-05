@@ -95,7 +95,7 @@ public class ProductMapper
 
     public static List<Product> getAllProducts(ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT * FROM products ORDER BY name ASC";
         List<Product> products = new ArrayList<>();
 
         try (Connection connection = connectionPool.getConnection();

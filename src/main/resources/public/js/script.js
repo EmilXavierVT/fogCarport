@@ -8,8 +8,8 @@ function increaseOne() {
 
 function decreaseOne() {
     var counter = document.getElementById("counter_number");
-    var x = parseInt(counter.value, 10); //
-    if(x>1) {// Convert to number
+    var x = parseInt(counter.value, 10);
+    if(x>1) { // Convert to number
         counter.value = x - 1;
         amountOfCupcake = x - 1;
     }
@@ -24,77 +24,101 @@ document.querySelectorAll(".product_info_box").forEach(box =>{
 });
 
 //CART OVERLAY
+let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
-let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+function saveCart() {
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+}
 
-function addToCart(item) {
-    // Check if item is already in cart
-    const existingIndex = cartItems.findIndex(i =>
-        i.name === item.name && i.price === item.price
-    );
-    if (existingIndex !== -1) {
-        // Increase amount if already in cart
-        cartItems[existingIndex].amount =
-            parseInt(cartItems[existingIndex].amount) + parseInt(item.amount);
-    } else {
-        cartItems.push(item);
-    }
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+function addToCart(form) {
+    const amount = Number(form.querySelector("input[name='amount']").value);
+    const name = form.querySelector("input[name='productName']").value;
+    const thumbnail = form.querySelector("input[name='productThumbnail']").value;
+    const price = Number(form.querySelector("input[name='productPrice']").value);
+
+    const item = {
+        name,
+        amount,
+        thumbnail,
+        price,
+        totalPrice: price * amount
+    };
+
+    cart.push(item);
+    saveCart();
+    renderCartOverlay();
 }
 
 function renderCartOverlay() {
-    const itemsContainer = document.getElementById("cart_items_container");
-    itemsContainer.innerHTML = " "; // Clear
+    const container = document.getElementById("cart_list_container");
+    const overlay = document.getElementById("cart_overlay");
 
-    cartItems.forEach(item => {
-        const node = document.createElement('div');
-        node.className = "cart_item";
-        node.innerHTML = `
-          <img src="${item.thumb}" alt="" style="width: 60px; vertical-align:middle;"/>
-          <span>${item.name}</span>
-          <span>Antal: ${item.amount}</span>
-          <span>Pris: ${item.price * item.amount} kr.</span>
-          <button onclick="removeItemFromCart(${item.name})">Remove</button>
-      `;
-        itemsContainer.appendChild(node);
-    });
-}
-
-
-function showCartOverlay(event) {
-    event.preventDefault();
-
-    const form = event.target;
-    const amount = form.querySelector("input[name='amount']").value;
-    const productName = form.querySelector("input[name='productName']").value;
-    const thumb = form.querySelector("input[name='productThumbnail']").value;
-    const price = form.querySelector("input[name='productPrice']").value;
-
-    addToCart({
-        name: productName,
-        amount: amount,
-        price: price,
-        thumb: thumb
-    });
-
-    renderCartOverlay();
+    if (!container || !overlay) return;
 
     const overlay = document.getElementById("cart_overlay");
     overlay.classList.remove("hidden");
-    setTimeout(() => overlay.classList.add("show"), 10);
+    overlay.classList.add("show");
 
-    const closeButton = document.getElementById("cart_overlay_close");
-    closeButton.onclick = () => {
-        overlay.classList.remove("show");
-        setTimeout(() => overlay.classList.add("hidden"), 350);
-    };
+    container.innerHTML = "";
 
-
-    function removeItemFromCart(name) {
-        cartItems = cartItems.filter(item => item.price !== name);
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        renderCartOverlay();
+    if (cart.length === 0) {
+        container.innerHTML = "<p>Din kurv er tom.</p>";
+        return;
     }
 
+    cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart_item";
+
+        div.innerHTML = `
+            <img src="${item.thumbnail}" class="cart_item_image" alt="${item.name}" />
+            <div class="cart_item_info">
+                <strong style="font-size: 12px;">${item.name}</strong>
+                <p style="font-size: 12px;">Antal: ${item.amount}</p>
+                <p style="font-size: 12px;">Pris: ${item.totalPrice} kr.</p>
+            </div>
+            <button class="cart_delete_button" data-index="${index}">Fjern</button>`;
+
+        container.appendChild(div);
+    });
+
+    document.querySelectorAll(".cart_delete_button").forEach(btn => {
+        btn.onclick = () => {
+            const index = btn.getAttribute("data-index");
+            cart.splice(index, 1);
+            saveCart();
+            renderCartOverlay();
+        };
+    });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (cart.length > 0) renderCartOverlay();
+
+    const overlayClose = document.getElementById("cart_overlay_close");
+    if(overlayClose) {
+        overlayClose.addEventListener("click", () => {
+            const overlay = document.getElementById("cart_overlay");
+            overlay.classList.remove("show");
+            overlay.classList.add("hidden");
+            document.body.classList.remove("cart_open");
+        });
+    }
+
+    const overlayRemove = document.getElementById("overlay_remove_item");
+    if(overlayRemove) {
+        overlayRemove.addEventListener("click", () => {
+            cart.pop();
+            saveCart();
+            renderCartOverlay();
+        });
+    }
+
+    const cartBtn = document.getElementById("cart_btn");
+    if(cartBtn) {
+        cartBtn.addEventListener("click", e =>{
+            e.preventDefault();
+            renderCartOverlay();
+        });
+    }
+});

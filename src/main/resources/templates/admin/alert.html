@@ -62,7 +62,7 @@
                         <td th:text="${product.dimensions}"></td>
                         <td th:text="${product.description}"></td>
                         <td th:text="${product.price} + ' DKK'"></td>
-                        <td class="button_row">
+                        <td class="button_row_products">
                             <form th:action="@{/update_price}" method="post">
                                 <input type="hidden" name="product_id" th:value="${product.productID}" />
                                 <input class="input_no_border_white" type="number" name="new_price" placeholder="Ændre pris" required />

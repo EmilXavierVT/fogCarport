@@ -122,4 +122,22 @@ public class ProductMapper
             throw new DatabaseException("Error getting all products from database", e.getMessage());
         }
     }
+
+    public static void updateProductPrice(int productId, float newPrice, ConnectionPool connectionPool)
+    {
+        try {
+            String sql = "UPDATE products SET price = ? WHERE product_id = ?";
+            try (Connection connection = connectionPool.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setFloat(1, newPrice);
+                ps.setInt(2, productId);
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected != 1) {
+                    throw new DatabaseException("Failed to update product price for ID: " + productId);
+                }
+            }
+        } catch (SQLException | DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

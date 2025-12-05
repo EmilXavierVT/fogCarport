@@ -11,18 +11,23 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminController {
-    public static void addRoutes(Javalin app) {
+    public static void addRoutes(Javalin app)
+    {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-//
-//        app.get("/admin/alert", ctx -> {showAllCarports(ctx, connectionPool);
-//            showAllMaterials(ctx, connectionPool);
-//        showAllOrders(ctx, connectionPool);
-//        showAllUsers(ctx, connectionPool);});
+
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
-
-
+        app.post("/update_price", ctx -> updatePrice(ctx, connectionPool));
     }
 
+    private static void updatePrice(Context ctx, ConnectionPool connectionPool)
+    {
+        int productId = Integer.parseInt(ctx.formParam("product_id"));
+        float newPrice = Integer.parseInt(ctx.formParam("new_price"));
+        ProductMapper.updateProductPrice(productId, newPrice, connectionPool);
+        ctx.sessionAttribute("price_update_message", "Produkt pris opdateret !");
+        ctx.redirect("/admin/alert");
+
+    }
 
 
     private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
@@ -36,7 +41,7 @@ public class AdminController {
             ctx.render("admin/alert.html", Map.of("all_users", users,
                     "all_carport_requests", orders,
                     "all_standard_carports", standardCarports,
-                    "all_materials", products));
+                    "all_products", products));
 
         } catch (DatabaseException e)
         {

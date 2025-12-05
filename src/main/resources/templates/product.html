@@ -1,4 +1,4 @@
-<head th:replace="fragments :: head(~{::product})"><title>Produkt</title></head>
+<head th:replace="~{fragments :: head(~{::product})}"><title>Produkt</title></head>
 <header th:replace="~{fragments :: header}"></header>
 <body>
 
@@ -16,9 +16,9 @@
         <span class="slider_product_page_price" th:text="${carport.price}"></span>
         <span class="slider_product_page_price_addition"> pr.stk + evt. fragt</span>
         </div>
-        <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST" onsubmit="showCartOverlay(event)">
+        <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST" onsubmit="event.preventDefault(); addToCart(this)">
             <input type="hidden" name="productName" th:value="${carport.name}"/>
-            <input type="hidden" name="productThumbnail" th:value="'/images/' + ${carport.carportID} + 'carport.png'"/>
+            <input type="hidden" name="productThumbnail" th:value="@{'/images/' + ${carport.carportID} + 'carport.png'}"/>
             <input type="hidden" name="productPrice" th:value="${carport.price}"/>
 
             <div class="add_amount_row">
@@ -26,7 +26,7 @@
                 <input class="product_page_counter" type="number" min="1" max="100" id="counter_number" name="amount" value="1" readonly required />
                 <button class="product_page_button" type="button" onclick="increaseOne()">+</button>
             </div>
-            <button class="add_to_cart_button">Læg i kurv
+            <button type="submit" class="add_to_cart_button">Læg i kurv
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 -6 24 24" fill="none">
                 <path d="M18 12L5 12M18 12L14 16M18 12L14 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg></button>

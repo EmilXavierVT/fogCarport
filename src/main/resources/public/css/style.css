@@ -475,7 +475,6 @@ nav a:hover {
 }
 
 /*CART OVERLAY*/
-
 .cart_overlay {
     position: fixed;
     top: 0;
@@ -610,19 +609,52 @@ body.cart_open {
     box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.3);
 }
 
-.overlay_trash_button {
-    background: transparent;
-    border: none;
-    position: absolute;
-    top: 161px;
-    right: 17px;
-    cursor: pointer;
-}
 .fragment_div {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/*CART PAGE*/
+.cart_page_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--white_widget);
+    max-width: 1300px;
+    border-radius: 30px;
+    border: 2px solid rgba(0,0,0, 0.4);
+    margin-bottom: 10%;
+}
+
+.cart_page_item {
+    width: 100%;
+    max-width: 1150px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 28px 28px 28px 28px;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-bottom: 0.5%;
+}
+
+.cart_page_image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 26px 0 0 26px;
+    border: 1px solid rgba(0,0,0, 0.8);
+}
+
+.cart_item_info_page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    align-items: center;
 }
 
 /* USER DEFINED CARPORT*/

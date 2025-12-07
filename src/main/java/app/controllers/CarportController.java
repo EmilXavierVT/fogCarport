@@ -18,6 +18,8 @@ public class CarportController
         app.get("/product/{id}", ctx -> displayProductPage(ctx, connectionPool));
         app.get("/product/pdf/{EAN}", ctx -> displayPdfPage(ctx));
         app.get("/cart", ctx -> ctx.render("cart.html"));
+        app.get("/pay_page", ctx -> ctx.render("pay_page.html"));
+        app.get("/payment_complete", ctx -> ctx.render("payment_complete.html"));
 
     }
 

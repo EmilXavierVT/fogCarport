@@ -132,7 +132,8 @@
                     <thead>
                     <tr>
                         <th>Kunde Navn</th>
-                        <th>email</th>
+                        <th>E-mail</th>
+                       <!-- <th>TelefonNummer</th> -->
                         <th>role</th>
                     </tr>
                     </thead>
@@ -141,6 +142,7 @@
 
                         <td th:text="${user.firstName} + ' ' + ${user.lastName}">Kunde Navn</td>
                         <td th:text="${user.email}">email</td>
+                      <!--  <td th:text="${user.phoneNumber}">TelefonNummer</td> -->
                         <td th:text="${user.role == 0 ? 'bruger' : (user.role == 1 ? 'admin' : 'Ukendt')}">Kategori</td>
                     </tr>
 

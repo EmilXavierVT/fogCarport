@@ -1,4 +1,5 @@
-<head th:replace="fragments :: head(~{::payment_complete})"><title>Betaling bekræftet</title></head>
+<head th:replace="~{fragments :: head(~{::payment_complete})}"><title>Betaling bekræftet</title></head>
+<header th:replace="~{fragments :: header}"></header>
 <body>
 
 <section> </section>
@@ -8,4 +9,4 @@
 <section> </section>
 
 </body>
-<footer th:replace="fragments :: footer"></footer>
+<footer th:replace="~{fragments :: footer}"></footer>

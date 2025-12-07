@@ -1,11 +1,27 @@
-<head th:replace="fragments :: head(~{::pay_page})"><title>Betalingsside</title></head>
+<head th:replace="~{fragments :: head(~{::pay_page})}"><title>Betalingsside</title></head>
+<header th:replace="~{fragments :: header}"></header>
 <body>
 
-<section> </section>
+<section>
+    <form th:action="@{/payment_complete}" method="GET">
+<div class="display_container_vertical">
+    <div class="pay_page_column">
+        <h2 style="font-size: 32px;">Betaling</h2>
+        <img th:src="@{/images/pay_page_icon.png}" alt="Betalings billede" style="width: 100%; max-width: 106px;" />
 
-<section> </section>
+        <label for="card_number" hidden>Indtast Kortnummer:</label>
+        <input class="input_no_border_white" type="text" id="card_number" name="card_number" placeholder="Kortnummer" required />
+        <label for="card_cvc" hidden>Indtast CVC:</label>
+        <input class="input_no_border_white" type="text" id="card_cvc" name="card_cvc" placeholder="CVC" required />
+        <label for="expiry_date" hidden>Indtast Udløbsdato:</label>
+        <input class="input_no_border_white" type="month" id="expiry_date" name="expiry_date" placeholder="MM/ÅÅ" maxlength="4" required />
 
-<section> </section>
+        <button class="button_white" style="margin-bottom:5%;">Betal</button>
+    </div>
+</div>
+    </form>
+</section>
+
 
 </body>
-<footer th:replace="fragments :: footer"></footer>
+<footer th:replace="~{fragments :: footer}"></footer>

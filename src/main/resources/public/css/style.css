@@ -272,6 +272,12 @@ nav a:hover {
     margin-top: 10px;
     align-items: center;
 }
+.button_row_products {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
 
 /*CREATE USER*/
 .register_form {

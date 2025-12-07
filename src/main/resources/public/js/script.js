@@ -121,3 +121,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+//CART PAGE
+function renderCartPage() {
+    const container = document.getElementById("cart_page_container");
+    container.innerHTML = "";
+
+    if (cart.length === 0) {
+        container.innerHTML = "<p class='display_container_vertical'>Din kurv er tom.</p>";
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart_page_item";
+
+        div.innerHTML = `
+            <img src="${item.thumbnail}" class="cart_page_image" alt="${item.name}" />
+            <div class="cart_item_info_page">
+            <strong>${item.name}</strong>
+            <p>Antal: ${item.amount}</p>
+            <p>Pris: ${item.totalPrice} kr.</p>
+            <button class="cart_delete_button" onclick="removeItem(${index})">Fjern</button>
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+    renderCartPage();
+}
+
+document.addEventListener("DOMContentLoaded", renderCartPage);

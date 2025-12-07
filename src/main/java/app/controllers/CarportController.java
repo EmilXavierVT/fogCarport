@@ -17,6 +17,8 @@ public class CarportController
         app.get("/", ctx -> showCarports(ctx, connectionPool));
         app.get("/product/{id}", ctx -> displayProductPage(ctx, connectionPool));
         app.get("/product/pdf/{EAN}", ctx -> displayPdfPage(ctx));
+        app.get("/cart", ctx -> ctx.render("cart.html"));
+
     }
 
     private static void displayPdfPage(Context ctx)

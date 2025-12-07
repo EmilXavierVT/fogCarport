@@ -84,7 +84,7 @@ public class UserController
             }
             catch (DatabaseException e)
             {
-                ctx.sessionAttribute("register_password_error", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+                ctx.sessionAttribute("register_password_error", "Den e-mail findes allerede. Prøv igen, eller log ind");
                 ctx.render("register_password.html");
             }
         }

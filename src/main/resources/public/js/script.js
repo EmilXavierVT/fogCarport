@@ -157,3 +157,8 @@ function removeItem(index) {
 }
 
 document.addEventListener("DOMContentLoaded", renderCartPage);
+
+function clearCart() {
+    cart = [];
+    sessionStorage.removeItem("cart");
+}

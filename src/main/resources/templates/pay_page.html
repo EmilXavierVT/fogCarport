@@ -16,12 +16,11 @@
         <label for="expiry_date" hidden>Indtast Udløbsdato:</label>
         <input class="input_no_border_white" type="month" id="expiry_date" name="expiry_date" placeholder="MM/ÅÅ" maxlength="4" required />
 
-        <button class="button_white" style="margin-bottom:5%;">Betal</button>
+        <button class="button_white" style="margin-bottom:5%;" onclick="clearCart()">Betal</button>
     </div>
 </div>
     </form>
 </section>
-
-
+<script src="/js/script.js"></script>
 </body>
 <footer th:replace="~{fragments :: footer}"></footer>

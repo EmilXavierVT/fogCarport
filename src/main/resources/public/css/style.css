@@ -673,6 +673,16 @@ body.cart_open {
     gap: 30px;
 }
 
+/*PAYMENT COMPLETE PAGE*/
+.payment_complete_column {
+    margin-top: 4%;
+    margin-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
 /* USER DEFINED CARPORT*/
 
 .user_defined_title {

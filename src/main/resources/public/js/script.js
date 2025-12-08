@@ -35,8 +35,10 @@ function addToCart(form) {
     const name = form.querySelector("input[name='productName']").value;
     const thumbnail = form.querySelector("input[name='productThumbnail']").value;
     const price = Number(form.querySelector("input[name='productPrice']").value);
+    const carportID = Number(form.querySelector("input[name='carportID']").value);
 
     const item = {
+        carportID,
         name,
         amount,
         thumbnail,
@@ -72,6 +74,7 @@ function renderCartOverlay() {
         div.innerHTML = `
             <img src="${item.thumbnail}" class="cart_item_image" alt="${item.name}" />
             <div class="cart_item_info">
+                <p hidden>${item.carportID}</p>
                 <strong style="font-size: 12px;">${item.name}</strong>
                 <p style="font-size: 12px;">Antal: ${item.amount}</p>
                 <p style="font-size: 12px;">Pris: ${item.totalPrice} kr.</p>
@@ -139,6 +142,7 @@ function renderCartPage() {
         div.innerHTML = `
             <img src="${item.thumbnail}" class="cart_page_image" alt="${item.name}" />
             <div class="cart_item_info_page">
+            <p hidden>${item.carportID}</p>
             <strong>${item.name}</strong>
             <p>Antal: ${item.amount}</p>
             <p>Pris: ${item.totalPrice} kr.</p>

@@ -17,6 +17,7 @@
         <span class="slider_product_page_price_addition"> pr.stk + evt. fragt</span>
         </div>
         <form class="add_to_cart_form" th:action="@{/add_to_cart}" method="POST" onsubmit="event.preventDefault(); addToCart(this)">
+            <input type="hidden" name="carportID" th:value="${carport.carportID}"/>
             <input type="hidden" name="productName" th:value="${carport.name}"/>
             <input type="hidden" name="productThumbnail" th:value="@{'/images/' + ${carport.carportID} + 'carport.png'}"/>
             <input type="hidden" name="productPrice" th:value="${carport.price}"/>

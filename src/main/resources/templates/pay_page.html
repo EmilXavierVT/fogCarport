@@ -3,12 +3,11 @@
 <body>
 
 <section>
-    <form th:action="@{/payment_complete}" method="GET">
+    <form th:action="@{/payment_complete}" method="POST">
 <div class="display_container_vertical">
     <div class="pay_page_column">
         <h2 style="font-size: 32px;">Betaling</h2>
         <img th:src="@{/images/pay_page_icon.png}" alt="Betalings billede" style="width: 100%; max-width: 106px;" />
-
         <label for="card_number" hidden>Indtast Kortnummer:</label>
         <input class="input_no_border_white" type="text" id="card_number" name="card_number" placeholder="Kortnummer" required />
         <label for="card_cvc" hidden>Indtast CVC:</label>

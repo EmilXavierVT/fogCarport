@@ -16,27 +16,30 @@
     <br>
     <form class="user_defined_form" th:action="@{/flat}" method="POST">
         <label for="width">Carport bredde</label><select name="width" id="width" th:required="true">
-            <option value="1">300</option>
-            <option value="2">360</option>
-            <option value="3">420</option>
-            <option value="4">480</option>
-            <option value="5">540</option>
-            <option value="6">600</option>
+            <option value="1">0</option>
+            <option value="2">300</option>
+            <option value="3">360</option>
+            <option value="4">420</option>
+            <option value="5">480</option>
+            <option value="6">540</option>
+            <option value="7">600</option>
         </select>
         <label for="length">Carport længde</label><select name="length" id="length" th:required="true">
-            <option value="1">300</option>
-            <option value="2">360</option>
-            <option value="3">420</option>
-            <option value="4">480</option>
-            <option value="5">540</option>
-            <option value="6">600</option>
-            <option value="7">660</option>
-            <option value="6">720</option>
-            <option value="6">780</option>
+        <option value="1">0</option>
+
+        <option value="2">300</option>
+            <option value="3">360</option>
+            <option value="4">420</option>
+            <option value="5">480</option>
+            <option value="6">540</option>
+            <option value="7">600</option>
+            <option value="8">660</option>
+            <option value="9">720</option>
+            <option value="10">780</option>
         </select>
         <label for="roof"></label> Carport trapeztag<select name="roof" id="roof"th:required="true">
             <option value="1">Ingen tag</option>
-            <option value="1">Plast tag</option>
+            <option value="2">Plast tag</option>
         </select>
 <br>
             <strong>Redskabsrum</strong>
@@ -45,23 +48,25 @@
         </p>
 
         <label for="shed_width">Redskabsrum bredde</label><select name="shed_width" id="shed_width">
-            <option value="1">300</option>
-            <option value="2">360</option>
-            <option value="3">420</option>
-            <option value="4">480</option>
-            <option value="5">540</option>
-            <option value="6">600</option>
+            <option value="1">0</option>
+            <option value="2">300</option>
+            <option value="3">360</option>
+            <option value="4">420</option>
+            <option value="5">480</option>
+            <option value="6">540</option>
+            <option value="7">600</option>
         </select>
         <label for="shed_length">Redskabsrum længde</label><select name="shed_length" id="shed_length">
-            <option value="1">300</option>
-            <option value="2">360</option>
-            <option value="3">420</option>
-            <option value="4">480</option>
-            <option value="5">540</option>
-            <option value="6">600</option>
-            <option value="7">660</option>
-            <option value="6">720</option>
-            <option value="6">780</option>
+            <option value="1">0</option>
+            <option value="2">300</option>
+            <option value="3">360</option>
+            <option value="4">420</option>
+            <option value="5">480</option>
+            <option value="6">540</option>
+            <option value="7">600</option>
+            <option value="8">660</option>
+            <option value="9">720</option>
+            <option value="10">780</option>
         </select>
         <label for="remarks">Evt. bemærkning / særlige ønsker</label><input type="text" name="remarks" id="remarks">
 <br>

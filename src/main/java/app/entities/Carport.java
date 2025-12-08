@@ -22,4 +22,11 @@ public abstract class Carport
        this.specification = specification;
    }
 
+    public Carport(int carportID, String name, float price, int type, String productionDescription) {
+        this.carportID = carportID;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.productionDescription = productionDescription;
+    }
 }

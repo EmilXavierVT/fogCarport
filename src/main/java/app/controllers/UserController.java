@@ -45,7 +45,8 @@ public class UserController
             else
             {
                 ctx.sessionAttribute("admin", false);
-                ctx.sessionAttribute("loginMessage", "Du er nu logget ind");
+                ctx.attribute("loginMessage", "Du er nu logget ind");
+
                 ctx.redirect("/");
                 ctx.render("/index.html", Map.of("loginMessage", "Du er nu logget ind"));
                 return true;
@@ -110,8 +111,12 @@ public class UserController
 
             user = UserMapper.updateUser(userId, firstName, lastName, zipCode, streetName, streetNumber, floor, phoneNumber, connectionPool);
 
+
+
             ctx.sessionAttribute("currentUser", user);
             ctx.sessionAttribute("message", "Du har opdateret din profil !");
+
+            ctx.redirect("/");
             ctx.render("index.html");
 
         } catch (NumberFormatException | DatabaseException e) {

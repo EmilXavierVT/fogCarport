@@ -44,7 +44,7 @@ public class UserDefinedController {
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",
-                " kære " + name + " Det glæder os at du skal ha en ny carport! " +
+                "Kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
 

@@ -16,7 +16,6 @@ public class UserDefinedController {
        app.get("userdefined",ctx -> ctx.render("userdefined.html"));
        app.get("flat",ctx->ctx.render("flat.html"));
        app.post("flat",ctx-> sendRequest(ctx));
-       app.post("flat",ctx-> sendRequest(ctx));
        app.get("/angle", ctx -> ctx.render("angle"));
        app.post("/angle", ctx -> sendAngleRequest(ctx));
 

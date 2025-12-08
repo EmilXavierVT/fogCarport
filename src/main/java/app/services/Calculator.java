@@ -1,9 +1,6 @@
 package app.services;
 
-import app.entities.Product;
-import app.entities.ProductInOrder;
-import app.entities.Specification;
-import app.entities.UserDefinedCarport;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductInOrderMapper;
@@ -39,6 +36,7 @@ public class Calculator
     private int handleAmount;
     private int tHingeAmount;
     private int angleHingeAmount;
+    private int angle;
     private Product beam;
     private Product post;
     private Product rafter;
@@ -170,6 +168,12 @@ public class Calculator
     tHinge = tHinges.get(0);
     angleHinge = angleHinges.get(0);
 
+    if(specification instanceof AngleSpecification)
+    {
+      angle = ((AngleSpecification) specification).getAngle();
+//      We neeed to figure out the correct math to figure this one out
+    }
+
 
 //    beams
     if(length<=600)
@@ -201,9 +205,9 @@ public class Calculator
             itemList.add(new ProductInOrder(0, roof, amountOfRoof,600));
             itemList.add(new ProductInOrder(0, roof, amountOfRoof,length-600));
         }
-//    fasciaBoard one will alwayls be width
+//    fasciaBoard one will always be width
 
-        itemList.add(new ProductInOrder(0,fasciaBoard,1,width));
+        itemList.add(new ProductInOrder(0,fasciaBoard,2,width));
         if(length<600)
         {
             itemList.add(new ProductInOrder(0,fasciaBoard,2,length));

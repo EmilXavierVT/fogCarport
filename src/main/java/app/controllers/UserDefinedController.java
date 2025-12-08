@@ -18,11 +18,11 @@ public class UserDefinedController {
        app.post("flat",ctx-> sendRequest(ctx));
        app.post("flat",ctx-> sendRequest(ctx));
        app.get("/angle", ctx -> ctx.render("angle"));
-       app.post("/angle", ctx -> sendAngleRequest(ctx, connectionPool));
+       app.post("/angle", ctx -> sendAngleRequest(ctx));
 
     }
 
-    private static void sendAngleRequest( Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void sendAngleRequest(Context ctx) throws DatabaseException, MessagingException {
         int width = Integer.parseInt(ctx.formParam("width"));
         int length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
@@ -39,11 +39,16 @@ public class UserDefinedController {
 
         boolean roof = !roofType.equals("Ingen tag");
 
-
-
         Calculator calculator = new Calculator(SpecificationWizard.makeAngleSpecification(width,length,roof,shedWidth,shedLength,angle));
 
         System.out.println(calculator.setItemList());
+        GmailSender gms = new GmailSender();
+        gms.sendPlainTextEmail(email,
+                "Tak for din forespørgsel!",
+                " kære " + name + " Det glæder os at du skal ha en ny carport! " +
+                        "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
+                        "mvh. Fog");
+
     }
 
     private static void sendRequest(Context ctx) throws DatabaseException, MessagingException {
@@ -75,5 +80,6 @@ public class UserDefinedController {
                         "mvh. Fog");
 
     }
+
 
 }

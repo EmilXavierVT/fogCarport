@@ -18,6 +18,10 @@
                   <li><a th:href="@{/userdefined}"><p>Quick-Byg</p></a></li>
               </ul>
               <ul>
+                  <li class="list_of_nav"><a th:href="@{/admin/alert}" th:if="${session.admin == true}">Admin</a></li>
+                  <li class="list_of_nav" th:if="${session.currentUser != null}"><h3 th:text="${session.currentUser.email !=null ? session.currentUser.email : 'Profil'}"></h3>
+                  </li>
+                  <li class="list_of_nav"><a th:href="@{/logout}" th:if="${session.currentUser != null}">Logout</a></li>
                   <li><a href="/#login_section" class="nav_icon">
                       <svg width="69" height="59" viewBox="0 0 69 59" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M34.9998 6.66667C36.7679 6.66667 38.4636 7.36904 39.7139 8.61929C40.9641 9.86953 41.6665 11.5652 41.6665 13.3333C41.6665 15.1014 40.9641 16.7971 39.7139 18.0474C38.4636 19.2976 36.7679 20 34.9998 20C33.2317 20 31.536 19.2976 30.2858 18.0474C29.0355 16.7971 28.3332 15.1014 28.3332 13.3333C28.3332 11.5652 29.0355 9.86953 30.2858 8.61929C31.536 7.36904 33.2317 6.66667 34.9998 6.66667ZM34.9998 23.3333C42.3665 23.3333 48.3332 26.3167 48.3332 30V33.3333H21.6665V30C21.6665 26.3167 27.6332 23.3333 34.9998 23.3333Z" fill="#0F1821"/>

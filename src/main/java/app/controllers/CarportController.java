@@ -41,7 +41,7 @@ public class CarportController
     private static void displayProductPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
     Carport actualCarport = CarportMapper.getCarportByID(Integer.parseInt(ctx.pathParam("id")),connectionPool);
-    List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
+    List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
 
         ctx.render("product.html", Map.of
                 (
@@ -53,7 +53,7 @@ public class CarportController
     public static void showCarports(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
         try {
-            List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
+            List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
             ctx.render("index.html", Map.of("standard_carports", standardCarports));
 
         }

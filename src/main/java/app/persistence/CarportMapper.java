@@ -193,6 +193,40 @@ public class CarportMapper
             throw new DatabaseException("Error: no carport found", e.getMessage());
         }
     }
+    public static List<Carport> getAllStandardCarportForSlider(ConnectionPool connectionPool) throws DatabaseException
+    {
+        ArrayList<Carport> carports = new ArrayList<>();
+        String sql = "SELECT * FROM carports ORDER BY type ASC";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+            {
+                if (rs.getString("pdf_file") != null)
+                {
+                    Carport carport = new StandardCarport(
+                            rs.getInt("carport_id"),
+                            rs.getString("name"),
+                            rs.getFloat("price"),
+                            rs.getInt("type"),
+                            rs.getString("product_description"),
+                            rs.getString("pdf_file"));
+                    carports.add(carport);
+                }
+            }
+                return carports;
+
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Error: no carport found", e.getMessage());
+        }
+    }
+
+
 }
 
 

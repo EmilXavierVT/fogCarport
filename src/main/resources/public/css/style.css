@@ -540,3 +540,8 @@ nav a:hover {
     background: var(--background_color);
     font-weight: bold;
 }
+.carport-svg-topview
+{
+    max-width: 200px;
+    max-height: 200px;
+}

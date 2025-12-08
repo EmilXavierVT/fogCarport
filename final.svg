@@ -1,9 +1,8 @@
 <svg version="1.1"
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="100%" viewBox="0 0 855 690"
+     width="100%" viewBox="0 0 855 690"
      preserveAspectRatio="xMinYMin">
-
 
     <defs>
         <marker id="beginArrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto">
@@ -13,10 +12,6 @@
             <path d="M0,0 L12,6 L0,12 L0,0 " style="fill: #000000;" />
         </marker>
     </defs>
-
-    <!-- Ramme -->
-
-
     <!-- Pile -->
     <line x1="40" y1="10" x2="40" y2="610" style="stroke:#000000;
         marker-start: url(#beginArrow);
@@ -28,7 +23,8 @@
 
     <!-- Text: Mål -->
     <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)">600 cm</text>
-    <text style="text-anchor: middle" x="502" y="670">780 cm</text>
+    <text style="text-anchor: middle" transform="translate(502,680) rotate(0)">600 cm</text>
+
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
          x="75"
          y="10"
@@ -37,9 +33,7 @@
          viewBox="0 0 780 600"
          preserveAspectRatio="xMinYMin">
 
-
         <rect x="0" y="0" height="600" width="780" style="stroke:#000000; fill: #ffffff" />
-
 
 
         <rect x="0" y="30" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />

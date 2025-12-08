@@ -3,6 +3,7 @@ package app;
 import app.config.ThymeleafConfig;
 import app.controllers.AdminController;
 import app.controllers.CarportController;
+import app.controllers.OrderController;
 import app.controllers.UserController;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -23,6 +24,9 @@ public class App
         CarportController.addRoutes(app);
         AdminController.addRoutes(app);
 
+        //slet senere
+        app.get("/showOrder", ctx -> OrderController.showOrder(ctx));
 
     }
+
 }

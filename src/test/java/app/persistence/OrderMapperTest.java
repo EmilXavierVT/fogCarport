@@ -23,7 +23,7 @@ public class OrderMapperTest
     private final static String DB = "carport";
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
-    User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",0);
+    User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",12345678,0);
     Order expectedOrder = new Order (1,tempUser,LocalDate.parse("2025-11-25"));
 
     @BeforeAll

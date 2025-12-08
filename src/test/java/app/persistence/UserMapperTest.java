@@ -21,8 +21,8 @@ class UserMapperTest
     private final static String DB = "carport";
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
-    User expectedUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",1);
-    User expectedUser2 = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",0);
+    User expectedUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",12345678,1);
+    User expectedUser2 = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",12345678,0);
     @BeforeAll
     public static void setUpClass()
     {
@@ -91,8 +91,8 @@ class UserMapperTest
     public void updateUserTest() throws DatabaseException
     {
         assertEquals(expectedUser2,UserMapper.getUserByID(2,connectionPool));
-        UserMapper.updateUser(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"",connectionPool);
-        User userAfterUpdate = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"","fred@dk.dk","1234",0);
+        UserMapper.updateUser(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"",12345678,connectionPool);
+        User userAfterUpdate = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",12,"","fred@dk.dk","1234",12345678,0);
         assertEquals(userAfterUpdate,UserMapper.getUserByID(2,connectionPool));
     }
 

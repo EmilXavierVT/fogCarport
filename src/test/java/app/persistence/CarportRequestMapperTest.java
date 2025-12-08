@@ -20,9 +20,9 @@ public class CarportRequestMapperTest
     private final static String DB = "carport";
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
-    User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",0);
-    User tempSalesRep = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",1);
-    User tempSalesRep2 = new User(3,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",1);
+    User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234", 12345678,0);
+    User tempSalesRep = new User(2,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",12345678,1);
+    User tempSalesRep2 = new User(3,"Frederik","Edvardsen",2450,"Egetoftevej",11,"","fred@dk.dk","1234",12345678,1);
 
     Product post = new Product(22, "trykimprægneret stolpe", "125x125 mm", "stolper graves 90 cm i jord", 110, 22);
     Product beam = new Product(3, "spærtræ", "45x195 mm", "Remme i sider, sadles ned i stolper", 100, 3);

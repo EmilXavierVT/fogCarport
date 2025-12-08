@@ -100,6 +100,7 @@ public class UserController
         try {
             String firstName = ctx.formParam("first_name");
             String lastName = ctx.formParam("last_name");
+            int phoneNumber = Integer.parseInt(ctx.formParam("phone_number"));
             String streetName = ctx.formParam("street_name");
             String floor = ctx.formParam("floor");
             int zipCode = Integer.parseInt(ctx.formParam("post_code"));
@@ -107,7 +108,7 @@ public class UserController
             User user = ctx.sessionAttribute("currentUser");
             int userId = user.getUserId();
 
-            user = UserMapper.updateUser(userId, firstName, lastName, zipCode, streetName, streetNumber, floor, connectionPool);
+            user = UserMapper.updateUser(userId, firstName, lastName, zipCode, streetName, streetNumber, floor, phoneNumber, connectionPool);
 
             ctx.sessionAttribute("currentUser", user);
             ctx.sessionAttribute("message", "Du har opdateret din profil !");

@@ -9,4 +9,7 @@ public class AngleSpecification extends Specification {
         this.angle = angle;
     }
 
+    public int getAngle() {
+        return angle;
+    }
 }

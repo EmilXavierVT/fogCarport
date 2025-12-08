@@ -38,7 +38,7 @@ public class UserDefinedController {
 
 
 
-        Calculator calculator = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
+        Calculator calculator = new Calculator(SpecificationWizard.makeAngleSpecification(width,length,roof,shedWidth,shedLength,angle));
 
         System.out.println(calculator.setItemList());
     }

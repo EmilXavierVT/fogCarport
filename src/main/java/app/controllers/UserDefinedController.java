@@ -4,8 +4,10 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.Calculator;
 import app.services.SpecificationWizard;
+import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import jakarta.mail.MessagingException;
 import org.jetbrains.annotations.NotNull;
 
 public class UserDefinedController {
@@ -13,11 +15,11 @@ public class UserDefinedController {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
        app.get("userdefined",ctx -> ctx.render("userdefined.html"));
        app.get("flat",ctx->ctx.render("flat.html"));
-       app.post("flat",ctx-> sendRequest(ctx,connectionPool));
+       app.post("flat",ctx-> sendRequest(ctx));
 
     }
 
-    private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void sendRequest(Context ctx) throws DatabaseException, MessagingException {
         int width = Integer.parseInt(ctx.formParam("width"));
         int length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
@@ -34,10 +36,16 @@ public class UserDefinedController {
         boolean roof = !roofType.equals("Ingen tag");
 
 
-
         Calculator calculator = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
 
         System.out.println(calculator.setItemList());
+        GmailSender gms = new GmailSender();
+        gms.sendPlainTextEmail(email,
+                "Tak for din forespørgsel!",
+                " kære " + name + " Det glæder os at du skal ha en ny carport! " +
+                        "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
+                        "mvh. Fog");
+
     }
 
 }

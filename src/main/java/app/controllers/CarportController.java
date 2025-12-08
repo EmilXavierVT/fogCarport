@@ -29,14 +29,24 @@ public class CarportController
     }
 
     private static void paymentComplete(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-       int carportID = Integer.parseInt(ctx.formParam("carportID"));
+       String idString = ctx.formParam("carportID");
+
+       if(idString == null || idString.isEmpty()){
+        ctx.status(400).result("Carport ID Missing");
+        return;
+       }
+
+       int carportID = Integer.parseInt(idString);
+
        User user = ctx.sessionAttribute("currentUser");
+       if(user == null) {
+           ctx.status(401).result("User not logged in");
+           return;
+       }
 
-        CarportRequestMapper.createCarportRequest(user.getUserId(), carportID,0, connectionPool);
+       CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, 0, connectionPool);
 
-        ctx.redirect("/payment_complete");
-        ctx.render("payment_complete.html");
-
+       ctx.redirect("/payment_complete");
     }
 
     private static void displayPdfPage(Context ctx)

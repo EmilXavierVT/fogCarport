@@ -162,6 +162,13 @@ function removeItem(index) {
 
 document.addEventListener("DOMContentLoaded", renderCartPage);
 
+function preparePayment() {
+    if(cart.length > 0) {
+    document.getElementById("carportID").value = cart[0].carportID;
+    }
+    clearCart();
+}
+
 function clearCart() {
     cart = [];
     sessionStorage.removeItem("cart");

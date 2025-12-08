@@ -205,9 +205,9 @@ public class Calculator
             itemList.add(new ProductInOrder(0, roof, amountOfRoof,600));
             itemList.add(new ProductInOrder(0, roof, amountOfRoof,length-600));
         }
-//    fasciaBoard one will alwayls be width
+//    fasciaBoard one will always be width
 
-        itemList.add(new ProductInOrder(0,fasciaBoard,1,width));
+        itemList.add(new ProductInOrder(0,fasciaBoard,2,width));
         if(length<600)
         {
             itemList.add(new ProductInOrder(0,fasciaBoard,2,length));

@@ -1,11 +1,14 @@
 package app.controllers;
 
 import app.entities.Carport;
+import app.entities.User;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
-import app.persistence.ConnectionPool;
+import app.persistence.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +22,31 @@ public class CarportController
         app.get("/product/pdf/{EAN}", ctx -> displayPdfPage(ctx));
         app.get("/cart", ctx -> ctx.render("cart.html"));
         app.get("/pay_page", ctx -> ctx.render("pay_page.html"));
+        app.post("/payment_complete", ctx -> paymentComplete(ctx, connectionPool));
         app.get("/payment_complete", ctx -> ctx.render("payment_complete.html"));
 
+
+    }
+
+    private static void paymentComplete(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+       String idString = ctx.formParam("carportID");
+
+       if(idString == null || idString.isEmpty()){
+        ctx.status(400).result("Carport ID Missing");
+        return;
+       }
+
+       int carportID = Integer.parseInt(idString);
+
+       User user = ctx.sessionAttribute("currentUser");
+       if(user == null) {
+           ctx.status(401).result("User not logged in");
+           return;
+       }
+
+       CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, 0, connectionPool);
+
+       ctx.redirect("/payment_complete");
     }
 
     private static void displayPdfPage(Context ctx)

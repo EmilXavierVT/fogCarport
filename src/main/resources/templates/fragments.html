@@ -54,6 +54,7 @@
             </div>
 
             <form id="overlay_cart_form" th:action="@{/cart}" method="GET">
+                <input type="hidden" name="carportID" id="overlay_input_carportID"/>
                 <input type="hidden" name="productName" id="overlay_input_productName"/>
                 <input type="hidden" name="amount" id="overlay_input_amount"/>
                 <input type="hidden" name="productThumbnail" id="overlay_input_thumbnail"/>

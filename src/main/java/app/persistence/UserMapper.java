@@ -118,6 +118,7 @@ public class UserMapper
                         rs.getString("floor"),
                         rs.getString("email"),
                         rs.getString("password"),
+                        rs.getInt("phone_number"),
                         rs.getInt("role")
 
                 );
@@ -134,10 +135,10 @@ public class UserMapper
     }
 
     public static User updateUser(int id, String firstName, String lastName, int zipCode,
-                                  String streetName, Integer houseNumber, String floor ,ConnectionPool connectionPool) throws DatabaseException
+                                  String streetName, Integer houseNumber, String floor, int phoneNumber ,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "UPDATE users SET first_name=?, last_name=?, zip_code=?, street_name=?, " +
-                "house_number=?, floor=? WHERE user_id=?";
+                "house_number=?, floor=?, phone_number=? WHERE user_id=?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -148,7 +149,8 @@ public class UserMapper
             ps.setString(4, streetName);
             ps.setInt(5, houseNumber);
             ps.setString(6, floor);
-            ps.setInt(7, id);
+            ps.setInt(7, phoneNumber);
+            ps.setInt(8, id);
             int rowsAffected = ps.executeUpdate();
 
             if ( rowsAffected != 1 )
@@ -256,6 +258,7 @@ public class UserMapper
                         rs.getString("floor"),
                         rs.getString("email"),
                         rs.getString("password"),
+                        rs.getInt("phone_number"),
                         rs.getInt("role")
                 ));
             }

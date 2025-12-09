@@ -54,6 +54,32 @@ public class CarportMapper
         }
     }
 
+    public static int SaveAndGetCarportInDB(String name, double price, int type, String productionDescription, int specification, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "INSERT INTO carports (name, price, type, product_description, specifications) VALUES (?, ?, ?, ?, ?) RETURNING carport_id";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ps.setString(1, name);
+            ps.setDouble(2, (price));
+            ps.setInt(3, type);
+            ps.setString(4, productionDescription);
+            ps.setInt(5, specification);
+            ps.executeQuery();
+
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+            return rs.getInt("carport_id");
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Error in creating a new carport", e.getMessage());
+        }
+
+    }
+    
+
     public static Carport getCarportByID(int carportID,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "SELECT * FROM carports WHERE carport_id = ?";

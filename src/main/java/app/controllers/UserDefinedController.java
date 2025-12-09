@@ -70,6 +70,11 @@ public class UserDefinedController {
             User user = ctx.sessionAttribute("currentUser");
             CarportRequestMapper.createCarportRequest(user.getUserId(),carportID,salesRep.getUserId(),connectionPool);
         }
+        else
+        {
+           User user= UserMapper.getUserByEmail(email,connectionPool);
+           CarportRequestMapper.createCarportRequest(user.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+        }
 
         System.out.println(calc.setItemList());
         GmailSender gms = new GmailSender();
@@ -113,6 +118,18 @@ public class UserDefinedController {
             User user = ctx.sessionAttribute("currentUser");
             CarportRequestMapper.createCarportRequest(user.getUserId(),carportID,salesRep.getUserId(),connectionPool);
         }
+        else
+        {
+            User user= UserMapper.getUserByEmail(email,connectionPool);
+            if(user !=null) {
+                CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
+            }
+            else {
+                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
+                CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+            }
+            }
+
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",

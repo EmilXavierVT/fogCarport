@@ -121,10 +121,14 @@ public class UserDefinedController {
 
         if(shedLength > 0 && shedWidth > 0 )
         {
-            carportSvg.addRectangle(5,32,shedWidth,shedLength,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(30,32,shedWidth,shedLength,"stroke-width:2px; stroke:#000000; fill:#ffffff");
 
-            carportSvg.addRectangle(5,shedWidth+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-            carportSvg.addRectangle(shedLength-5,shedWidth+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(30,shedWidth+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(shedLength+20,shedWidth+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            carportSvg.addRectangle(30,32,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(shedLength+20,32,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+
         }
 
         //spær
@@ -132,6 +136,7 @@ public class UserDefinedController {
         int endRafter = length - 5;
         int raftersBettwen = calc.getAmountOfRafters()-2;
         int spaceBettwenRafter = endRafter/(raftersBettwen+1);
+
 
         carportSvg.addRectangle(startRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
         carportSvg.addRectangle(endRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
@@ -143,27 +148,26 @@ public class UserDefinedController {
             raftersBettwen --;
         }
 
+        if(shedLength == 0 && shedWidth == 0 ) {
+            //stolper
+            carportSvg.addRectangle(30, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(30, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
 
-        //stolper
-        carportSvg.addRectangle(100,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-        carportSvg.addRectangle(100,width-33,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(length - 100, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(length - 100, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
 
-        carportSvg.addRectangle(length-30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-        carportSvg.addRectangle(length-30,width-33,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            int spaceBettwenStartAndEnd = length - 130;
+            int startPole = 30;
+            int postsPerSide = (calc.getAmountOfPosts() - 4) / 2;
+            int spaceBettwenEachpost = spaceBettwenStartAndEnd / (postsPerSide + 1);
 
-        int spaceBettwenStartAndEnd = length-130;
-        int startPole = 100;
-        int postsPerSide = (calc.getAmountOfPosts()-4)/2;
-        int spaceBettwenEachpost = spaceBettwenStartAndEnd/(postsPerSide + 1);
-
-        while(postsPerSide > 0)
-        {
-            startPole +=spaceBettwenEachpost;
-            carportSvg.addRectangle(startPole,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-            carportSvg.addRectangle(startPole,width-33,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-            postsPerSide--;
+            while (postsPerSide > 0) {
+                startPole += spaceBettwenEachpost;
+                carportSvg.addRectangle(startPole, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                carportSvg.addRectangle(startPole, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                postsPerSide--;
+            }
         }
-
 
 
         //dash lines

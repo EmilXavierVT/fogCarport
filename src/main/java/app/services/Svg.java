@@ -34,9 +34,9 @@ public class Svg {
      svg.append(SVG_ARROW_DEFS);
     }
 
-    public void addRectangle(int x, int y, double width, double height, String style)
+    public void addRectangle(int x, int y, double width, double length, String style)
     {
-    svg.append(String.format(SVG_RECT_TEMPLATE, x, y, width, height, style));
+    svg.append(String.format(SVG_RECT_TEMPLATE, x, y, width, length, style));
 
     }
     public void addLine(int x1, int y1, int x2, int y2, String style)

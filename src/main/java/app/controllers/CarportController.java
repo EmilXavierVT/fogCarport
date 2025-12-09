@@ -4,16 +4,21 @@ import app.entities.Carport;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
+import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class CarportController
 {
+
     public static void addRoutes(Javalin app)
     {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -89,5 +94,7 @@ public class CarportController
             ctx.redirect("/");
         }
     }
+
+
     }
 

@@ -23,7 +23,7 @@ public class ProductsInOrderMapperTest {
 
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
-    User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",0);
+    User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",12345678,0);
     Order tempOrder = new Order (1,tempUser,LocalDate.parse("2025-11-25"));
     Product tempProduct = new Product(3,"spærtræ","45x195 mm","Remme i sider, sadles ned i stolper",100,3);
 

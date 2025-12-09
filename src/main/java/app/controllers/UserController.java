@@ -29,7 +29,7 @@ public class UserController
 
         try
         {
-            User user = UserMapper.login(email, password,connectionPool);
+            User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
             ctx.attribute("currentUser", user);
 
@@ -45,7 +45,8 @@ public class UserController
             else
             {
                 ctx.sessionAttribute("admin", false);
-                ctx.sessionAttribute("loginMessage", "Du er nu logget ind");
+                ctx.attribute("loginMessage", "Du er nu logget ind");
+
                 ctx.redirect("/");
                 ctx.render("/index.html", Map.of("loginMessage", "Du er nu logget ind"));
                 return true;
@@ -53,10 +54,10 @@ public class UserController
         }
         catch (DatabaseException e)
         {
-            ctx.sessionAttribute("errorLogin", "login fejlede!");
+            ctx.sessionAttribute("error_login", "login fejlede!");
             System.out.println("login logs errors");
             ctx.redirect("/");
-            ctx.render("/index.html",Map.of("errorLogin", "login fejlede!"));
+            ctx.render("/index.html",Map.of("error_login", "login fejlede!"));
             return false;
         }
     }
@@ -84,30 +85,43 @@ public class UserController
             }
             catch (DatabaseException e)
             {
-                ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+                ctx.sessionAttribute("register_password_error", "Den e-mail findes allerede. Prøv igen, eller log ind");
                 ctx.render("register_password.html");
             }
         }
         else
         {
-            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+            ctx.sessionAttribute("register_password_error", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("register_password.html");
         }
     }
 
     public static void registerInfo(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
-        String firstName = ctx.formParam("first_name");
-        String lastName = ctx.formParam("last_name");
-        String streetName = ctx.formParam("street_name");
-        String floor = ctx.formParam("floor");
-        int zipCode = Integer.parseInt(ctx.formParam("post_code"));
-        int streetNumber = Integer.parseInt(ctx.formParam("street_number"));
-        User user = ctx.sessionAttribute("currentUser");
-        int userId = user.getUserId();
-        user = UserMapper.updateUser(userId,firstName,lastName,zipCode,streetName,streetNumber,floor,connectionPool);
-        ctx.sessionAttribute("currentUser",user);
-        ctx.sessionAttribute("message","Du har opdateret din profil!");
-        ctx.render("index.html");
+        try {
+            String firstName = ctx.formParam("first_name");
+            String lastName = ctx.formParam("last_name");
+            int phoneNumber = Integer.parseInt(ctx.formParam("phone_number"));
+            String streetName = ctx.formParam("street_name");
+            String floor = ctx.formParam("floor");
+            int zipCode = Integer.parseInt(ctx.formParam("post_code"));
+            int streetNumber = Integer.parseInt(ctx.formParam("street_number"));
+            User user = ctx.sessionAttribute("currentUser");
+            int userId = user.getUserId();
+
+            user = UserMapper.updateUser(userId, firstName, lastName, zipCode, streetName, streetNumber, floor, phoneNumber, connectionPool);
+
+
+
+            ctx.sessionAttribute("currentUser", user);
+            ctx.sessionAttribute("message", "Du har opdateret din profil !");
+
+            ctx.redirect("/");
+            ctx.render("index.html");
+
+        } catch (NumberFormatException | DatabaseException e) {
+            ctx.sessionAttribute("register_info_error", "Der skete en fejl under opdatering af din profil, prøv igen !");
+            ctx.render("create_user.html");
+        }
     }
 }

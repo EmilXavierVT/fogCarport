@@ -14,9 +14,10 @@ int houseNumber;
 String floor;
 String email;
 String password;
+int phoneNumber;
 int role;
 
-    public User(int userId, String firstName, String lastName, int zip_code, String streetName, int houseNumber, String floor, String email, String password,int role)
+    public User(int userId, String firstName, String lastName, int zip_code, String streetName, int houseNumber, String floor, String email, String password,int phoneNumber, int role)
     {
         this.userId = userId;
         this.firstName = firstName;
@@ -27,6 +28,7 @@ int role;
         this.floor = floor;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
         this.role = role;
     }
 }

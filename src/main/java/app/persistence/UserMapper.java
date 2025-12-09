@@ -47,6 +47,10 @@ public class UserMapper
 
     public static User createUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
+        if (isEmailAlreadyTaken(email, connectionPool)) {
+            throw new DatabaseException("Email is already in use.");
+        }
+
         String sql = "INSERT INTO users (email, password) " +
                 "VALUES (?, ?) RETURNING user_id";
 
@@ -72,6 +76,26 @@ public class UserMapper
         }
     }
 
+    private static boolean isEmailAlreadyTaken(String email, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("E-mail is already taken", e.getMessage());
+
+
+        }
+        return false;
+    }
+
     public static User getUserByID(int id,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "SELECT * FROM users WHERE user_id = ?";
@@ -94,6 +118,7 @@ public class UserMapper
                         rs.getString("floor"),
                         rs.getString("email"),
                         rs.getString("password"),
+                        rs.getInt("phone_number"),
                         rs.getInt("role")
 
                 );
@@ -110,10 +135,10 @@ public class UserMapper
     }
 
     public static User updateUser(int id, String firstName, String lastName, int zipCode,
-                                  String streetName, Integer houseNumber, String floor ,ConnectionPool connectionPool) throws DatabaseException
+                                  String streetName, Integer houseNumber, String floor, int phoneNumber ,ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "UPDATE users SET first_name=?, last_name=?, zip_code=?, street_name=?, " +
-                "house_number=?, floor=? WHERE user_id=?";
+                "house_number=?, floor=?, phone_number=? WHERE user_id=?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
@@ -124,7 +149,8 @@ public class UserMapper
             ps.setString(4, streetName);
             ps.setInt(5, houseNumber);
             ps.setString(6, floor);
-            ps.setInt(7, id);
+            ps.setInt(7, phoneNumber);
+            ps.setInt(8, id);
             int rowsAffected = ps.executeUpdate();
 
             if ( rowsAffected != 1 )
@@ -232,6 +258,7 @@ public class UserMapper
                         rs.getString("floor"),
                         rs.getString("email"),
                         rs.getString("password"),
+                        rs.getInt("phone_number"),
                         rs.getInt("role")
                 ));
             }

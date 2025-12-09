@@ -52,19 +52,29 @@
                         <th>Dimension</th>
                         <th>Beskrivelse</th>
                         <th>Pris</th>
+                        <th>skift pris</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="material : ${all_materials}">
-                        <td th:text="${material.name}"></td>
-                        <td th:text="${material.dimensions}"></td>
-                        <td th:text="${material.description}"></td>
-                        <td th:text="${material.price} + ' DKK'"></td>
+
+                    <tr th:each="product : ${all_products}">
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.dimensions}"></td>
+                        <td th:text="${product.description}"></td>
+                        <td th:text="${product.price} + ' DKK'"></td>
+                        <td class="button_row_products">
+                            <form th:action="@{/update_price}" method="post">
+                                <input type="hidden" name="product_id" th:value="${product.productID}" />
+                                <input class="input_no_border_white" type="number" name="new_price" placeholder="Ændre pris" required />
+                                <button class="button_white" type="submit">Ændre pris</button>
+                            </form>
+                        </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(all_materials)}">
                         <td> Ingen materialer fundet</td>
                     </tr>
                     </tbody>
+
                 </table>
             </div>
         </section>
@@ -104,6 +114,7 @@
                         <td th:text="${req.carport.shed ? 'Ja' : 'Nej'}">Skur</td>
                         <td th:text="${req.carport.shedDepth}">Skur dybde</td>
                         <td th:text="${req.carport.shedLength}">Skur længde</td>
+                        <button th:href="" class="button_white" type="submit">Log ind</button>
                     </tr>
 
                     <tr th:if="${#lists.isEmpty(all_carport_requests)}">
@@ -113,8 +124,36 @@
                 </table>
             </div>
         </section>
+<section class="notification_section">
 
-    </section>
+            <h2>Users</h2>
+            <div class="table_container">
+                <table class="dashboard_table">
+                    <thead>
+                    <tr>
+                        <th>Kunde Navn</th>
+                        <th>E-mail</th>
+                        <th>TelefonNummer</th>
+                        <th>role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${all_users}">
+
+                        <td th:text="${user.firstName} + ' ' + ${user.lastName}">Kunde Navn</td>
+                        <td th:text="${user.email}">email</td>
+                        <td th:text="${user.phoneNumber}">TelefonNummer</td>
+                        <td th:text="${user.role == 0 ? 'bruger' : (user.role == 1 ? 'admin' : 'Ukendt')}">Kategori</td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(all_users)}">
+                        <td colspan="4">Ingen brugere fundet</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+</section>
 
 
 

@@ -12,6 +12,8 @@
                 <input class="input_no_border_white" type="text" id="first_name" name="first_name" placeholder="Navn" required />
                 <label for="last_name" hidden>Indtast Efternavn:</label>
                 <input class="input_no_border_white" type="text" id="last_name" name="last_name" placeholder="Efternavn" required />
+                <label for="phone_number" hidden>Telefonnummer:</label>
+                <input class="input_no_border_white" type="text" id="phone_number" name="phone_number" placeholder="Telefonnummer" required />
                 <label for="postcode" hidden>Indtast Postnummer:</label>
                 <input class="input_no_border_white" type="text" id="postcode" name="post_code" placeholder="Postnummer" required />
                 <label for="street_name" hidden>Vejnavn:</label>
@@ -19,11 +21,12 @@
                 <label for="street_number" hidden>Vejnummer:</label>
                 <input class="input_no_border_white" type="text" id="street_number" name="street_number" placeholder="Vejnummer" required />
                 <label for="floor" hidden>Etage:</label>
-                <input class="input_no_border_white" type="text" id="floor" name="floor" placeholder="Etage" required />
+                <input class="input_no_border_white" type="text" id="floor" name="floor" placeholder="Etage"  />
                 <div class="button_row_info_page">
                 <button class="button_white" type="submit">Velkommen</button>
                 </div>
             </form>
+            <p th:if="${session.register_info_error != null}" th:text="${session.register_info_error}" style="color: red; font-weight: bold"></p>
         </div>
     </section>
     </div>

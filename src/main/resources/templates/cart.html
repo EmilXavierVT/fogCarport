@@ -1,11 +1,14 @@
-<head th:replace="fragments :: head(~{::cart})"><title>Kurv</title></head>
+<head th:replace="~{fragments :: head(~{::cart})}"><title>Kurv</title></head>
+<header th:replace="~{fragments :: header}"></header>
 <body>
 
-<section> </section>
-
-<section> </section>
-
-<section> </section>
-
+<form th:action="@{/pay_page}" method="GET">
+    <div class="display_container_vertical">
+    <h2 style="margin-top: 5%; font-size: 32px;">Din kurv</h2>
+<div id="cart_page_container" class="cart_page_container"></div>
+        <button class="button_white" style="margin-bottom:5%;">Gå til betaling</button>
+    </div>
+</form>
+<script src="/js/script.js"></script>
 </body>
-<footer th:replace="fragments :: footer"></footer>
+<footer th:replace="~{fragments :: footer}"></footer>

@@ -8,8 +8,8 @@ function increaseOne() {
 
 function decreaseOne() {
     var counter = document.getElementById("counter_number");
-    var x = parseInt(counter.value, 10); //
-    if(x>1) {// Convert to number
+    var x = parseInt(counter.value, 10);
+    if(x>1) { // Convert to number
         counter.value = x - 1;
         amountOfCupcake = x - 1;
     }
@@ -22,3 +22,154 @@ document.querySelectorAll(".product_info_box").forEach(box =>{
     box.classList.toggle("open");
    });
 });
+
+//CART OVERLAY
+let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+function saveCart() {
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function addToCart(form) {
+    const amount = Number(form.querySelector("input[name='amount']").value);
+    const name = form.querySelector("input[name='productName']").value;
+    const thumbnail = form.querySelector("input[name='productThumbnail']").value;
+    const price = Number(form.querySelector("input[name='productPrice']").value);
+    const carportID = Number(form.querySelector("input[name='carportID']").value);
+
+    const item = {
+        carportID,
+        name,
+        amount,
+        thumbnail,
+        price,
+        totalPrice: price * amount
+    };
+
+    cart.push(item);
+    saveCart();
+    renderCartOverlay();
+}
+
+function renderCartOverlay() {
+    const container = document.getElementById("cart_list_container");
+    const overlay = document.getElementById("cart_overlay");
+
+    if (!container || !overlay) return;
+
+    overlay.classList.remove("hidden");
+    overlay.classList.add("show");
+
+    container.innerHTML = "";
+
+    if (cart.length === 0) {
+        container.innerHTML = "<p>Din kurv er tom.</p>";
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart_item";
+
+        div.innerHTML = `
+            <img src="${item.thumbnail}" class="cart_item_image" alt="${item.name}" />
+            <div class="cart_item_info">
+                <p hidden>${item.carportID}</p>
+                <strong style="font-size: 12px;">${item.name}</strong>
+                <p style="font-size: 12px;">Antal: ${item.amount}</p>
+                <p style="font-size: 12px;">Pris: ${item.totalPrice} kr.</p>
+            </div>
+            <button class="cart_delete_button" data-index="${index}">Fjern</button>`;
+
+        container.appendChild(div);
+    });
+
+    document.querySelectorAll(".cart_delete_button").forEach(btn => {
+        btn.onclick = () => {
+            const index = btn.getAttribute("data-index");
+            cart.splice(index, 1);
+            saveCart();
+            renderCartOverlay();
+        };
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (cart.length > 0) renderCartOverlay();
+
+    const overlayClose = document.getElementById("cart_overlay_close");
+    if(overlayClose) {
+        overlayClose.addEventListener("click", () => {
+            const overlay = document.getElementById("cart_overlay");
+            overlay.classList.remove("show");
+            overlay.classList.add("hidden");
+            document.body.classList.remove("cart_open");
+        });
+    }
+
+    const overlayRemove = document.getElementById("overlay_remove_item");
+    if(overlayRemove) {
+        overlayRemove.addEventListener("click", () => {
+            cart.pop();
+            saveCart();
+            renderCartOverlay();
+        });
+    }
+
+    const cartBtn = document.getElementById("cart_btn");
+    if(cartBtn) {
+        cartBtn.addEventListener("click", e =>{
+            e.preventDefault();
+            renderCartOverlay();
+        });
+    }
+});
+
+//CART PAGE
+function renderCartPage() {
+    const container = document.getElementById("cart_page_container");
+    container.innerHTML = "";
+
+    if (cart.length === 0) {
+        container.innerHTML = "<p class='display_container_vertical'>Din kurv er tom.</p>";
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart_page_item";
+
+        div.innerHTML = `
+            <img src="${item.thumbnail}" class="cart_page_image" alt="${item.name}" />
+            <div class="cart_item_info_page">
+            <p hidden>${item.carportID}</p>
+            <strong>${item.name}</strong>
+            <p>Antal: ${item.amount}</p>
+            <p>Pris: ${item.totalPrice} kr.</p>
+            <button class="cart_delete_button" onclick="removeItem(${index})">Fjern</button>
+            </div>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+    renderCartPage();
+}
+
+document.addEventListener("DOMContentLoaded", renderCartPage);
+
+function preparePayment() {
+    if(cart.length > 0) {
+    document.getElementById("carportID").value = cart[0].carportID;
+    }
+    clearCart();
+}
+
+function clearCart() {
+    cart = [];
+    sessionStorage.removeItem("cart");
+}

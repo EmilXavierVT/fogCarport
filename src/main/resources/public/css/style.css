@@ -19,8 +19,9 @@ html {
 header {
     position: relative;
     width: 100%;
+    max-width: 100%;
     bottom: 0;
-    overflow: hidden;
+    overflow: visible;
     background: var(--background_color);
     filter: drop-shadow(0 10px 10px rgba(0,0,0,0.25))
 }
@@ -271,6 +272,12 @@ nav a:hover {
     margin-top: 10px;
     align-items: center;
 }
+.button_row_products {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
 
 /*CREATE USER*/
 .register_form {
@@ -473,11 +480,311 @@ nav a:hover {
     border: 0.5px solid rgba(0, 0, 0, 0.2);
 }
 
+/*CART OVERLAY*/
+.cart_overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 460px;
+    height: 100vh;
+    background: var(--background_color);
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 10px 20px 10px;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.35s ease, transform 0.35s ease-in-out;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+body.cart_open {
+    overflow-x: hidden;
+}
+
+.cart_overlay.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.cart_overlay.hidden {
+    display: none;
+    pointer-events: none;
+}
+
+.cart_list_container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    overflow-y: auto;
+    padding-right: 5px;
+    box-shadow: 6px 8px 15px 0 rgba(0,0,0,0.3);
+}
+
+.cart_overlay_image {
+    width: 205px;
+    height: auto;
+    object-fit: cover;
+    margin-left: 1%;
+}
+
+.cart_overlay_text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.cart_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white_widget);
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cart_item_image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.cart_item_info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.cart_delete_button {
+    background: var(--blue_widget);
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    color: var(--white_widget);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.cart_delete_button:hover {
+    background: var(--hover_change_color);
+    transform: scale(1.05);
+}
+
+.cart_overlay_close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    background: transparent;
+    border: none;
+    font-size: 32px;
+    color: var(--text);
+    cursor: pointer;
+    transition: font-size 0.35s ease;
+}
+
+.cart_overlay_close:hover {
+    transform: scale(1.08);
+}
+
+.overlay_to_cart_button {
+    width: 330px;
+    height: 35px;
+    position: absolute;
+    bottom: 80px;
+    right: 60px;
+    border-radius: 20px;
+    border: none;
+    background: var(--blue_widget);
+    color: var(--background_color);
+    transition: all 0.5s ease;
+}
+
+.overlay_to_cart_button:hover {
+    transition: all 0.3s ease;
+    background: var(--hover_change_color);
+    color: var(--white_widget);
+    transform: scale(1.03);
+    box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.3);
+}
+
 .fragment_div {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/*CART PAGE*/
+.cart_page_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--white_widget);
+    max-width: 1300px;
+    border-radius: 30px;
+    border: 2px solid rgba(0,0,0, 0.4);
+    margin-bottom: 10%;
+}
+
+.cart_page_item {
+    width: 100%;
+    max-width: 1150px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 28px 28px 28px 28px;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-bottom: 0.5%;
+}
+
+.cart_page_image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 26px 0 0 26px;
+    border: 1px solid rgba(0,0,0, 0.8);
+}
+
+.cart_item_info_page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    align-items: center;
+}
+
+/*PAY PAGE*/
+.pay_page_column {
+    margin-top: 4%;
+    margin-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/*PAYMENT COMPLETE PAGE*/
+.payment_complete_column {
+    margin-top: 4%;
+    margin-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* USER DEFINED CARPORT*/
+
+.user_defined_title {
+    font-size: 35px;
+    text-align: center;
+    margin: 100px ;
+}
+
+.content_holder_user_defined {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    justify-content: center;
+}
+
+.carport_type_picker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #EDEDED;
+    text-align: center;
+}
+.carport_name {
+    font-size: 15px;
+}
+.carport_type_description {
+
+font-size: 12px;
+}
+.user_defined_description_text {
+    width: 50%;
+    margin: 200px 0 100px 0;
+
+}
+
+.user_defined_body_text {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.user_defined_picture_section {
+    display: flex;
+    justify-content: center;
+}
+
+img.user_defined_picture {
+    width:100%;
+    height: 1250px;
+    max-width: 2400px;
+}
+.blue_arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*FLAT ROOF SECTION*/
+.user_defined_form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    border-radius: 10px;
+}
+.content_holder_flat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.flat_section_container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    gap:10px;
+    border-radius: 10px;
+    border: 3px solid var(--border_box_color);
+
+}
+.form_submit_button {
+    background: var(--dark_blue_widget);
+    color: var(--white_widget);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.form_submit_button:hover {
+    background: var(--hover_change_color);
+}
+.flat_line {
+    border: 2px solid var(--text);
+    width: 80%;
 }
 
 <!-- Test CSS i Alert -->

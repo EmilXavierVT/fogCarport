@@ -22,7 +22,7 @@ public class AdminController {
     private static void updatePrice(Context ctx, ConnectionPool connectionPool)
     {
         int productId = Integer.parseInt(ctx.formParam("product_id"));
-        float newPrice = Integer.parseInt(ctx.formParam("new_price"));
+        float newPrice = Float.parseFloat(ctx.formParam("new_price"));
         ProductMapper.updateProductPrice(productId, newPrice, connectionPool);
         ctx.sessionAttribute("price_update_message", "Produkt pris opdateret !");
         ctx.redirect("/admin/alert");
@@ -33,13 +33,13 @@ public class AdminController {
     private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
     {try
         {
-            List<User> users = UserMapper.getAllUsers(connectionPool);
-            List<CarportRequest> orders = CarportRequestMapper.getAllCarportRequests(connectionPool);
+           List<User> users = UserMapper.getAllUsers(connectionPool);
+//           List<CarportRequest> orders = CarportRequestMapper.getAllCarportRequests(connectionPool);
             List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
             List<Product> products = ProductMapper.getAllProducts(connectionPool);
 
             ctx.render("admin/alert.html", Map.of("all_users", users,
-                    "all_carport_requests", orders,
+//                    "all_carport_requests", orders,
                     "all_standard_carports", standardCarports,
                     "all_products", products));
 

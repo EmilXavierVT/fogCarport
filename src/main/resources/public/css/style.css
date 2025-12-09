@@ -766,7 +766,7 @@ img.user_defined_picture {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 25%;
+    width: 80%;
     gap:10px;
     border-radius: 10px;
     border: 3px solid var(--border_box_color);

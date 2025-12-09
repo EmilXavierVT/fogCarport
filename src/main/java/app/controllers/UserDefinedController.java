@@ -10,6 +10,8 @@ import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 public class UserDefinedController {
     public static void addRoutes(Javalin app) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -47,7 +49,9 @@ public class UserDefinedController {
                 "Kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
-
+        ctx.sessionAttribute("request_sent",true);
+        ctx.render("/index",Map.of("request_sent",true));
+        ctx.redirect("/");
     }
 
     private static void sendRequest(Context ctx) throws DatabaseException, MessagingException {
@@ -77,7 +81,8 @@ public class UserDefinedController {
                 " kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
-
+        ctx.sessionAttribute("request_sent",true);
+        ctx.redirect("/");
     }
 
 

@@ -1,6 +1,8 @@
 package app.controllers;
 
+import app.entities.User;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportRequestMapper;
 import app.persistence.ConnectionPool;
 import app.services.Calculator;
 import app.services.SpecificationWizard;
@@ -37,18 +39,36 @@ public class UserDefinedController {
         String city = ctx.formParam("city");
         String phoneNumber = ctx.formParam("phone_number");
         String email = ctx.formParam("email");
-
         boolean roof = !roofType.equals("Ingen tag");
 
-        Calculator calculator = new Calculator(SpecificationWizard.makeAngleSpecification(width,length,roof,shedWidth,shedLength,angle));
 
-        System.out.println(calculator.setItemList());
+        Calculator calc = new Calculator(SpecificationWizard.makeAngleSpecification(width,length,roof,shedWidth,shedLength,angle));
+//        en user baseret på mail hvis ikke ny user
+//        sales rep Id
+//        en carport med styliste
+
+
+
+
+
+
+
+
+
+        if(ctx.sessionAttribute("currentUser") != null)
+        {
+            User user = ctx.sessionAttribute("currentUser");
+            CarportRequestMapper.createCarportRequest(user,);
+        }
+
+        System.out.println(calc.setItemList());
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",
                 "Kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
+
         ctx.sessionAttribute("request_sent",true);
         ctx.render("/index",Map.of("request_sent",true));
         ctx.redirect("/");
@@ -72,9 +92,9 @@ public class UserDefinedController {
 
 
 
-        Calculator calculator = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
+        Calculator calc = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
 
-        System.out.println(calculator.setItemList());
+        System.out.println(calc.setItemList());
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",

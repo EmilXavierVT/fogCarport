@@ -83,6 +83,8 @@ public class UserDefinedController {
                 "Kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
+        gms.sendPlainTextEmail(salesRep.getEmail(), "Ny forespørgsel er landet i din indbakke", "Hej " + salesRep.getFirstName() + ", " +
+                " Der er kommet en ny forespørgsel fra " + name + " de kan kontaktes på " + email + " eller " + phoneNumber + ".");
 
         ctx.sessionAttribute("request_sent",true);
         ctx.render("/index",Map.of("request_sent",true));
@@ -136,6 +138,8 @@ public class UserDefinedController {
                 " kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
+        gms.sendPlainTextEmail(salesRep.getEmail(), "Ny forespørgsel er landet i din indbakke", "Hej " + salesRep.getFirstName() + ", " +
+                " Der er kommet en ny forespørgsel fra " + name + " de kan kontaktes på " + email + " eller " + phoneNumber + ".");
         ctx.sessionAttribute("request_sent",true);
         ctx.redirect("/");
     }

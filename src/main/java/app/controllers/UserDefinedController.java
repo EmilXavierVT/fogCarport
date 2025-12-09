@@ -119,17 +119,7 @@ public class UserDefinedController {
         carportSvg.addRectangle(0,width-30,4,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
 
 
-        if(shedLength > 0 && shedWidth > 0 )
-        {
-            carportSvg.addRectangle(30,32,shedWidth,shedLength,"stroke-width:2px; stroke:#000000; fill:#ffffff");
 
-            carportSvg.addRectangle(30,shedWidth+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-            carportSvg.addRectangle(shedLength+20,shedWidth+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-
-            carportSvg.addRectangle(30,32,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-            carportSvg.addRectangle(shedLength+20,32,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-
-        }
 
         //spær
         int startRafter = 0;
@@ -168,8 +158,81 @@ public class UserDefinedController {
                 postsPerSide--;
             }
         }
+        if(shedLength > 0 && shedWidth > 0 )
+        {
+            //skur
+            carportSvg.addRectangle(30,27,shedWidth,shedLength,"stroke-width:2px; stroke:#000000; fill:#ffffff");
 
+            //øverst venstre
+            carportSvg.addRectangle(30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
 
+            //æverst højre
+            carportSvg.addRectangle(shedLength+20,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            //nederst venstre
+            carportSvg.addRectangle(30,shedWidth+17,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            //nederst højre
+            carportSvg.addRectangle(shedLength+20,shedWidth+17,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            //carport nederst venstre
+            carportSvg.addRectangle(30, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            //øverste højre stolpe
+            carportSvg.addRectangle(length - 100, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            //nederste stolpte højer
+            carportSvg.addRectangle(length - 100, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            int spaceBettwenBottomStartAndEnd = length - 130;
+            int startBottomPole = 30;
+            int postsPerSide = (calc.getAmountOfPosts() - 4) / 2;
+            int bottomPostAmount = (calc.getAmountOfPosts() - 4) / 2;
+            int spaceBettwenEachBottompost = spaceBettwenBottomStartAndEnd / (postsPerSide + 1);
+
+            // nederste stolper midden
+            while (bottomPostAmount > 0) {
+                startBottomPole += spaceBettwenEachBottompost;
+                carportSvg.addRectangle(startBottomPole, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                bottomPostAmount--;
+            }
+
+            //en stolpe brede
+            if(shedWidth >= 310 && shedWidth <= 620)
+            {
+                carportSvg.addRectangle(30,(shedWidth/2)+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+                carportSvg.addRectangle(shedLength+20,(shedWidth/2)+22,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+
+            }
+
+            // 1 stolpe længde
+            if(shedLength >= 310 && shedLength <= 620) {
+                carportSvg.addRectangle((shedLength / 2) + 30, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                carportSvg.addRectangle((shedLength / 2) + 30, shedWidth + 22, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                postsPerSide--;
+            }
+
+            //2 stoler længde
+            if (shedLength >= 620) {
+                    int spaceBettwenStartAndEnd = shedLength / 3;
+                    int startPole = 30;
+                    int postToPlace = 2;
+
+                    while (postToPlace > 0) {
+                        startPole += spaceBettwenStartAndEnd;
+                        carportSvg.addRectangle(startPole, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                        carportSvg.addRectangle(startPole, shedWidth + 22, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
+                        postToPlace--;
+                        postsPerSide--;
+                    }
+                }
+            }
+
+        if(length-shedLength > 130)
+            carportSvg.addRectangle(shedLength+130+30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+        {
+
+        }
         //dash lines
         carportSvg.addLine(55,35,length-35,width-30,"stroke:#000000; stroke-dasharray: 5 5;");
             carportSvg.addLine(55,width-30,length-35,35,"stroke:#000000; stroke-dasharray: 5 5;");

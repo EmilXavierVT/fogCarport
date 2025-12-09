@@ -1,7 +1,7 @@
 package app.entities;
 
 public class AngleSpecification extends Specification {
-    int angle;
+   private int angle;
 
 
     public AngleSpecification(long EAN, String model, int roomFor, boolean shed, Product post, Product beam, Product rafter, Product roof, Product fasciaBoard, int length, int width, int heightFront, int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength, int parkingWidth, int shedDepth, int shedWidth, int angle) {

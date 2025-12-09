@@ -15,9 +15,9 @@ import java.util.Map;
 public class UserDefinedController {
     public static void addRoutes(Javalin app) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-       app.get("userdefined",ctx -> ctx.render("userdefined.html"));
-       app.get("flat",ctx->ctx.render("flat.html"));
-       app.post("flat",ctx-> sendRequest(ctx));
+       app.get("/userdefined",ctx -> ctx.render("userdefined.html"));
+       app.get("/flat",ctx->ctx.render("flat.html"));
+       app.post("/flat",ctx-> sendRequest(ctx));
        app.get("/angle", ctx -> ctx.render("angle"));
        app.post("/angle", ctx -> sendAngleRequest(ctx));
 

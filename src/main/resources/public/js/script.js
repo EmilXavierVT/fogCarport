@@ -197,7 +197,7 @@ const searchInputMaterials = document.getElementById('search');
 const itemsList = [
     document.getElementById('materials_section'),
     document.getElementById('products_section'),
-    // document.getElementById('notifications_section'),
+    document.getElementById('notifications_section'),
     document.getElementById('users_section')
 ];
 

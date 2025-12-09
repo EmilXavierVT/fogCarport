@@ -787,8 +787,6 @@ img.user_defined_picture {
     width: 80%;
 }
 
-<!-- Test CSS i Alert -->
-
 /* DASHBOARD LAYOUT */
 .Dashboard {
     width: 100%;
@@ -805,7 +803,6 @@ img.user_defined_picture {
     padding-left: 8px;
 }
 
-
 .tab {
     background: none;
     border: none;
@@ -818,6 +815,14 @@ img.user_defined_picture {
 .tab.active {
     border-bottom: 2px solid black;
     font-weight: bold;
+}
+
+.tab_content {
+    display: none;
+}
+
+.tab_content.active {
+    display: block;
 }
 
 /* TABLE WRAPPER */
@@ -846,4 +851,8 @@ img.user_defined_picture {
 .dashboard_table thead th {
     background: var(--background_color);
     font-weight: bold;
+}
+
+.search_input {
+    margin-bottom: 2%;
 }

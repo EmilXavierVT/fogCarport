@@ -24,7 +24,6 @@ public class App
         CarportController.addRoutes(app);
         AdminController.addRoutes(app);
         UserDefinedController.addRoutes(app);
-
-
     }
+
 }

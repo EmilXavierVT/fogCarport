@@ -59,10 +59,10 @@ class UserMapperTest
                 stmt.execute("SELECT setval('test_schema.users_user_id_seq', 1)");
 
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',1)");
+                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',1,'12345678')");
 
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',0)");
+                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',0,12345678)");
 
                 stmt.execute("SELECT setval('test_schema.users_user_id_seq', COALESCE((SELECT MAX(user_id)+1 FROM test_schema.users), 1), false)");
             }

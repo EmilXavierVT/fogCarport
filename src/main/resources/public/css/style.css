@@ -787,6 +787,8 @@ img.user_defined_picture {
     width: 80%;
 }
 
+<!-- Test CSS i Alert -->
+
 /* DASHBOARD LAYOUT */
 .Dashboard {
     width: 100%;
@@ -802,6 +804,7 @@ img.user_defined_picture {
     border-radius: 6px;
     padding-left: 8px;
 }
+
 
 .tab {
     background: none;
@@ -855,4 +858,9 @@ img.user_defined_picture {
 
 .search_input {
     margin-bottom: 2%;
+}
+.carport-svg-topview
+{
+    max-width: 200px;
+    max-height: 200px;
 }

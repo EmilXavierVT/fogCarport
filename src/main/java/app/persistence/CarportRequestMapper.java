@@ -105,8 +105,8 @@ public class CarportRequestMapper
                         rs.getInt("carport_request_id"),
                         UserMapper.getUserByID(rs.getInt("user_id"), connectionPool),
                         CarportMapper.getCarportByID(rs.getInt("carport_id"), connectionPool),
-                        UserMapper.getUserByID(rs.getInt("sales_rep_id"), connectionPool)
-                ));
+                        rs.getInt("sales_rep_id") != 0 ? UserMapper.getUserByID(rs.getInt("sales_rep_id"), connectionPool) : null
+                        ));
             }
             return requests;
         } catch (SQLException e)

@@ -94,17 +94,17 @@
                     </thead>
                     <tbody>
                     <tr th:each="req : ${all_carport_requests}">
-                        <td th:text="${req.user.firstName + ' ' + req.user.lastName}">Navn</td>
+                        <td th:text="${req.user.firstName} + ' ' + ${req.user.lastName}">Navn</td>
                         <td th:text="${req.user.zipCode}">Postnummer</td>
-                        <td th:text="${req.user.streetName + ' ' + req.user.houseNumber}">Adresse</td>
+                        <td th:text="${req.user.streetName} + ' ' + ${req.user.houseNumber}">Adresse</td>
                         <td th:text="${req.carport.name}">Forespørgsel</td>
-                        <td th:text="${req.id}">Request ID</td>
-                        <td th:text="${req.carport.length}">Længde</td>
-                        <td th:text="${req.carport.width}">Bredde</td>
-                        <td th:text="${req.carport.shed ? 'Ja' : 'Nej'}">Skur</td>
-                        <td th:text="${req.carport.shedDepth}">Skur dybde</td>
-                        <td th:text="${req.carport.shedLength}">Skur længde</td>
-                        <button th:href="" class="button_white" type="submit">Log ind</button>
+                        <td th:text="${req.carportRequestID}">Request ID</td>
+                        <td th:text="${req.carport.specification.length}">Længde</td>
+                        <td th:text="${req.carport.specification.width}">Bredde</td>
+                        <td th:text="${req.carport.specification.shed ? 'Ja' : 'Nej'}">Skur</td>
+                        <td th:text="${req.carport.specification.shedDepth}">Skur dybde</td>
+                        <td th:text="${req.carport.specification.shedWidth}">Skur længde</td>
+<!--                       <button th:href="" class="button_white" type="submit">Log ind</button> -->
                     </tr>
 
                     <tr th:if="${#lists.isEmpty(all_carport_requests)}">

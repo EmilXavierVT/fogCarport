@@ -123,15 +123,17 @@ public class UserMapper
 
                 );
             }
-            else
-            {
-                throw new DatabaseException("No user found with ID: " + id);
-            }
+//            else
+//            {
+//                throw new DatabaseException("No user found with ID: " + id);
+//            }
+            return null;
         }
         catch (SQLException e)
         {
             throw new DatabaseException("Error retrieving user", e.getMessage());
         }
+
     }
 
     public static User updateUser(int id, String firstName, String lastName, int zipCode,

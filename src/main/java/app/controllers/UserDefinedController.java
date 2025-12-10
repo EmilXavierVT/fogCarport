@@ -224,8 +224,15 @@ public class UserDefinedController {
                 }
             }
         //stolpe mellem skur og sidste stolpte øverst højre
-        if(length-shedLength > 130){
+        if(length-100-shedLength > 130){
             carportSvg.addRectangle(shedLength+130+30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+        }
+        if(length-100-shedLength > 460){
+            int firstPost = shedLength+130+30;
+            int space = length-100-firstPost;
+            int secondPost = space/2;
+            carportSvg.addRectangle(firstPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            carportSvg.addRectangle(firstPost+secondPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
         }
         //dash lines
         carportSvg.addLine(55,35,length-35,width-30,"stroke:#000000; stroke-dasharray: 5 5;");

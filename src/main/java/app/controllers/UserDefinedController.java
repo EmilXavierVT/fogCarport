@@ -19,8 +19,7 @@ public class UserDefinedController {
     public static int width;
     public static int length;
     public static int shedWidth;
-    public static int shedLength
-            ;
+    public static int shedLength;
     private static Calculator calc;
 
     public static void addRoutes(Javalin app) {
@@ -102,15 +101,22 @@ public class UserDefinedController {
 
         //creating scale around carport
         Svg scale = new Svg(0,0,"0 0 855 690","100%","auto");
+
         scale.addLine(40,10,40,350,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
         scale.addLine(75,380,500,380,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
 
         scale.addText(30,175,-90, String.valueOf(width) + " cm");
         scale.addText(275,395,0, String.valueOf(length) + " cm");
 
+        //new
+//        double targetSize = 750.0;
+//        double scaleFactor = targetSize / Math.max(width, length);
 
         //carport
         Svg carportSvg = new Svg(75,10,"0 0 780 600","50%","auto");
+
+//        carportSvg.beginGroup("transform=\"scale(" + scaleFactor + ")\"");
+
         //ramme
         carportSvg.addRectangle(0,0,width,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
 
@@ -222,22 +228,26 @@ public class UserDefinedController {
                         postsPerSide--;
                     }
                 }
+            if(length-100-shedLength > 130){
+                carportSvg.addRectangle(shedLength+130+30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            }
+            if(length-100-shedLength > 460){
+                int firstPost = shedLength+130+30;
+                int space = length-100-firstPost;
+                int secondPost = space/2;
+                carportSvg.addRectangle(firstPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+                carportSvg.addRectangle(firstPost+secondPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
+            }
             }
         //stolpe mellem skur og sidste stolpte øverst højre
-        if(length-100-shedLength > 130){
-            carportSvg.addRectangle(shedLength+130+30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-        }
-        if(length-100-shedLength > 460){
-            int firstPost = shedLength+130+30;
-            int space = length-100-firstPost;
-            int secondPost = space/2;
-            carportSvg.addRectangle(firstPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-            carportSvg.addRectangle(firstPost+secondPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
-        }
+
         //dash lines
         carportSvg.addLine(55,35,length-35,width-30,"stroke:#000000; stroke-dasharray: 5 5;");
             carportSvg.addLine(55,width-30,length-35,35,"stroke:#000000; stroke-dasharray: 5 5;");
 
+
+
+//        carportSvg.endGroup();
         //adding carport to scale
         scale.addSvg(carportSvg);
 
@@ -245,4 +255,6 @@ public class UserDefinedController {
         ctx.render("/show_drawing.html");
 
     }
+
+
 }

@@ -62,4 +62,12 @@ public class Svg {
     public String toString(){
         return svg.append("</svg>").toString();
     }
+
+    public void beginGroup(String attributes) {
+        this.svg.append("<g " + attributes + ">");
+    }
+
+    public void endGroup() {
+        this.svg.append("</g>");
+    }
 }

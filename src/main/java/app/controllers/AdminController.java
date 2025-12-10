@@ -3,8 +3,10 @@ package app.controllers;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
+import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import jakarta.mail.MessagingException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,16 +20,30 @@ public class AdminController {
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
         app.post("/update_price", ctx -> updatePrice(ctx, connectionPool));
         app.get("/admin/construction",ctx-> showConstructionPage(ctx, connectionPool));
+        app.post("/admin/construction",ctx -> sendEmail(ctx));
     }
 
-    private static void showConstructionPage(@NotNull Context ctx, ConnectionPool connectionPool) {
+    private static void sendEmail(Context ctx) throws MessagingException {
+        GmailSender gemailSender = new GmailSender();
+        String to = "luke_persson@yahoo.dk";
+//        String to = ctx.formParam("to_email");
+        String subject = ctx.formParam("email_subject");
+        String body = ctx.formParam("email_body");
+
+        gemailSender.sendPlainTextEmail(to, subject, body);
+        ctx.sessionAttribute("email_sent_message", "Email sendt til " + to);
+        ctx.redirect("/admin/alert");
+    }
+
+    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool) {
         try{
             List<Product> products = ProductMapper.getAllProducts(connectionPool);
+            ctx.render("admin/construction.html", Map.of("get_all_products", products));
+
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
 
-        ctx.render("admin/construction.html");
     }
 
     private static void updatePrice(Context ctx, ConnectionPool connectionPool)

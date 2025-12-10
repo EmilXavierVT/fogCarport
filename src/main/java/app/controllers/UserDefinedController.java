@@ -102,20 +102,17 @@ public class UserDefinedController {
         //creating scale around carport
         Svg scale = new Svg(0,0,"0 0 855 690","100%","auto");
 
-        scale.addLine(40,10,40,350,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
-        scale.addLine(75,380,500,380,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
 
-        scale.addText(30,175,-90, String.valueOf(width) + " cm");
-        scale.addText(275,395,0, String.valueOf(length) + " cm");
+        scale.addLine(50,10,50,width/2+20,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
+        scale.addLine(80,width/2 + 45,length/2+100,width/2 +45,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
 
-        //new
-//        double targetSize = 750.0;
-//        double scaleFactor = targetSize / Math.max(width, length);
+        scale.addText(30,width/3-10,-90, String.valueOf(width) + " cm");
+        scale.addText(length/3 +55,width/2 + 60,0, String.valueOf(length) + " cm");
+
 
         //carport
         Svg carportSvg = new Svg(75,10,"0 0 780 600","50%","auto");
 
-//        carportSvg.beginGroup("transform=\"scale(" + scaleFactor + ")\"");
 
         //ramme
         carportSvg.addRectangle(0,0,width,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
@@ -245,9 +242,6 @@ public class UserDefinedController {
         carportSvg.addLine(55,35,length-35,width-30,"stroke:#000000; stroke-dasharray: 5 5;");
             carportSvg.addLine(55,width-30,length-35,35,"stroke:#000000; stroke-dasharray: 5 5;");
 
-
-
-//        carportSvg.endGroup();
         //adding carport to scale
         scale.addSvg(carportSvg);
 

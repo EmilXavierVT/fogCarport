@@ -94,18 +94,25 @@
         <option value="20">20</option>
     </select>
         </div>
+            <div class="flat_section_container_construction">
+                <label for="rafter_type"><h3>Materialer</h3></label>
+                <select name="rafter_type" th:required="true">
+                    <option value="1">Færdige spær (dyre)</option>
+                    <option value="2">Byg-selv-spær (billige)</option>
+                </select>
+            </div>
 </div>
     </div>
 </div>
 
 
-
+<!--
     <div class="flat_section_container_admin">
         <div class="flat_section_container_header">
         <h2>Rem og Spær</h2>
             <div class="flat_section_container_boxes">
         <div class="flat_section_container_construction">
-    <form class="user_defined_form"></form> <!--th:action="@{/flat}" method="POST"  -->
+    <form class="user_defined_form"></form>
         <label for="beam"></label><select name="beam" id="beam" th:required="true">
         <option value="0">0</option>
         <option value="300">300</option>
@@ -128,13 +135,7 @@
         <option value="780">780</option>
     </select>
         </div>
-            <div class="flat_section_container_construction">
-            <label for="rafter_type"><h3>Carport længde</h3></label>
-            <select name="rafter_type" th:required="true">
-            <option value="1">Færdige spær (dyre)</option>
-            <option value="2">Byg-selv-spær (billige)</option>
-        </select>
-             </div>
+
     </div>
     </div>
 </div>
@@ -142,7 +143,8 @@
 
         <div class="flat_section_container_admin">
             <div class="flat_section_container_construction">
-    <form class="user_defined_form"></form> <!--th:action="@{/flat}" method="POST"-->
+    <form class="user_defined_form"></form>
+
         <label for="width">Carport bredde</label><select name="width" id="width" th:required="true">
         <option value="0">0</option>
         <option value="300">300</option>
@@ -174,6 +176,7 @@
         </select>
              </div>
     </div>
+-->
 </div>
 
 
@@ -185,21 +188,24 @@
             <table id="notifications" class="dashboard_table">
                 <thead>
                 <tr>
-                    <th>Antal</th>
+
+<!--                    <th>Antal</th>-->
+                    <th>Navn</th>
                     <th>Varenummer</th>
                     <th>Varebeskrivelse</th>
-                    <th>Længde</th>
-                    <th>Bredde</th>
+<!--                    <th>Længde</th>-->
+<!--                    <th>Bredde</th>-->
                     <th>Pris</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="product : ${get_all_products}">
-                    <td th:text="${product.specification.getAmount}">Navn</td>
+                    <td th:text="${product.name}"></td>
+<!--                    <td th:text="${product.specification.getAmount}">Navn</td>-->
                     <td th:text="${product.productID}">Varenummer</td>
                     <td th:text="${product.description}">Varebeskrivelse</td>
-                    <td th:text="${product.length}">Længde</td>
-                    <td th:text="${product.width}">Bredde</td>
+<!--                    <td th:text="${product.length}">Længde</td>-->
+<!--                    <td th:text="${product.width}">Bredde</td>-->
                     <td th:text="${product.price}">Pris</td>
                 </tr>
 
@@ -217,7 +223,40 @@
 
 <section id="customer_receipt_section" class="tab_content"> </section>
 
-<section id="customer_email_section" class="tab_content"> </section>
+<section id="customer_email_section" class="tab_content active">
+
+    <div class="quick_build_container">
+        <h1>Kunde E-mail</h1>
+        <div class="flat_section_container_header">
+            <h2>E-mail indhold</h2>
+
+            <div class="flat_section_container_boxes">
+                <div class="flat_section_container_construction">
+                    <form class="user_defined_form" th:action="@{/admin/construction}" method="post">
+                        <label for="email_subject">
+                            <h3>Email Emne</h3> Omhandlende Carport </label>
+                        <input type="text" id="email_subject" name="email_subject" required />
+                        <label for="email_body">
+                            <h3>Email Indhold</h3>
+                        </label>
+                        <textarea id="email_body" name="email_body" rows="30" cols="100" required>
+Hej (indsæt brugernavn)
+
+
+Dbh.
+                </textarea>
+
+                        <button type="submit">Send Email</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</section>
 
 </body>
 

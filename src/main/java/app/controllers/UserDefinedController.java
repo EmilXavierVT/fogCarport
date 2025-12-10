@@ -72,8 +72,14 @@ public class UserDefinedController {
         }
         else
         {
-           User user= UserMapper.getUserByEmail(email,connectionPool);
-           CarportRequestMapper.createCarportRequest(user.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+            User user= UserMapper.getUserByEmail(email,connectionPool);
+            if(user !=null) {
+                CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
+            }
+            else {
+                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
+                CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+            }
         }
 
         System.out.println(calc.setItemList());

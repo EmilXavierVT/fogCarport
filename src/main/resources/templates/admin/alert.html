@@ -5,20 +5,18 @@
 
 <section class="Dashboard">
     <h1>Dashboard</h1>
-
-<form class="search_form" th:action="@{search_carport}" method="get">
-    <input type="text" name="q" placeholder="Søg efter carport" class="search_input"/>
-</form>
+    <input id="search" type="text" name="q" placeholder="Søg" class="search_input"/>
 
 <div class="tabs_container">
-    <button class="tab active">Produkter</button>
-    <button class="tab">Materialer</button>
-    <button class="tab">Notifikation</button>
+    <button class="tab active" data-target="products_section">Produkter</button>
+    <button class="tab" data-target="materials_section">Materialer</button>
+    <button class="tab" data-target="notifications_section">Notifikation</button>
+    <button class="tab" data-target="users_section">Brugere</button>
 </div>
-
-           <section class="products_section">
+           <section id="products_section" class="tab_content active">
+               <h2>Produkter</h2>
             <div class="table_container">
-                <table class="dashboard_table">
+                <table id="products" class="dashboard_table">
                     <thead>
                     <tr>
                         <th>Navn</th>
@@ -40,12 +38,10 @@
                 </table>
             </div>
         </section>
-
-
-    <section class="materials_section">
-
+    <section id="materials_section" class="tab_content">
+        <h2>Materialer</h2>
             <div class="materials_container">
-                <table class="dashboard_table">
+                <table id="materials" class="dashboard_table">
                     <thead>
                     <tr>
                         <th>Navn</th>
@@ -57,7 +53,7 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="product : ${all_products}">
+                    <tr  th:each="product : ${all_products}">
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.dimensions}"></td>
                         <td th:text="${product.description}"></td>
@@ -70,24 +66,18 @@
                             </form>
                         </td>
                     </tr>
-                    <tr th:if="${#lists.isEmpty(all_materials)}">
+                    <tr th:if="${#lists.isEmpty(all_products)}">
                         <td> Ingen materialer fundet</td>
                     </tr>
                     </tbody>
-
                 </table>
             </div>
         </section>
 
-
-
-
-
-    <section class="notification_section">
-
+    <section id="notifications_section" class="tab_content">
             <h2>Forespørgsler</h2>
             <div class="table_container">
-                <table class="dashboard_table">
+                <table id="notifications" class="dashboard_table">
                     <thead>
                     <tr>
                         <th>Navn</th>
@@ -104,17 +94,17 @@
                     </thead>
                     <tbody>
                     <tr th:each="req : ${all_carport_requests}">
-                        <td th:text="${req.user.firstName + ' ' + req.user.lastName}">Navn</td>
+                        <td th:text="${req.user.firstName} + ' ' + ${req.user.lastName}">Navn</td>
                         <td th:text="${req.user.zipCode}">Postnummer</td>
-                        <td th:text="${req.user.streetName + ' ' + req.user.houseNumber}">Adresse</td>
+                        <td th:text="${req.user.streetName} + ' ' + ${req.user.houseNumber}">Adresse</td>
                         <td th:text="${req.carport.name}">Forespørgsel</td>
-                        <td th:text="${req.id}">Request ID</td>
-                        <td th:text="${req.carport.length}">Længde</td>
-                        <td th:text="${req.carport.width}">Bredde</td>
-                        <td th:text="${req.carport.shed ? 'Ja' : 'Nej'}">Skur</td>
-                        <td th:text="${req.carport.shedDepth}">Skur dybde</td>
-                        <td th:text="${req.carport.shedLength}">Skur længde</td>
-                        <button th:href="" class="button_white" type="submit">Log ind</button>
+                        <td th:text="${req.carportRequestID}">Request ID</td>
+                        <td th:text="${req.carport.specification.length}">Længde</td>
+                        <td th:text="${req.carport.specification.width}">Bredde</td>
+                        <td th:text="${req.carport.specification.shed ? 'Ja' : 'Nej'}">Skur</td>
+                        <td th:text="${req.carport.specification.shedDepth}">Skur dybde</td>
+                        <td th:text="${req.carport.specification.shedWidth}">Skur længde</td>
+<!--                       <button th:href="" class="button_white" type="submit">Log ind</button> -->
                     </tr>
 
                     <tr th:if="${#lists.isEmpty(all_carport_requests)}">
@@ -124,11 +114,11 @@
                 </table>
             </div>
         </section>
-<section class="notification_section">
 
-            <h2>Users</h2>
+<section id="users_section" class="tab_content">
+            <h2>Brugere</h2>
             <div class="table_container">
-                <table class="dashboard_table">
+                <table id="users" class="dashboard_table">
                     <thead>
                     <tr>
                         <th>Kunde Navn</th>
@@ -139,13 +129,11 @@
                     </thead>
                     <tbody>
                     <tr th:each="user : ${all_users}">
-
                         <td th:text="${user.firstName} + ' ' + ${user.lastName}">Kunde Navn</td>
                         <td th:text="${user.email}">email</td>
                         <td th:text="${user.phoneNumber}">TelefonNummer</td>
                         <td th:text="${user.role == 0 ? 'bruger' : (user.role == 1 ? 'admin' : 'Ukendt')}">Kategori</td>
                     </tr>
-
                     <tr th:if="${#lists.isEmpty(all_users)}">
                         <td colspan="4">Ingen brugere fundet</td>
                     </tr>
@@ -154,12 +142,6 @@
             </div>
         </section>
 </section>
-
-
-
-
-
-
-
+<script src="/js/script.js"></script>
 </body>
-<footer th:replace="fragments :: footer"></footer>
+<footer th:replace="~{fragments :: footer}"></footer>

@@ -6,12 +6,14 @@ import app.entities.Specification;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
+import app.persistence.SpecificationMapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class SpecificationWizard {
 
-    public static Specification makeASpecification(int width, int length, boolean roof, int shedWidth, int shedDepth) throws DatabaseException {
+    public static Specification makeASpecification(int width, int length, boolean roof, int shedWidth, int shedDepth) throws DatabaseException, SQLException {
 
         int roomFor = (int) (width/100)/3;
         boolean shed = (shedWidth > 0 && shedDepth > 0);
@@ -25,11 +27,10 @@ public class SpecificationWizard {
     List<Product> fasciaBoards = allProducts.stream().filter(product -> product.getProductID() == 1).toList();
 
 
-        Specification actual = new Specification(0,"custom",roomFor,shed,
-                posts.get(0),beams.get(0),rafters.get(0),roofs.get(0),fasciaBoards.get(0),
+        Specification actual = SpecificationMapper.createAndGetSpecification(0,"custom",roomFor,shed,
+                posts.get(0).getProductID(),beams.get(0).getProductID(),rafters.get(0).getProductID(),roofs.get(0).getProductID(),fasciaBoards.get(0).getProductID(),
                 length,width,380,380,length,width,310,
-
-                length-shedDepth,width-30,shedDepth,shedWidth);
+                length-shedDepth,width-30,shedDepth,shedWidth,ConnectionPool.getInstance());
 
         return actual;
     }

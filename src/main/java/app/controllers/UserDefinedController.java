@@ -1,7 +1,13 @@
 package app.controllers;
 
+import app.entities.Carport;
+import app.entities.User;
+import app.entities.UserDefinedCarport;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportMapper;
+import app.persistence.CarportRequestMapper;
 import app.persistence.ConnectionPool;
+import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.SpecificationWizard;
 import app.services.Svg;
@@ -11,6 +17,7 @@ import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -26,13 +33,13 @@ public class UserDefinedController {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
        app.get("/userdefined",ctx -> ctx.render("userdefined.html"));
        app.get("/flat",ctx->ctx.render("flat.html"));
-       app.post("/flat",ctx-> sendRequest(ctx));
+       app.post("/flat",ctx-> sendRequest(ctx, connectionPool));
        app.get("/angle", ctx -> ctx.render("angle"));
-       app.post("/angle", ctx -> sendAngleRequest(ctx));
+       app.post("/angle", ctx -> sendAngleRequest(ctx, connectionPool));
        app.get("/show_drawing", ctx -> showDrawing(ctx));
     }
 
-    private static void sendAngleRequest(Context ctx) throws DatabaseException, MessagingException {
+    private static void sendAngleRequest(Context ctx,ConnectionPool connectionPool) throws DatabaseException, MessagingException {
         width = Integer.parseInt(ctx.formParam("width"));
         length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
@@ -52,18 +59,44 @@ public class UserDefinedController {
         calc = new Calculator(SpecificationWizard.makeAngleSpecification(width,length,roof,shedWidth,shedLength,angle));
 
         System.out.println(calc.setItemList());
+
+
+
+        int carportID = CarportMapper.SaveAndGetCarportInDB(name,calc.getCostPrice(),70,"custom",calc.getSpecification().getSpecificationId(),connectionPool);
+        User salesRep = UserMapper.getUserByID(29,connectionPool);
+        if(ctx.sessionAttribute("currentUser") != null)
+        {
+            User user = ctx.sessionAttribute("currentUser");
+            CarportRequestMapper.createCarportRequest(user.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+        }
+        else
+        {
+            User user= UserMapper.getUserByEmail(email,connectionPool);
+            if(user !=null) {
+                CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
+            }
+            else {
+                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
+                CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+            }
+        }
+
+        System.out.println(calc.setItemList());
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",
                 "Kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
+        gms.sendPlainTextEmail(salesRep.getEmail(), "Ny forespørgsel er landet i din indbakke", "Hej " + salesRep.getFirstName() + ", " +
+                " Der er kommet en ny forespørgsel fra " + name + " de kan kontaktes på " + email + " eller " + phoneNumber + ".");
+
         ctx.sessionAttribute("request_sent",true);
         ctx.render("/index",Map.of("request_sent",true));
         ctx.redirect("/");
     }
 
-    private static void sendRequest(Context ctx) throws DatabaseException, MessagingException {
+    private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException, MessagingException, SQLException {
         width = Integer.parseInt(ctx.formParam("width"));
         length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
@@ -84,16 +117,36 @@ public class UserDefinedController {
         calc = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
 
         System.out.println(calc.setItemList());
+
+        int carportID = CarportMapper.SaveAndGetCarportInDB(name,  calc.getCostPrice(),70,"custom",calc.getSpecification().getSpecificationId(),connectionPool);
+        User salesRep = UserMapper.getUserByID(29,connectionPool);
+        if(ctx.sessionAttribute("currentUser") != null)
+        {
+            User user = ctx.sessionAttribute("currentUser");
+            CarportRequestMapper.createCarportRequest(user.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+        }
+        else
+        {
+            User user= UserMapper.getUserByEmail(email,connectionPool);
+            if(user !=null) {
+                CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
+            }
+            else {
+                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
+                CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
+            }
+            }
+
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",
                 " kære " + name + " Det glæder os at du skal ha en ny carport! " +
                         "Vi kontroller mål og dimensioner og vender tilbage hurtigst muligt " +
                         "mvh. Fog");
+        gms.sendPlainTextEmail(salesRep.getEmail(), "Ny forespørgsel er landet i din indbakke", "Hej " + salesRep.getFirstName() + ", " +
+                " Der er kommet en ny forespørgsel fra " + name + " de kan kontaktes på " + email + " eller " + phoneNumber + ".");
         ctx.sessionAttribute("request_sent",true);
-        ctx.render("/index",Map.of("request_sent",true));
         ctx.redirect("/");
-
     }
 
     public static void showDrawing(Context ctx) {

@@ -145,7 +145,7 @@ public class CarportRequestMapperTest
     @Test
     public void findCarportRequestTest() throws SQLException, DatabaseException
     {
-        assertEquals(expectedCarportRequest,CarportRequestMapper.getCarportbyRequestID(1,connectionPool));
+        assertEquals(expectedCarportRequest,CarportRequestMapper.getCarportByRequestID(1,connectionPool));
     }
 
     @Test
@@ -159,10 +159,10 @@ public class CarportRequestMapperTest
     @Test
     public void UpdateCarportRequestTest() throws SQLException, DatabaseException
     {
-        assertEquals(expectedCarportRequest,CarportRequestMapper.getCarportbyRequestID(1,connectionPool));
+        assertEquals(expectedCarportRequest,CarportRequestMapper.getCarportByRequestID(1,connectionPool));
         CarportRequestMapper.updateCarportRequest(1,1,1,3,connectionPool);
         CarportRequest updatedCarportRequest = new CarportRequest(1,tempUser,tempCarport,tempSalesRep2);
-        assertEquals(updatedCarportRequest,CarportRequestMapper.getCarportbyRequestID(1,connectionPool));
+        assertEquals(updatedCarportRequest,CarportRequestMapper.getCarportByRequestID(1,connectionPool));
     }
 
     @Test

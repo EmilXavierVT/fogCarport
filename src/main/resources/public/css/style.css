@@ -820,6 +820,14 @@ img.user_defined_picture {
     font-weight: bold;
 }
 
+.tab_content {
+    display: none;
+}
+
+.tab_content.active {
+    display: block;
+}
+
 /* TABLE WRAPPER */
 .table_container {
     margin-top: 15px;
@@ -846,6 +854,10 @@ img.user_defined_picture {
 .dashboard_table thead th {
     background: var(--background_color);
     font-weight: bold;
+}
+
+.search_input {
+    margin-bottom: 2%;
 }
 .carport-svg-topview
 {

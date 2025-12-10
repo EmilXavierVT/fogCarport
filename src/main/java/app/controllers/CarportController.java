@@ -33,7 +33,7 @@ public class CarportController
 
     }
 
-    private static void paymentComplete(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void paymentComplete(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
        String idString = ctx.formParam("carportID");
 
        if(idString == null || idString.isEmpty()){
@@ -50,7 +50,7 @@ public class CarportController
        }
 
        CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, 0, connectionPool);
-
+       OrderMapper.saveOrder(user.getUserId(),LocalDate.now(),connectionPool);
        ctx.redirect("/payment_complete");
     }
 

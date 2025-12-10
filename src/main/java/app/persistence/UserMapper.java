@@ -123,15 +123,17 @@ public class UserMapper
 
                 );
             }
-            else
-            {
-                throw new DatabaseException("No user found with ID: " + id);
-            }
+//            else
+//            {
+//                throw new DatabaseException("No user found with ID: " + id);
+//            }
+            return null;
         }
         catch (SQLException e)
         {
             throw new DatabaseException("Error retrieving user", e.getMessage());
         }
+
     }
 
     public static User updateUser(int id, String firstName, String lastName, int zipCode,
@@ -268,6 +270,35 @@ public class UserMapper
         {
             throw new DatabaseException("Error retrieving all users", e.getMessage());
         }
+    }
+
+    public static User getUserByEmail(String email, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getInt("user_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("zip_code"),
+                        rs.getString("street_name"),
+                        rs.getInt("house_number"),
+                        rs.getString("floor"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getInt("phone_number"),
+                        rs.getInt("role")
+                );
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving user by email", e.getMessage());
+        }
+    return null;
     }
 }
 

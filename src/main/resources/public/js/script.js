@@ -173,3 +173,54 @@ function clearCart() {
     cart = [];
     sessionStorage.removeItem("cart");
 }
+
+// SECTION ADMIN TABS
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab_content');
+
+tabs.forEach(tab => {
+   tab.addEventListener('click',() => {
+       tabs.forEach(t => t.classList.remove('active'));
+       tabContents.forEach(tc => tc.classList.remove('active'));
+
+       tab.classList.add('active');
+       const target = tab.getAttribute('data-target');
+       document.getElementById(target).classList.add('active');
+   });
+});
+
+document.querySelector('.tab.active').click();
+
+// Searchfields for admin/alert
+
+const searchInputMaterials = document.getElementById('search');
+const itemsList = [
+    document.getElementById('materials_section'),
+    document.getElementById('products_section'),
+    document.getElementById('notifications_section'),
+    document.getElementById('users_section')
+];
+
+searchInputMaterials.addEventListener('input', function()
+{
+
+    const query = searchInputMaterials.value.toLowerCase();
+    itemsList.forEach(section=> {
+        const table = section.querySelector("table");
+
+        if (table) {
+
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const tds = rows[i].getElementsByTagName('td');
+                let rowText = '';
+
+                for (let j = 0; j < tds.length; j++) {
+                    rowText += tds[j].textContent.toLowerCase() + ' ';
+                }
+                rows[i].style.display = rowText.includes(query) ? '' : 'none';
+            }
+        }
+    });
+});

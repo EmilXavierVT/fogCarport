@@ -895,11 +895,12 @@ img.user_defined_picture {
     min-height: 192px;
     gap: 10px;
     border-radius: 10px;
-   border: 3px solid var(--border_box_color);
+    border: 3px solid var(--border_box_color);
     border-bottom: none;
     border-top: none;
     border-left: none;
 }
+
 .flat_section_container_header{
     display: flex;
     flex-direction: column;

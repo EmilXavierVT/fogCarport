@@ -2,11 +2,225 @@
 <header th:replace="~{fragments :: header}"></header>
 <body>
 
-<section> </section>
+<section class="Construction"> </section>
+<h1>Konstruktion</h1>
+<div class="input_container">
+    <button class="tab active" data-target="quick_build_section"> Quick-Byg</button>
+    <button class="tab" data-target="product_section"> Stykliste</button>
+    <button class="tab " data-target="drawing_section"> Tegning</button>
+    <button class="tab " data-target="customer_receipt_section"> Kunde-kvittering</button>
+    <button class="tab " data-target="customer_email_section"> Kunde-Email</button>
+</div>
 
-<section> </section>
+<section id="quick_build_section" class="tab_content active"> </section>
+<div class="quick_build_container">
+    <h1>Quick-Byg</h1>
 
-<section> </section>
+    <div class="flat_section_container_admin">
+        <div class="flat_section_container_header">
+        <h2>Carport dimensioner</h2>
+            <div class="flat_section_container_boxes">
+    <div class="flat_section_container_construction">
+        <form class="user_defined_form"></form> <!--th:action="@{/flat}" method="POST" -->
+        <label for="width"><h3>Bredde</h3></label><select name="width" th:required="true">
+        <option value="0">0</option>
+        <option value="300">300</option>
+        <option value="360">360</option>
+        <option value="420">420</option>
+        <option value="480">480</option>
+        <option value="540">540</option>
+        <option value="600">600</option>
+    </select>
+        <label for="length"><h3>Længde</h3></label><select name="length"  th:required="true">
+        <option value="1">0</option>
+        <option value="300">300</option>
+        <option value="360">360</option>
+        <option value="420">420</option>
+        <option value="480">480</option>
+        <option value="540">540</option>
+        <option value="600">600</option>
+        <option value="660">660</option>
+        <option value="720">720</option>
+        <option value="780">780</option>
+    </select>
+
+    </div>
+        <div class="flat_section_container_construction">
+            <label for="shed"></label> <h3>Redskabskur</h3><select name="shed" id="shed"th:required="true">
+            <option value="0">Uden Skur</option>
+            <option value="1">Med Skur</option>
+        </select>
+            <label for="shed_width"><h3>Redskabsrum bredde</h3></label><select name="shed_width" id="shed_width">
+            <option value="0">0</option>
+            <option value="300">300</option>
+            <option value="360">360</option>
+            <option value="420">420</option>
+            <option value="480">480</option>
+            <option value="540">540</option>
+            <option value="600">600</option>
+        </select>
+            <label for="shed_length"><h3>Redskabsrum længde</h3></label><select name="shed_length" id="shed_length">
+            <option value="0">0</option>
+            <option value="300">300</option>
+            <option value="360">360</option>
+            <option value="420">420</option>
+            <option value="480">480</option>
+            <option value="540">540</option>
+            <option value="600">600</option>
+            <option value="660">660</option>
+            <option value="720">720</option>
+            <option value="780">780</option>
+        </select>
+             </div>
+    </div>
+    </div>
+    </div>
+
+
+<div class="flat_section_container_admin">
+    <div class="flat_section_container_header">
+    <h2>Tag</h2>
+        <div class= "flat_section_container_boxes">
+    <div class="flat_section_container_construction">
+        <label for="roof"></label> <h3>Carport trapeztag</h3><select name="roof" id="roof"th:required="true">
+        <option value="1">Ingen tag</option>
+        <option value="2">Plast tag</option>
+    </select>
+        <label for="roof_angle"><h3>Grader ved rejsning</h3></label><select name="roof_angle" id="roof_angle" th:required="true">
+        <option value="0">0</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+    </select>
+        </div>
+</div>
+    </div>
+</div>
+
+
+
+    <div class="flat_section_container_admin">
+        <div class="flat_section_container_header">
+        <h2>Rem og Spær</h2>
+            <div class="flat_section_container_boxes">
+        <div class="flat_section_container_construction">
+    <form class="user_defined_form"></form> <!--th:action="@{/flat}" method="POST"  -->
+        <label for="beam"></label><select name="beam" id="beam" th:required="true">
+        <option value="0">0</option>
+        <option value="300">300</option>
+        <option value="360">360</option>
+        <option value="420">420</option>
+        <option value="480">480</option>
+        <option value="540">540</option>
+        <option value="600">600</option>
+    </select>
+        <label for="rafter"><h3>Carport længde</h3></label><select name="rafter" id="rafter" th:required="true">
+        <option value="1">0</option>
+        <option value="300">300</option>
+        <option value="360">360</option>
+        <option value="420">420</option>
+        <option value="480">480</option>
+        <option value="540">540</option>
+        <option value="600">600</option>
+        <option value="660">660</option>
+        <option value="720">720</option>
+        <option value="780">780</option>
+    </select>
+        </div>
+            <div class="flat_section_container_construction">
+            <label for="rafter_type"><h3>Carport længde</h3></label>
+            <select name="rafter_type" th:required="true">
+            <option value="1">Færdige spær (dyre)</option>
+            <option value="2">Byg-selv-spær (billige)</option>
+        </select>
+             </div>
+    </div>
+    </div>
+</div>
+
+
+        <div class="flat_section_container_admin">
+            <div class="flat_section_container_construction">
+    <form class="user_defined_form"></form> <!--th:action="@{/flat}" method="POST"-->
+        <label for="width">Carport bredde</label><select name="width" id="width" th:required="true">
+        <option value="0">0</option>
+        <option value="300">300</option>
+        <option value="360">360</option>
+        <option value="420">420</option>
+        <option value="480">480</option>
+        <option value="540">540</option>
+        <option value="600">600</option>
+    </select>
+        <label for="length">Carport længde</label><select name="length" id="length" th:required="true">
+        <option value="1">0</option>
+        <option value="300">300</option>
+        <option value="360">360</option>
+        <option value="420">420</option>
+        <option value="480">480</option>
+        <option value="540">540</option>
+        <option value="600">600</option>
+        <option value="660">660</option>
+        <option value="720">720</option>
+        <option value="780">780</option>
+    </select>
+                </div>
+                <div class="flat_section_container_construction">
+            <label for="length">Carport længde</label>
+            <select name="length" th:required="true">
+            <option value="1">0</option>
+            <option value="2">1</option>
+            <option value="3">2</option>
+        </select>
+             </div>
+    </div>
+</div>
+
+
+<section id="product_section" class="tab_content active">
+
+    <section id="notifications_section" class="tab_content active">
+        <h2>Forespørgsler</h2>
+        <div class="table_container">
+            <table id="notifications" class="dashboard_table">
+                <thead>
+                <tr>
+                    <th>Antal</th>
+                    <th>Varenummer</th>
+                    <th>Varebeskrivelse</th>
+                    <th>Længde</th>
+                    <th>Bredde</th>
+                    <th>Pris</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${get_all_products}">
+                    <td th:text="${product.specification.getAmount}">Navn</td>
+                    <td th:text="${product.productID}">Varenummer</td>
+                    <td th:text="${product.description}">Varebeskrivelse</td>
+                    <td th:text="${product.length}">Længde</td>
+                    <td th:text="${product.width}">Bredde</td>
+                    <td th:text="${product.price}">Pris</td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(get_all_products)}">
+                    <td colspan="10">Ingen produkter fundet</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</section>
+
+<section id="drawing_section" class="tab_content"> </section>
+
+<section id="customer_receipt_section" class="tab_content"> </section>
+
+<section id="customer_email_section" class="tab_content"> </section>
 
 </body>
+
+
+
 <footer th:replace="~{fragments :: footer}"></footer>

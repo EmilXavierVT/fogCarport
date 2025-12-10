@@ -34,12 +34,12 @@ public class AdminController {
     {try
         {
            List<User> users = UserMapper.getAllUsers(connectionPool);
-//           List<CarportRequest> orders = CarportRequestMapper.getAllCarportRequests(connectionPool);
+           List<CarportRequest> request = CarportRequestMapper.getAllCarportRequests(connectionPool);
             List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
             List<Product> products = ProductMapper.getAllProducts(connectionPool);
 
             ctx.render("admin/alert.html", Map.of("all_users", users,
-//                    "all_carport_requests", orders,
+//                    "all_carport_requests", request,
                     "all_standard_carports", standardCarports,
                     "all_products", products));
 

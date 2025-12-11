@@ -10,13 +10,13 @@ public class Svg {
 
 
     private static final String SVG_ARROW_DEFS = "<defs>\n" +
-            "        <marker id=\"beginArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"0\" refY=\"6\" orient=\"auto\">\n" +
-            "            <path d=\"M0,6 L12,0 L12,12 L0,6\" style=\"fill: #000000;\" />\n" +
-            "        </marker>\n" +
-            "        <marker id=\"endArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"12\" refY=\"6\" orient=\"auto\">\n" +
-            "            <path d=\"M0,0 L12,6 L0,12 L0,0 \" style=\"fill: #000000;\" />\n" +
-            "        </marker>\n" +
-            "    </defs>";
+            "  <marker id=\"beginArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"0\" refY=\"6\" orient=\"auto\" markerUnits=\"userSpaceOnUse\">\n" +
+            "    <path d=\"M0,6 L12,0 L12,12 L0,6\" style=\"fill:#000000;\" />\n" +
+            "  </marker>\n" +
+            "  <marker id=\"endArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"12\" refY=\"6\" orient=\"auto\" markerUnits=\"userSpaceOnUse\">\n" +
+            "    <path d=\"M0,0 L12,6 L0,12 L0,0\" style=\"fill:#000000;\" />\n" +
+            "  </marker>\n" +
+            "</defs>";
 
     private static final String SVG_LINE_TEMPLATE = " <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" style=\"%s\" />\n";
 
@@ -61,5 +61,13 @@ public class Svg {
 
     public String toString(){
         return svg.append("</svg>").toString();
+    }
+
+    public void beginGroup(String attributes) {
+        this.svg.append("<g " + attributes + ">");
+    }
+
+    public void endGroup() {
+        this.svg.append("</g>");
     }
 }

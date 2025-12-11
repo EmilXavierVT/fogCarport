@@ -12,7 +12,8 @@
     <button class="tab " data-target="customer_email_section"> Kunde-Email</button>
 </div>
 
-<section id="quick_build_section" class="tab_content active"> </section>
+<form th:action="@{/admin/update_request}" method="POST">
+<section id="quick_build_section" class="tab_content active">
 <div class="quick_build_container">
     <h1>Quick-Byg</h1>
 
@@ -22,7 +23,9 @@
             <div class="flat_section_container_boxes">
     <div class="flat_section_container_construction">
         <form class="user_defined_form"></form> <!--th:action="@{/flat}" method="POST" -->
-        <label for="width"><h3>Bredde</h3></label><select name="width" th:required="true">
+        <label for="width"><h3>Bredde</h3></label>
+        <select id="width" name="width" th:required="true"  >
+        <option value="" th:text="${carport_request.carport.specification.width}">0</option>
         <option value="0">0</option>
         <option value="300">300</option>
         <option value="360">360</option>
@@ -31,7 +34,9 @@
         <option value="540">540</option>
         <option value="600">600</option>
     </select>
-        <label for="length"><h3>Længde</h3></label><select name="length"  th:required="true">
+        <label for="length"><h3>Længde</h3></label>
+        <select id="length" name="length"  th:required="true">
+        <option value="" th:text="${carport_request.carport.specification.length}">0</option>
         <option value="1">0</option>
         <option value="300">300</option>
         <option value="360">360</option>
@@ -46,11 +51,13 @@
 
     </div>
         <div class="flat_section_container_construction">
-            <label for="shed"></label> <h3>Redskabskur</h3><select name="shed" id="shed"th:required="true">
+            <label for="shed"></label> <h3>Redskabskur</h3>
+            <select name="shed" id="shed"th:required="true">
             <option value="0">Uden Skur</option>
             <option value="1">Med Skur</option>
         </select>
-            <label for="shed_width"><h3>Redskabsrum bredde</h3></label><select name="shed_width" id="shed_width">
+            <label for="shed_width"><h3>Redskabsrum bredde</h3></label>
+            <select name="shed_width" id="shed_width">
             <option value="0">0</option>
             <option value="300">300</option>
             <option value="360">360</option>
@@ -59,7 +66,8 @@
             <option value="540">540</option>
             <option value="600">600</option>
         </select>
-            <label for="shed_length"><h3>Redskabsrum længde</h3></label><select name="shed_length" id="shed_length">
+            <label for="shed_length"><h3>Redskabsrum længde</h3></label>
+            <select name="shed_length" id="shed_length">
             <option value="0">0</option>
             <option value="300">300</option>
             <option value="360">360</option>
@@ -82,11 +90,13 @@
     <h2>Tag</h2>
         <div class= "flat_section_container_boxes">
     <div class="flat_section_container_construction">
-        <label for="roof"></label> <h3>Carport trapeztag</h3><select name="roof" id="roof"th:required="true">
+        <label for="roof"></label> <h3>Carport trapeztag</h3>
+        <select name="roof" id="roof"th:required="true">
         <option value="1">Ingen tag</option>
         <option value="2">Plast tag</option>
     </select>
-        <label for="roof_angle"><h3>Grader ved rejsning</h3></label><select name="roof_angle" id="roof_angle" th:required="true">
+        <label for="roof_angle"><h3>Grader ved rejsning</h3></label>
+        <select name="roof_angle" id="roof_angle" th:required="true">
         <option value="0">0</option>
         <option value="5">5</option>
         <option value="10">10</option>
@@ -96,7 +106,7 @@
         </div>
             <div class="flat_section_container_construction">
                 <label for="rafter_type"><h3>Materialer</h3></label>
-                <select name="rafter_type" th:required="true">
+                <select id="rafter_type" name="rafter_type" th:required="true">
                     <option value="1">Færdige spær (dyre)</option>
                     <option value="2">Byg-selv-spær (billige)</option>
                 </select>
@@ -177,8 +187,10 @@
              </div>
     </div>
 -->
+    <button type="submit">Opdater Database</button>
 </div>
-
+</section>
+</form>
 
 <section id="product_section" class="tab_content active">
 
@@ -222,8 +234,9 @@
 <section id="drawing_section" class="tab_content active"> </section>
 <p>here we want to show the svg</p>
 <div class="carport-svg-topview">
-    <div th:utext="${svg}"> </div>
+    <div class="svg_construction" th:utext="${svg}"> </div>
 </div>
+
 
 <section id="customer_receipt_section" class="tab_content"> </section>
 
@@ -258,12 +271,7 @@ Dbh.
         </div>
 
     </div>
-    </div>
-
 </section>
-
+<script src="/js/script.js"></script>
 </body>
-
-
-
 <footer th:replace="~{fragments :: footer}"></footer>

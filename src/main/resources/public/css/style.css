@@ -878,11 +878,7 @@ img.user_defined_picture {
 .search_input {
     margin-bottom: 2%;
 }
-.carport-svg-topview
-{
-    max-width: 200px;
-    max-height: 200px;
-}
+.carport-svg-topview {}
 
 .flat_section_container_admin {
     text-align: center;

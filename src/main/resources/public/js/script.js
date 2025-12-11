@@ -243,7 +243,7 @@ document.querySelectorAll(".open_details").forEach(svg => {
         document.getElementById("view_shed_width").textContent = this.dataset.shedWidth;
 
         document.getElementById("view_shed").textContent =
-            this.dataset.shed === true ? 'Ja' : 'Nej';
+            this.dataset.shed === "1" ? 'Ja' : 'Nej';
 
         document.getElementById("view_roof").textContent =
             this.dataset.roof === "1" ? "Ingen tag" :

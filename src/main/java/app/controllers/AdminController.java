@@ -3,12 +3,14 @@ package app.controllers;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
+import app.services.Svg;
 import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +21,33 @@ public class AdminController {
 
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
         app.post("/update_price", ctx -> updatePrice(ctx, connectionPool));
-        app.get("/admin/construction",ctx-> showConstructionPage(ctx, connectionPool));
+        app.get("/admin/construction/{id}",ctx-> showConstructionPage(ctx, connectionPool));
+//        app.get("")
         app.post("/admin/construction",ctx -> sendEmail(ctx));
+
+        app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
     }
+
+    private static void updateRequest(Context ctx, ConnectionPool connectionPool)
+    {
+        CarportRequest req = ctx.sessionAttribute("carport_request");
+        int width = Integer.parseInt(ctx.sessionAttribute("width"));
+        int length = Integer.parseInt(ctx.sessionAttribute("length"));
+        boolean shed = Integer.parseInt(ctx.sessionAttribute("shed")) == 0 ? false : true;
+        int shedWidth = Integer.parseInt(ctx.sessionAttribute("shed_width"));
+        int shedLength = Integer.parseInt(ctx.sessionAttribute("shed_length"));
+        int roof = Integer.parseInt(ctx.sessionAttribute("roof"));
+        int roofAngle = Integer.parseInt(ctx.sessionAttribute("roof_angle"));
+        int rafterType = Integer.parseInt(ctx.sessionAttribute("rafter_type"));
+
+        Specification spec = req.getCarport().getSpecification();
+
+
+        // req -> carport -> specifaction
+//        mapper til spec alle attributter
+
+    }
+
 
     private static void sendEmail(Context ctx) throws MessagingException {
         GmailSender gemailSender = new GmailSender();
@@ -35,12 +61,26 @@ public class AdminController {
         ctx.redirect("/admin/alert");
     }
 
-    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool) {
-        try{
-            List<Product> products = ProductMapper.getAllProducts(connectionPool);
-            ctx.render("admin/construction.html", Map.of("get_all_products", products));
+    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool)
+    {
+        try
+        {
+            int id = Integer.parseInt(ctx.pathParam("id"));
 
-        } catch (DatabaseException e) {
+            CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
+            ctx.sessionAttribute("carport_request", cr);
+            if (cr != null) {
+                Specification sp = cr.getCarport().getSpecification();
+
+                Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
+                ctx.attribute("svg", svg.toString());
+            }
+            else {
+                throw new RuntimeException("Svg Could not be found");
+            }
+            ctx.render("admin/construction.html", Map.of("carport_request", cr));
+
+        } catch (DatabaseException | SQLException e) {
             throw new RuntimeException(e);
         }
 

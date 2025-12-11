@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Carport;
+import app.entities.Specification;
 import app.entities.User;
 import app.entities.UserDefinedCarport;
 import app.exceptions.DatabaseException;
@@ -149,8 +150,10 @@ public class UserDefinedController {
         ctx.redirect("/");
     }
 
-    public static void showDrawing(Context ctx, int width, int length,int shedWidth,int shedLength) {
+    public static Svg showDrawing( int width, int length, int shedWidth, int shedLength, Specification specification) {
+
         Locale.setDefault(Locale.US);
+        Calculator calc = new Calculator(specification);
 
         //creating scale around carport
         Svg scale = new Svg(0,0,"0 0 855 690","100%","auto");
@@ -298,8 +301,8 @@ public class UserDefinedController {
         //adding carport to scale
         scale.addSvg(carportSvg);
 
-        ctx.attribute("svg",scale.toString());
-        ctx.render("/show_drawing.html");
+        return scale;
+
 
     }
 

@@ -198,4 +198,10 @@ public class SpecificationMapper
         }
     }
 
+    public static void updateSpecification(int requestId, int width, int length, boolean shed, int shedWidth, int shedLength, int roof, int roofAngle, int rafterType)
+    {
+    //  String sql = "UPDATE specifications Set width"
+
+}
+
 }

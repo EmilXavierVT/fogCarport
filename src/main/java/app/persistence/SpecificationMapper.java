@@ -198,10 +198,29 @@ public class SpecificationMapper
         }
     }
 
-    public static void updateSpecification(int requestId, int width, int length, boolean shed, int shedWidth, int shedLength, int roof, int roofAngle, int rafterType)
+    public static void updateSpecification(int requestId, int width, int length, boolean shed, int shedWidth, int shedLength, int roof, ConnectionPool connectionPool) throws DatabaseException, SQLException
     {
-    //  String sql = "UPDATE specifications Set width"
+      String sql = "UPDATE specifications SET length = ?, width = ?, shed = ?, shed_width = ?, shed_depth = ?, roof = ? " +
+              "FROM carports JOIN carport_requests USING (carport_id) WHERE carports.specifications = specifications.specification_id " +
+              "AND carport_requests.carport_request_id = ?";
 
+      try(Connection connection = connectionPool.getConnection();
+      PreparedStatement ps = connection.prepareStatement(sql))
+      {
+          ps.setInt(1, length);
+          ps.setInt(2, width);
+          ps.setBoolean(3, shed);
+          ps.setInt(4, shedWidth);
+          ps.setInt(5, shedLength);
+          ps.setInt(6, roof);
+          ps.setInt(7, requestId);
+          int rowsAffected = ps.executeUpdate();
+
+          if ( rowsAffected != 1 )
+          {
+              throw new DatabaseException("Failed to update specifications with ID: " + requestId);
+          }
+      }
 }
 
 }

@@ -237,8 +237,8 @@ document.querySelectorAll(".open_details").forEach(svg => {
 
         document.getElementById("view_length").textContent = this.dataset.length;
         document.getElementById("view_width").textContent = this.dataset.width;
-        document.getElementById("view_roof").textContent = this.dataset.roof;
-        document.getElementById("view_shed").textContent = this.dataset.shed;
+        //document.getElementById("view_roof").textContent = this.dataset.roof;
+        //document.getElementById("view_shed").textContent = this.dataset.shed;
         document.getElementById("view_shed_depth").textContent = this.dataset.shedDepth;
         document.getElementById("view_shed_width").textContent = this.dataset.shedWidth;
 

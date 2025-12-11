@@ -3,6 +3,7 @@ package app.controllers;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
+import app.services.Calculator;
 import app.services.Svg;
 import app.util.GmailSender;
 import io.javalin.Javalin;
@@ -28,21 +29,19 @@ public class AdminController {
         app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
     }
 
-    private static void updateRequest(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void updateRequest(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
         CarportRequest req = ctx.sessionAttribute("carport_request");
-        int width = Integer.parseInt(ctx.sessionAttribute("width"));
-        int length = Integer.parseInt(ctx.sessionAttribute("length"));
-        boolean shed = Integer.parseInt(ctx.sessionAttribute("shed")) == 0 ? false : true;
-        int shedWidth = Integer.parseInt(ctx.sessionAttribute("shed_width"));
-        int shedLength = Integer.parseInt(ctx.sessionAttribute("shed_length"));
-        int roof = Integer.parseInt(ctx.sessionAttribute("roof"));
-        int roofAngle = Integer.parseInt(ctx.sessionAttribute("roof_angle"));
-        int rafterType = Integer.parseInt(ctx.sessionAttribute("rafter_type"));
+        int width = Integer.parseInt(ctx.formParam("width"));
+        int length = Integer.parseInt(ctx.formParam("length"));
+        boolean shed = Integer.parseInt(ctx.formParam("shed")) == 0 ? false : true;
+        int shedWidth = Integer.parseInt(ctx.formParam("shed_width"));
+        int shedLength = Integer.parseInt(ctx.formParam("shed_length"));
+        int roof = Integer.parseInt(ctx.formParam("roof"));
 
         Specification spec = req.getCarport().getSpecification();
+        SpecificationMapper.updateSpecification(req.getCarportRequestID(),width,length,shed,shedWidth,shedLength,roof,connectionPool);
 
-
+        ctx.redirect("/admin/construction/" + req.getCarportRequestID());
         // req -> carport -> specifaction
 //        mapper til spec alle attributter
 
@@ -71,18 +70,22 @@ public class AdminController {
             ctx.sessionAttribute("carport_request", cr);
             if (cr != null) {
                 Specification sp = cr.getCarport().getSpecification();
+               List<ProductInOrder> itemList = new Calculator(sp).setItemList();
+               ctx.sessionAttribute("item_list", itemList);
 
                 Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
                 ctx.attribute("svg", svg.toString());
+            ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list",itemList));
             }
             else {
                 throw new RuntimeException("Svg Could not be found");
             }
-            ctx.render("admin/construction.html", Map.of("carport_request", cr));
 
         } catch (DatabaseException | SQLException e) {
             throw new RuntimeException(e);
         }
+
+
 
     }
 

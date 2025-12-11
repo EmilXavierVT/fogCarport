@@ -177,21 +177,7 @@ public class UserDefinedController {
         carportSvg.addRectangle(0,30,4,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
         carportSvg.addRectangle(0,width-30,4,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
 
-        //spær
-        int startRafter = 0;
-        int endRafter = length - 5;
-        int raftersBettwen = calc.getAmountOfRafters()-2;
-        int spaceBettwenRafter = endRafter/(raftersBettwen+1);
 
-        carportSvg.addRectangle(startRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
-        carportSvg.addRectangle(endRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
-
-        while (raftersBettwen>0)
-        {
-            startRafter += spaceBettwenRafter;
-            carportSvg.addRectangle(startRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
-            raftersBettwen --;
-        }
 
         if(shedLength == 0 && shedWidth == 0 ) {
             //stolper
@@ -292,6 +278,22 @@ public class UserDefinedController {
                 carportSvg.addRectangle(firstPost+secondPost,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
             }
             }
+
+        //spær
+        int startRafter = 0;
+        int endRafter = length - 5;
+        int raftersBettwen = calc.getAmountOfRafters()-2;
+        int spaceBettwenRafter = endRafter/(raftersBettwen+1);
+
+        carportSvg.addRectangle(startRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
+        carportSvg.addRectangle(endRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
+
+        while (raftersBettwen>0)
+        {
+            startRafter += spaceBettwenRafter;
+            carportSvg.addRectangle(startRafter,0,width,5,"stroke-width:1px; stroke:#000000; fill:#ffffff");
+            raftersBettwen --;
+        }
         //stolpe mellem skur og sidste stolpte øverst højre
 
         //dash lines

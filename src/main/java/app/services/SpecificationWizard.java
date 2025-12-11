@@ -15,7 +15,7 @@ public class SpecificationWizard {
 
     public static Specification makeASpecification(int width, int length, boolean roof, int shedWidth, int shedDepth) throws DatabaseException, SQLException {
 
-        int roomFor = (int) (width/100)/3;
+        int roomFor = (int) (width/300);
         boolean shed = (shedWidth > 0 && shedDepth > 0);
 
         List<Product> allProducts = ProductMapper.getAllProducts(ConnectionPool.getInstance());
@@ -36,7 +36,7 @@ public class SpecificationWizard {
     }
   public static Specification makeAngleSpecification(int width, int length, boolean roof, int shedWidth, int shedDepth, int angle) throws DatabaseException {
 
-    int roomFor = (int) (width/100)/3;
+    int roomFor = (int) (width/300);
     boolean shed = (shedWidth > 0 && shedDepth > 0);
 
     List<Product> allProducts = ProductMapper.getAllProducts(ConnectionPool.getInstance());

@@ -36,7 +36,7 @@ public class UserDefinedController {
        app.post("/flat",ctx-> sendRequest(ctx, connectionPool));
        app.get("/angle", ctx -> ctx.render("angle"));
        app.post("/angle", ctx -> sendAngleRequest(ctx, connectionPool));
-       app.get("/show_drawing", ctx -> showDrawing(ctx));
+//       app.get("/show_drawing", ctx -> showDrawing(ctx));
     }
 
     private static void sendAngleRequest(Context ctx,ConnectionPool connectionPool) throws DatabaseException, MessagingException {
@@ -149,7 +149,7 @@ public class UserDefinedController {
         ctx.redirect("/");
     }
 
-    public static void showDrawing(Context ctx) {
+    public static void showDrawing(Context ctx, int width, int length,int shedWidth,int shedLength) {
         Locale.setDefault(Locale.US);
 
         //creating scale around carport

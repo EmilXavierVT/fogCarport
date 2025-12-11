@@ -786,11 +786,11 @@ img.user_defined_picture {
     justify-content: center;
     align-items: center;
     width: 80%;
-    gap:10px;
+    gap: 10px;
     border-radius: 10px;
     border: 3px solid var(--border_box_color);
-
 }
+
 .form_submit_button {
     background: var(--dark_blue_widget);
     color: var(--white_widget);
@@ -883,6 +883,58 @@ img.user_defined_picture {
     max-width: 200px;
     max-height: 200px;
 }
+
+.flat_section_container_admin {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    border-radius: 10px;
+    border: 3px solid var(--border_box_color);
+}
+.flat_section_admin {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    gap:10px;
+}
+.flat_section_container_construction {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    min-height: 192px;
+    gap: 10px;
+    border-radius: 10px;
+   border: 3px solid var(--border_box_color);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+}
+.flat_section_container_header{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.flat_section_container_boxes{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 3px solid var(--border_box_color);
+}
+
 
 /*ADMIN OVERLAY EDIT/VIEW*/
 .open_details * {

@@ -17,7 +17,17 @@ public class AdminController {
 
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
         app.post("/update_price", ctx -> updatePrice(ctx, connectionPool));
-        app.get("/admin/construction",ctx-> ctx.render("admin/construction.html"));
+        app.get("/admin/construction",ctx-> showConstructionPage(ctx, connectionPool));
+    }
+
+    private static void showConstructionPage(@NotNull Context ctx, ConnectionPool connectionPool) {
+        try{
+            List<Product> products = ProductMapper.getAllProducts(connectionPool);
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+
+        ctx.render("admin/construction.html");
     }
 
     private static void updatePrice(Context ctx, ConnectionPool connectionPool)

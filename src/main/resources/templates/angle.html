@@ -1,4 +1,4 @@
-<head th:replace="fragments :: head(~{::flat})"><title>Fladt Tag</title></head>
+<head th:replace="~{fragments :: head(~{::flat})}"><title>Fladt Tag</title></head>
 <body>
 <header th:replace="~{fragments :: header}"></header>
 <div class="content_holder_flat">
@@ -26,7 +26,6 @@
         </select>
             <label for="length">Carport længde</label><select name="length" id="length" th:required="true">
             <option value="1">0</option>
-
             <option value="2">300</option>
             <option value="3">360</option>
             <option value="4">420</option>
@@ -38,7 +37,6 @@
             <option value="10">780</option>
         </select>
             <label for="roof"></label> Carport trapeztag<select name="roof" id="roof"th:required="true">
-
             <option value="1">Sort beton tagsten</option>
             <option value="2">Rød beton tagsten</option>
         </select>
@@ -46,7 +44,7 @@
             <option value="1"> 10</option>
             <option value="2"> 15</option>
             <option value="3"> 20</option>
-            <option value="4">25 </option>
+            <option value="4">25</option>
             <option value="5"> 30</option>
             <option value="5"> 35</option>
             <option value="5"> 40</option>
@@ -101,4 +99,4 @@
     <section> </section>
 </div>
 </body>
-<footer th:replace="fragments :: footer"></footer>
+<footer th:replace="~{fragments :: footer}"></footer>

@@ -224,3 +224,39 @@ searchInputMaterials.addEventListener('input', function()
         }
     });
 });
+
+//ADMIN OVERLAY VIEW AND EDIT
+document.querySelectorAll(".open_details").forEach(svg => {
+    svg.addEventListener("click", function() {
+        document.getElementById("length_input").value = this.dataset.length;
+        document.getElementById("width_input").value = this.dataset.width;
+        document.getElementById("shed_input").value = this.dataset.shed;
+        document.getElementById("roof_input").value = this.dataset.roof;
+        document.getElementById("shed_depth_input").value = this.dataset.shedDepth;
+        document.getElementById("shed_width_input").value = this.dataset.shedWidth;
+
+        document.getElementById("view_length").textContent = this.dataset.length;
+        document.getElementById("view_width").textContent = this.dataset.width;
+        document.getElementById("view_roof").textContent = this.dataset.roof;
+        document.getElementById("view_shed").textContent = this.dataset.shed;
+        document.getElementById("view_shed_depth").textContent = this.dataset.shedDepth;
+        document.getElementById("view_shed_width").textContent = this.dataset.shedWidth;
+
+        document.getElementById("view_shed").textContent =
+            this.dataset.shed === true ? 'Ja' : 'Nej';
+
+        document.getElementById("view_roof").textContent =
+            this.dataset.roof === "1" ? "Ingen tag" :
+            this.dataset.roof === "2" ? "Plast tag" : "";
+
+        document.body.style.overflow = 'hidden';
+        document.getElementById("edit_modal").classList.remove("modal_hidden");
+        document.getElementById("view_panel").classList.remove("view_panel_hidden")
+    });
+});
+
+document.getElementById("close_btn").addEventListener("click", () => {
+    document.getElementById("edit_modal").classList.add("modal_hidden");
+    document.getElementById("view_panel").classList.add("view_panel_hidden");
+    document.body.style.overflow = 'unset';
+});

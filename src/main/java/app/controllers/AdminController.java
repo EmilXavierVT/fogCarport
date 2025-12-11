@@ -17,6 +17,7 @@ public class AdminController {
 
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
         app.post("/update_price", ctx -> updatePrice(ctx, connectionPool));
+        app.get("/admin/construction",ctx-> ctx.render("admin/construction.html"));
     }
 
     private static void updatePrice(Context ctx, ConnectionPool connectionPool)
@@ -26,7 +27,6 @@ public class AdminController {
         ProductMapper.updateProductPrice(productId, newPrice, connectionPool);
         ctx.sessionAttribute("price_update_message", "Produkt pris opdateret !");
         ctx.redirect("/admin/alert");
-
     }
 
 
@@ -50,7 +50,6 @@ public class AdminController {
         }
 
     }
-
 
     private static void showAllUsers(Context ctx, ConnectionPool connectionPool)
     {

@@ -27,6 +27,17 @@ public class AdminController {
         app.post("/admin/construction",ctx -> sendEmail(ctx));
 
         app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
+        app.post("/update_offer_price", ctx -> updateOfferPrice(ctx,connectionPool));
+    }
+
+    private static void updateOfferPrice(Context ctx, ConnectionPool connectionPool)
+    {
+        double markupPercentage = ctx.formParam("markup_percentage") == null ? 1.39 : Double.parseDouble(ctx.formParam("markup_percentage"));
+        CarportRequest req = ctx.sessionAttribute("carport_request");
+
+        ctx.sessionAttribute("markup_percentage", 1+(markupPercentage/100));
+        ctx.redirect("/admin/construction/"+req.getCarportRequestID());
+
     }
 
     private static void updateRequest(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
@@ -50,8 +61,8 @@ public class AdminController {
 
     private static void sendEmail(Context ctx) throws MessagingException {
         GmailSender gemailSender = new GmailSender();
-        String to = "luke_persson@yahoo.dk";
-//        String to = ctx.formParam("to_email");
+//        String to = "luke_persson@yahoo.dk";
+        String to = ctx.formParam("to_email");
         String subject = ctx.formParam("email_subject");
         String body = ctx.formParam("email_body");
 
@@ -69,13 +80,25 @@ public class AdminController {
             CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
             ctx.sessionAttribute("carport_request", cr);
             if (cr != null) {
+
                 Specification sp = cr.getCarport().getSpecification();
-               List<ProductInOrder> itemList = new Calculator(sp).setItemList();
+                Calculator calc = new Calculator(sp);
+               List<ProductInOrder> itemList = calc.setItemList();
                ctx.sessionAttribute("item_list", itemList);
+               double markupPercentage = ctx.sessionAttribute("markup_percentage") == null ? 1.39 : ctx.sessionAttribute("markup_percentage");
+
+
+                double salesCost = 5;
+
+                double costPrice = salesCost * calc.getCostPrice();
+
+               double actualOffer = (costPrice * markupPercentage) * 1.25;
+
+
 
                 Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
                 ctx.attribute("svg", svg.toString());
-            ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list",itemList));
+            ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list",itemList, "cost_price",costPrice, "actual_offer", actualOffer));
             }
             else {
                 throw new RuntimeException("Svg Could not be found");

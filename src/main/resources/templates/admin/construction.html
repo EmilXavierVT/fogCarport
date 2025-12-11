@@ -152,6 +152,21 @@
                 </tbody>
             </table>
         </div>
+        <div class="price_container">
+            <div>
+            <h2>Kost Pris: <span th:text="${cost_price} + ' DKK'"></span></h2>
+            <h2>Tilbuds Pris: <span th:text="${actual_offer} + ' DKK'"></span></h2>
+            </div>
+            <div>
+                <form th:action="@{/update_offer_price}" method="post">
+                <input type="hidden" />
+                    <label>
+                        <input name="markup_percentage" class="input_markup_percentage" type="number" min="20" max="99" placeholder="Ændre pris" required />
+                    </label>
+                    <button class="button_white" type="submit">dækningsgrad</button>
+            </form>
+            </div>
+        </div>
     </section>
 
 <section id="drawing_section" class="tab_content">

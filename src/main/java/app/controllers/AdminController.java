@@ -27,11 +27,19 @@ public class AdminController {
 //        app.get("")
         app.post("/admin/construction",ctx -> sendEmail(ctx));
         app.post("/send_acceptance_offer",ctx -> sendAcceptanceOffer(ctx));
+        app.post("/delete_offer",ctx -> deleteOffer(ctx, connectionPool));
 
         app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
         app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
     }
 
+    private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
+        // Instead of Deleting it, we change the type of the carport to type 404. So it can be looked up later.
+
+        CarportRequest rq = ctx.sessionAttribute("carport_request");
+        CarportMapper.changeTypeToDeletedByID(rq.getCarport().getCarportID(),connectionPool);
+        ctx.redirect("/admin/alert");
+    }
 
     private static void sendAcceptanceOffer(Context ctx) throws MessagingException
     {

@@ -9,14 +9,12 @@
     <button type="submit" id="yes-btn" class="yes-btn">JA</button>
         <label>
             <input hidden name="carport_request_id" th:value="${carport_request.carportRequestID}">
-            </input>
         </label>
     </form>
     <form action="/decline_offer" method="POST">
     <button type="submit" id="no-btn" class="no-btn">NEJ</button>
         <label>
             <input hidden name="carport_request_id" th:value="${carport_request.carportRequestID}">
-            </input>
         </label>
     </form>
 </div>

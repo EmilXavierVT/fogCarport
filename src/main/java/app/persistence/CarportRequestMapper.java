@@ -106,19 +106,5 @@ public class CarportRequestMapper {
         }
 
     }
-    public static void getStatus(int id, ConnectionPool connectionPool)
-    {
-        String sql = "SELECT status FROM carport_requests WHERE carport_request_id = ?";
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
 
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

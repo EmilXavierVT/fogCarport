@@ -1,12 +1,10 @@
-<head th:replace="fragments :: head(~{::userdefined})"><title>Skræddersyet Carport</title></head>
+<head th:replace="~{fragments :: head(~{::userdefined})}"><title>Skræddersyet Carport</title></head>
 <body>
 <header th:replace="~{fragments :: header}"></header>
-
 <section class="user_defined_title">
     <p> Lad os tegne din carport drøm
         bestil et Quick-Byg tilbud</p>
 </section>
-
 <section class="content_holder_user_defined">
     <a th:href="@{/flat}">
     <div class="carport_type_picker">
@@ -57,16 +55,16 @@
     </div>
         </a>
      </section>
-
 <section class="user_defined_body_text">
     <p class="user_defined_description_text">Med et specialudviklet computerprogram kan vi lynhurtigt beregne
         prisen og  udskrive en skitsetegning på en carport indenfor
         standardprogram. <br/>
         Tilbud og skitsetegning fremsendes på mail hurtigst muligt. Ved bestilling medfølger standardbyggevejledning.</p>
-
 </section>
 <section class="user_defined_picture_section">
     <img class="user_defined_picture" th:src="@{/images/udcCarport.png}" alt="user_defined_picture"/>
 </section>
-<footer th:replace="fragments :: footer"></footer>
+<script src="/js/script.js"></script>
 </body>
+<footer th:replace="~{fragments :: footer}"></footer>
+

@@ -1,7 +1,6 @@
 <head th:replace="~{admin_fragments :: head(~{::construction})}"><title>Konstruktion af Kunde-carport</title></head>
 <header th:replace="~{fragments :: header}"></header>
 <body>
-
 <section class="Construction"> </section>
 <h1>Konstruktion</h1>
 <div class="input_container">
@@ -11,7 +10,6 @@
     <button class="tab" data-target="customer_receipt_section"> Kunde-kvittering</button>
     <button class="tab" data-target="customer_email_section"> Kunde-Email</button>
 </div>
-
 <form th:action="@{/admin/update_request}" method="POST">
 <section id="quick_build_section" class="tab_content active">
 <div class="display_container_vertical">
@@ -47,11 +45,10 @@
         <option value="720">720</option>
         <option value="780">780</option>
     </select>
-
     </div>
         <div class="flat_section_container_construction">
             <label for="shed"></label> <h3>Redskabskur</h3>
-            <select name="shed" id="shed" th:required="true">
+            <select class="dropdowns_admin_construction" name="shed" id="shed" th:required="true">
                 <option th:text="${carport_request.carport.specification.shed == true ? 'Med Skur' : 'Uden Skur' }"></option>
                 <option value="0">Uden Skur</option>
                 <option value="1">Med Skur</option>
@@ -85,8 +82,6 @@
     </div>
     </div>
     </div>
-
-
 <div class="flat_section_container_admin">
     <div class="flat_section_container_header">
     <h2>Tag</h2>
@@ -113,14 +108,13 @@
                     <option value="2">Byg-selv-spær (billige)</option>
                 </select>
             </div>
-</div>
+        </div>
     </div>
 </div>
     <div class="button_row">
     <button class="button_white"
             type="submit"
             style="margin-top: 2%; max-width: 200px; height: 10%;">Opdater Database</button>
-
     <button type="button" class="button_white tab"
             data-target="itemList_section"
             style="margin-top: 2%; max-width: 200px; height: 10%;">Se Stykliste</button>
@@ -128,7 +122,6 @@
 </div>
 </section>
 </form>
-
     <section id="itemList_section" class="tab_content">
         <div class="display_container_vertical">
         <h2>Forespørgsler</h2>
@@ -180,45 +173,39 @@
             <button type="button" class="button_white tab"
                     data-target="quick_build_section"
                     style="margin-top: 2%; max-width: 200px; height: 10%;">Se Quick-byg</button>
-
                 <button type="button" class="button_white tab"
                         data-target="drawing_section"
                         style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>
                 </div>
         </div>
     </section>
-
 <section id="drawing_section" class="tab_content">
     <div class="display_container_vertical">
 <div class="carport-svg-topview" style="height: 500px; width: 100%;">
     <div class="svg_construction" th:utext="${svg}"> </div>
 </div>
-    <div class="button_row">
+    <div class="button_row" style="margin-top: 10%;">
         <button type="button" class="button_white tab"
                 data-target="itemList_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Stykliste</button>
-
         <button type="button" class="button_white tab"
                 data-target="customer_receipt_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kundekvittering</button>
     </div>
     </div>
 </section>
-
 <section id="customer_receipt_section" class="tab_content">
 <div class="display_container_vertical">
     <div class="button_row">
         <button type="button" class="button_white tab"
                 data-target="drawing_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>
-
         <button type="button" class="button_white tab"
                 data-target="customer_email_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kunde-Email</button>
     </div>
 </div>
 </section>
-
 <section id="customer_email_section" class="tab_content">
     <div class="quick_build_container">
         <h1>Kunde E-mail</h1>
@@ -237,18 +224,14 @@
                                   placeholder="Hej (indsæt brugernavn)" required>
                         </textarea>
                         <button type="submit" class="button_white">Send Email</button>
-
-
-
-                        <button type="submit">Send Email</button>
                     </form>
                     <form th:action="@{/send_acceptance_offer}" method="post">
-                        <button type="submit">Send Tilbud</button>
+                        <button class="button_white" type="submit" style="width: 200px;">Send Tilbud</button>
                     </form>
                     <form th:action="@{/delete_offer}" method="post">
-                        <button type="submit">Slet Tilbud</button>
+                        <button class="button_white" type="submit" style="width: 200px;">Slet Tilbud</button>
                     </form>
-                    <div class="button_row">
+                    <div class="button_row" style="width: 200px;">
                         <button type="button" class="button_white tab"
                                 data-target="drawing_section"
                                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>

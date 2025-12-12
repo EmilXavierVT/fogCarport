@@ -1,7 +1,6 @@
 <head th:replace="~{fragments :: head(~{::flat})}"><title>Fladt Tag</title></head>
 <body>
 <header th:replace="~{fragments :: header}"></header>
-
 <div class="content_holder_accept_offer">
 <p th:text="${'Hej ' + carport_request.user.firstName}  + ${' du har lavet bestilling : ' + carport_request.carportRequestID} "></p>
     <p>Vil du acceptere tilbudet ?</p>
@@ -18,5 +17,6 @@
         </label>
     </form>
 </div>
-
+<script src="/js/script.js"></script>
+</body>
 <footer th:replace="~{fragments :: footer}"></footer>

@@ -4,7 +4,6 @@
 <section class="Dashboard">
     <h1>Dashboard</h1>
     <input id="search" type="text" name="q" placeholder="Søg" class="search_input"/>
-
 <div class="tabs_container">
     <button class="tab active" data-target="products_section">Produkter</button>
     <button class="tab" data-target="materials_section">Materialer</button>
@@ -28,7 +27,6 @@
                             <div th:href="@{'/carport/' + ${carport.carportID}}"
                                th:text="${carport.name}">Produktnavn</div>
                         </td>
-
                         <td th:text="${carport.type == 1 ? 'enkelt' : (carport.type == 2 ? 'double' : 'Ukendt')}">Kategori</td>
                         <td th:text="${carport.price} + ' kr.'">Pris</td>
                     </tr>
@@ -50,7 +48,6 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     <tr  th:each="product : ${all_products}">
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.dimensions}"></td>
@@ -71,7 +68,6 @@
                 </table>
             </div>
         </section>
-
     <section id="notifications_section" class="tab_content">
             <h2>Forespørgsler</h2>
             <div class="table_container">

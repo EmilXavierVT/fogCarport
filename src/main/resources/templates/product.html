@@ -1,11 +1,9 @@
 <head th:replace="~{fragments :: head(~{::product})}"><title>Produkt</title></head>
 <header th:replace="~{fragments :: header}"></header>
 <body>
-
 <section>
 <div class="display_container_vertical">
 <div class="display_container_horizontal">
-
     <div class="content_holder">
         <img class="product_page_image" th:src="@{'/images/' + ${carport.carportID} + 'carport.png'}" alt="Carport image" />
     <div class="product_text_field">
@@ -21,7 +19,6 @@
             <input type="hidden" name="productName" th:value="${carport.name}"/>
             <input type="hidden" name="productThumbnail" th:value="@{'/images/' + ${carport.carportID} + 'carport.png'}"/>
             <input type="hidden" name="productPrice" th:value="${carport.price}"/>
-
             <div class="add_amount_row">
                 <button class="product_page_button" type="button" onclick="decreaseOne()">-</button>
                 <input class="product_page_counter" type="number" min="1" max="100" id="counter_number" name="amount" value="1" readonly required />
@@ -38,10 +35,8 @@
 </div>
 </div>
 </section>
-
 <section class="product_page_info_section">
 <div class="display_container_vertical">
-
     <div class="product_info_box">
         <div class="product_description_header">
         <h3>Produktbeskrivelse</h3>
@@ -51,7 +46,6 @@
         <p th:text="${carport.productionDescription}" style="font-size: 13px;"></p>
         </div>
     </div>
-
     <div class="product_info_box">
         <div class="product_description_header">
             <h3>Specifikationer</h3>
@@ -107,7 +101,6 @@
             <hr class="specification_hr"/>
         </div>
     </div>
-
     <div class="product_info_box">
         <div class="product_description_header">
             <h3>Levering</h3>
@@ -121,7 +114,6 @@
                 Fyn og Jylland: 2.500,- pr. bestilt enhed.</p>
         </div>
     </div>
-
     <div class="product_info_box">
         <div class="product_description_header">
             <h3>Dokumenter og Links</h3>
@@ -133,8 +125,6 @@
     </div>
 </div>
 </section>
-
-
 <section id="carport_section" class="carport_slider_section">
     <div class="slider_container">
         <div class="slider">

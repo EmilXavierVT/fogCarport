@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AdminController {
     public static void addRoutes(Javalin app)
@@ -144,10 +145,12 @@ public class AdminController {
     private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
     {try
         {
-           List<User> users = UserMapper.getAllUsers(connectionPool);
-           List<CarportRequest> requests = CarportRequestMapper.getAllCarportRequests(connectionPool);
+            List<User> users = UserMapper.getAllUsers(connectionPool);
+            List<CarportRequest> requests = CarportRequestMapper.getAllCarportRequests(connectionPool);
             List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
             List<Product> products = ProductMapper.getAllProducts(connectionPool);
+            requests =  requests.stream().filter(cr -> cr.getStatus() == 0  || cr.getStatus() ==1).toList();
+            requests = requests.stream().filter((cr-> cr.getCarport().getType() == 70)).toList();
 
             ctx.render("admin/alert.html", Map.of("all_users", users,
                     "all_carport_requests", requests,

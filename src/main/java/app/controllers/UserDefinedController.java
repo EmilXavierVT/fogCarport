@@ -116,7 +116,7 @@ public class UserDefinedController {
         System.out.println(calc.setItemList());
 
         int carportID = CarportMapper.SaveAndGetCarportInDB(name,  calc.getCostPrice(),70,"custom",calc.getSpecification().getSpecificationId(),connectionPool);
-        User salesRep = UserMapper.getUserByID(29,connectionPool);
+        User salesRep = UserMapper.getUserByID(1,connectionPool);
         if(ctx.sessionAttribute("currentUser") != null)
         {
             User user = ctx.sessionAttribute("currentUser");

@@ -279,7 +279,7 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    }
+}
 
 
 /*CREATE USER*/
@@ -649,10 +649,9 @@ body.cart_open {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background: var(--white_widget);
+    background: transparent;
     max-width: 1300px;
     border-radius: 30px;
-    border: 2px solid rgba(0,0,0, 0.4);
     margin-bottom: 10%;
 }
 
@@ -732,7 +731,7 @@ body.cart_open {
 }
 .carport_type_description {
 
-font-size: 12px;
+    font-size: 12px;
 }
 .user_defined_description_text {
     width: 50%;

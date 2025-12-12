@@ -2,8 +2,6 @@
 <header th:replace="~{fragments :: header}"></header>
 <body>
 <h1 class="page-title">Carport Stykliste og Byggevejledning</h1>
-
-
 <div class="table_container">
     <h2>Materialeliste til Din Carport</h2>
     <table id="itemList" class="dashboard_table">
@@ -30,7 +28,6 @@
         </tbody>
     </table>
 </div>
-
 <div class="building-instructions">
     <h2>Byggevejledning</h2>
     <ol>
@@ -43,13 +40,10 @@
     </ol>
     <p class="warning">Bemærk: Følg altid lokale bygningsreglementer og sikkerhedsforskrifter</p>
 </div>
-
 <div class="carport-svg-topview">
     <h2>Teknisk Tegning af Din Carport</h2>
     <div class="svg_construction" th:utext="${svg}"></div>
 </div>
-
-
 <script src="/js/script.js"></script>
 </body>
 <footer th:replace="~{fragments :: footer}"></footer>

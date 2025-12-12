@@ -41,7 +41,8 @@ public class CarportController
 
        User user = ctx.sessionAttribute("currentUser");
        if(user == null) {
-           ctx.status(401).result("User not logged in");
+
+          ctx.render("/login.html");
            return;
        }
 

@@ -74,7 +74,7 @@ public class OrderMapperTest
                         "(2,1,'2025-11-28')");
 
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',0)");
+                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',0,12345678)");
 
                 stmt.execute("SELECT setval('test_schema.orders_order_id_seq', COALESCE((SELECT MAX (order_id)+1 FROM test_schema.orders), 1), false)");
                 stmt.execute("SELECT setval('test_schema.users_user_id_seq', COALESCE((SELECT MAX(user_id)+1 FROM test_schema.users), 1), false)");

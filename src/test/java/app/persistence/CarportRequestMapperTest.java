@@ -122,12 +122,11 @@ public class CarportRequestMapperTest
                         "(1,'trykimp. Bræt','25x200 mm','understernbrædder til for- & bagende',15,1)");
 
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',0)");
-
+                        "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',0,12345678)");
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',1)");
+                        "(2,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',1,12345678)");
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
-                        "(3,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',1)");
+                        "(3,'Frederik','Edvardsen',2450,'Egetoftevej',11,'','fred@dk.dk','1234',1,12345678)");
 
                 stmt.execute("SELECT setval('test_schema.carport_requests_carport_request_id_seq', COALESCE((SELECT MAX(carport_request_id)+1 FROM test_schema.carport_requests), 1), false)");
                 stmt.execute("SELECT setval('test_schema.carports_carport_id_seq', COALESCE((SELECT MAX (carport_id)+1 FROM test_schema.carports), 1), false)");

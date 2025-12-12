@@ -7,6 +7,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportRequestMapper;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.Svg;
@@ -14,9 +15,11 @@ import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
+import ognl.enhance.OrderedReturn;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +67,9 @@ public class UserController
     }
 
     private static void acceptOffer(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        CarportRequestMapper.updateStatus(Integer.parseInt(ctx.formParam("carport_request_id")), 2,connectionPool);
+        CarportRequest cr = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.formParam("carport_request_id")),connectionPool);
+        CarportRequestMapper.updateStatus(cr.getCarportRequestID(), 2,connectionPool);
+        OrderMapper.saveOrderAndReturn(cr.getUser().getUserId(), LocalDate.now(),connectionPool);
         ctx.redirect("/view_order");
     }
 

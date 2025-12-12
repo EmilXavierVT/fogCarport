@@ -1,0 +1,39 @@
+<head th:replace="~{fragments :: head(~{::flat})}"><title>Fladt Tag</title></head>
+<header th:replace="~{fragments :: header}"></header>
+<body>
+
+
+
+    <div class="carport-svg-topview">
+        <div class="svg_construction" th:utext="${svg}"> </div>
+    </div>
+
+<div class="table_container">
+    <table id="itemList" class="dashboard_table">
+        <thead>
+        <tr>
+            <th>Antal</th>
+            <th>Vare Navn</th>
+            <th>Hjælpe Tekst</th>
+            <th>Dimensioner</th>
+            <th>Længde</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${item_list}">
+            <td th:text="${item.amount}"></td>
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${item.product.description}"></td>
+            <td th:text="${item.product.dimensions}"></td>
+            <td th:text="${item.length}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(item_list)}">
+            <td colspan="10">Ingen produkter fundet</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/script.js"></script>
+</body>
+<footer th:replace="~{fragments :: footer}"></footer>

@@ -1,9 +1,7 @@
 package app.controllers;
 
-import app.entities.Carport;
 import app.entities.Specification;
 import app.entities.User;
-import app.entities.UserDefinedCarport;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
 import app.persistence.CarportRequestMapper;
@@ -16,12 +14,10 @@ import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
-import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class UserDefinedController {
     public static int width;

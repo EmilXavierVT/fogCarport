@@ -119,6 +119,8 @@ public class Calculator
         coveringScrewsAmount = amountOfRafters/5;
         boltAmount = amountOfRafters/2 + amountOfPosts;
         squareWasherAmount = amountOfPosts +1;
+
+
         fourSevenScrewsAmount = amountOfWallCovering/100;
         fourFiveScrewsAmount = amountOfWallCovering/100;
         handleAmount = (amountOfWallCovering > 0) ? 1 : 0;
@@ -239,11 +241,14 @@ public class Calculator
         itemList.add(new ProductInOrder(0, coveringScrew, coveringScrewsAmount, 0));
         itemList.add(new ProductInOrder(0, bolt, boltAmount, 0));
         itemList.add(new ProductInOrder(0, squareWasher, squareWasherAmount, 0));
-        itemList.add(new ProductInOrder(0, fourSevenScrew, fourSevenScrewsAmount, 0));
-        itemList.add(new ProductInOrder(0, fourFiveScrew, fourFiveScrewsAmount, 0));
-        itemList.add(new ProductInOrder(0, handle, handleAmount, 0));
-        itemList.add(new ProductInOrder(0, tHinge, tHingeAmount, 0));
-        itemList.add(new ProductInOrder(0, angleHinge, angleHingeAmount, 0));
+        if(specification.isShed())
+        {
+            itemList.add(new ProductInOrder(0, fourSevenScrew, fourSevenScrewsAmount, 0));
+            itemList.add(new ProductInOrder(0, fourFiveScrew, fourFiveScrewsAmount, 0));
+            itemList.add(new ProductInOrder(0, handle, handleAmount, 0));
+            itemList.add(new ProductInOrder(0, tHinge, tHingeAmount, 0));
+            itemList.add(new ProductInOrder(0, angleHinge, angleHingeAmount, 0));
+        }
 
         return itemList;
     }

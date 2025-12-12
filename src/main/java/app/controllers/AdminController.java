@@ -61,7 +61,8 @@ public class AdminController {
 
     private static void sendEmail(Context ctx) throws MessagingException {
         GmailSender gemailSender = new GmailSender();
-//        String to = "luke_persson@yahoo.dk";
+
+
         String to = ctx.formParam("to_email");
         String subject = ctx.formParam("email_subject");
         String body = ctx.formParam("email_body");
@@ -76,6 +77,7 @@ public class AdminController {
         try
         {
             int id = Integer.parseInt(ctx.pathParam("id"));
+            CarportRequestMapper.updateStatus(id, 1, connectionPool);
 
             CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
             ctx.sessionAttribute("carport_request", cr);
@@ -92,7 +94,7 @@ public class AdminController {
 
                 double costPrice = salesCost * calc.getCostPrice();
 
-               double actualOffer = (costPrice * markupPercentage) * 1.25;
+                double actualOffer = (costPrice * markupPercentage) * 1.25;
 
 
 

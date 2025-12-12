@@ -114,4 +114,17 @@ public class CarportRequestMapper
             throw new DatabaseException(e.getMessage() + " problem with getting all carport requests");
         }
     }
+    public static void updateStatus(int id, int status, ConnectionPool connectionPool)
+    {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement("UPDATE carport_requests SET status = ? WHERE carport_request_id = ?"))
+        {
+            ps.setInt(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

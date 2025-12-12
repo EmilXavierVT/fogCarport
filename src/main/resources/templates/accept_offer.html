@@ -1,0 +1,22 @@
+<head th:replace="~{fragments :: head(~{::flat})}"><title>Fladt Tag</title></head>
+<body>
+<header th:replace="~{fragments :: header}"></header>
+
+<div class="content_holder_accept_offer">
+<p th:text="${'Hej ' + carport_request.user.firstName}  + ${' du har lavet bestilling : ' + carport_request.carportRequestID} "></p>
+    <p>Vil du acceptere tilbudet ?</p>
+    <form action="/accept_offer" method="POST">
+    <button type="submit" id="yes-btn" class="yes-btn">JA</button>
+        <label>
+            <input hidden name="carport_request_id" th:value="${carport_request.carportRequestID}">
+        </label>
+    </form>
+    <form action="/decline_offer" method="POST">
+    <button type="submit" id="no-btn" class="no-btn">NEJ</button>
+        <label>
+            <input hidden name="carport_request_id" th:value="${carport_request.carportRequestID}">
+        </label>
+    </form>
+</div>
+
+<footer th:replace="~{fragments :: footer}"></footer>

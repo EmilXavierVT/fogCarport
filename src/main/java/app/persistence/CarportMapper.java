@@ -253,6 +253,25 @@ public class CarportMapper
     }
 
 
+    public static void changeTypeToDeletedByID(int carportID, ConnectionPool connectionPool) throws SQLException {
+        String sql = "UPDATE carports SET type = ? WHERE carport_id = ?";
+
+        try(Connection connection = connectionPool.getConnection();
+        PreparedStatement ps = connection.prepareStatement(sql))
+        {
+            ps.setInt(1, 404);
+            ps.setInt(2, carportID);
+            int rowsAffected = ps.executeUpdate();
+
+            if ( rowsAffected != 1 )
+            {
+                throw new DatabaseException("Failed to move carprot to removed by ID: " + carportID);
+            }
+
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

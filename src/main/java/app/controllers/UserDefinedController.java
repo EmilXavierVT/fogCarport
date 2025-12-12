@@ -1,9 +1,7 @@
 package app.controllers;
 
-import app.entities.Carport;
 import app.entities.Specification;
 import app.entities.User;
-import app.entities.UserDefinedCarport;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
 import app.persistence.CarportRequestMapper;
@@ -16,12 +14,10 @@ import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
-import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class UserDefinedController {
     public static int width;
@@ -120,7 +116,7 @@ public class UserDefinedController {
         System.out.println(calc.setItemList());
 
         int carportID = CarportMapper.SaveAndGetCarportInDB(name,  calc.getCostPrice(),70,"custom",calc.getSpecification().getSpecificationId(),connectionPool);
-        User salesRep = UserMapper.getUserByID(29,connectionPool);
+        User salesRep = UserMapper.getUserByID(1,connectionPool);
         if(ctx.sessionAttribute("currentUser") != null)
         {
             User user = ctx.sessionAttribute("currentUser");
@@ -133,7 +129,7 @@ public class UserDefinedController {
                 CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
             }
             else {
-                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
+                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email,"1234",connectionPool);
                 CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
             }
             }

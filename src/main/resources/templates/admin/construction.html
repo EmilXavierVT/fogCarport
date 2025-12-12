@@ -51,20 +51,21 @@
     </div>
         <div class="flat_section_container_construction">
             <label for="shed"></label> <h3>Redskabskur</h3>
-            <select name="shed" id="shed"th:required="true">
-            <option value="0">Uden Skur</option>
-            <option value="1">Med Skur</option>
+            <select name="shed" id="shed" th:required="true">
+                <option th:text="${carport_request.carport.specification.shed == true ? 'Med Skur' : 'Uden Skur' }"></option>
+                <option value="0">Uden Skur</option>
+                <option value="1">Med Skur</option>
         </select>
             <label for="shed_width"><h3>Redskabsrum bredde</h3></label>
             <select name="shed_width" id="shed_width">
                 <option th:value="${carport_request.carport.specification.shedWidth}" th:text="${carport_request.carport.specification.shedWidth}">0</option>
-            <option value="0">0</option>
-            <option value="300">300</option>
-            <option value="360">360</option>
-            <option value="420">420</option>
-            <option value="480">480</option>
-            <option value="540">540</option>
-            <option value="600">600</option>
+                <option value="0">0</option>
+                <option value="300">300</option>
+                <option value="360">360</option>
+                <option value="420">420</option>
+                <option value="480">480</option>
+                <option value="540">540</option>
+                <option value="600">600</option>
         </select>
             <label for="shed_length"><h3>Redskabsrum længde</h3></label>
             <select name="shed_length" id="shed_length">
@@ -201,6 +202,12 @@ Dbh.
                 </textarea>
 
                         <button type="submit">Send Email</button>
+                    </form>
+                    <form th:action="@{/send_acceptance_offer}" method="post">
+                        <button type="submit">Send Tilbud</button>
+                    </form>
+                    <form th:action="@{/delete_offer}" method="post">
+                        <button type="submit">Slet Tilbud</button>
                     </form>
                 </div>
             </div>

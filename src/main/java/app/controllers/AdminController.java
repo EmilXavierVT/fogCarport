@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AdminController {
     public static void addRoutes(Javalin app)
@@ -25,12 +26,40 @@ public class AdminController {
         app.get("/admin/construction/{id}",ctx-> showConstructionPage(ctx, connectionPool));
 //        app.get("")
         app.post("/admin/construction",ctx -> sendEmail(ctx));
+        app.post("/send_acceptance_offer",ctx -> sendAcceptanceOffer(ctx));
+        app.post("/delete_offer",ctx -> deleteOffer(ctx, connectionPool));
 
         app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
-        app.post("/update_offer_price", ctx -> updateOfferPrice(ctx,connectionPool));
+        app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
     }
 
-    private static void updateOfferPrice(Context ctx, ConnectionPool connectionPool)
+    private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
+        // Instead of Deleting it, we change the type of the carport to type 404. So it can be looked up later.
+
+        CarportRequest rq = ctx.sessionAttribute("carport_request");
+        CarportMapper.changeTypeToDeletedByID(rq.getCarport().getCarportID(),connectionPool);
+        ctx.redirect("/admin/alert");
+    }
+
+    private static void sendAcceptanceOffer(Context ctx) throws MessagingException
+    {
+        GmailSender gmailSender = new GmailSender();
+       CarportRequest rq = ctx.sessionAttribute("carport_request");
+        User user = rq.getUser();
+        int id = rq.getCarportRequestID();
+        String to = user.getEmail();
+        String subject = "Tillykke du skal ha en carport fra FOG";
+        String body = "Vi har vurderet at din carport kan bygges! " + "Her  er et link til at bekræfte tilbuddet: \n" +
+                 "http://localhost:7071/accept_offer/" + id;
+
+        gmailSender.sendPlainTextEmail(to, subject, body);
+        ctx.sessionAttribute("email_sent_message", "Email sendt til " +user.getFirstName() + " " + user.getLastName() + ". Med e-mail: " + to);
+        ctx.redirect("/admin/alert");
+    }
+
+
+
+    private static void updateOfferPrice(Context ctx)
     {
         double markupPercentage = ctx.formParam("markup_percentage") == null ? 1.39 : Double.parseDouble(ctx.formParam("markup_percentage"));
         CarportRequest req = ctx.sessionAttribute("carport_request");
@@ -53,15 +82,13 @@ public class AdminController {
         SpecificationMapper.updateSpecification(req.getCarportRequestID(),width,length,shed,shedWidth,shedLength,roof,connectionPool);
 
         ctx.redirect("/admin/construction/" + req.getCarportRequestID());
-        // req -> carport -> specifaction
-//        mapper til spec alle attributter
-
     }
 
 
     private static void sendEmail(Context ctx) throws MessagingException {
         GmailSender gemailSender = new GmailSender();
-//        String to = "luke_persson@yahoo.dk";
+
+
         String to = ctx.formParam("to_email");
         String subject = ctx.formParam("email_subject");
         String body = ctx.formParam("email_body");
@@ -76,6 +103,7 @@ public class AdminController {
         try
         {
             int id = Integer.parseInt(ctx.pathParam("id"));
+            CarportRequestMapper.updateStatus(id, 1, connectionPool);
 
             CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
             ctx.sessionAttribute("carport_request", cr);
@@ -92,7 +120,7 @@ public class AdminController {
 
                 double costPrice = salesCost * calc.getCostPrice();
 
-               double actualOffer = (costPrice * markupPercentage) * 1.25;
+                double actualOffer = (costPrice * markupPercentage) * 1.25;
 
 
 
@@ -125,10 +153,12 @@ public class AdminController {
     private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
     {try
         {
-           List<User> users = UserMapper.getAllUsers(connectionPool);
-           List<CarportRequest> requests = CarportRequestMapper.getAllCarportRequests(connectionPool);
+            List<User> users = UserMapper.getAllUsers(connectionPool);
+            List<CarportRequest> requests = CarportRequestMapper.getAllCarportRequests(connectionPool);
             List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
             List<Product> products = ProductMapper.getAllProducts(connectionPool);
+            requests =  requests.stream().filter(cr -> cr.getStatus() == 0  || cr.getStatus() ==1).toList();
+            requests = requests.stream().filter((cr-> cr.getCarport().getType() == 70)).toList();
 
             ctx.render("admin/alert.html", Map.of("all_users", users,
                     "all_carport_requests", requests,

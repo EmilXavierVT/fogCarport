@@ -35,18 +35,21 @@ public class OrderMapper
         return orderId;
     }
 
-    public static void saveOrder(int userID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException
-    {
-        String sql = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
+    public static Order saveOrderAndReturn(int userID, LocalDate localDate, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        int orderId = getAvailableOrderId(connectionPool);
+        String sql = "INSERT INTO orders (order_id, user_id, date) VALUES (?, ?, ?)";
 
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql))
-        {
-            ps.setInt(1, userID);
-            ps.setDate(2, java.sql.Date.valueOf(localDate));
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ps.setInt(2, userID);
+            ps.setDate(3, java.sql.Date.valueOf(localDate));
             ps.executeUpdate();
+
+            return getOrderByID(orderId, connectionPool);
         }
     }
+
 
     public static Order getOrderByID(int orderID, ConnectionPool connectionPool)
     {

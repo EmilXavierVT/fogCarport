@@ -1,12 +1,20 @@
 package app.controllers;
 
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
-import app.persistence.ConnectionPool;
-import app.persistence.UserMapper;
+import app.persistence.*;
+import app.services.Calculator;
+import app.services.Svg;
+import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import jakarta.mail.MessagingException;
+import ognl.enhance.OrderedReturn;
+import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 public class UserController
@@ -19,7 +27,70 @@ public class UserController
         app.get("/register_password", ctx -> ctx.render("register_password.html"));
         app.post("/register_password", ctx -> createUser(ctx, connectionPool));
         app.get("/create_user", ctx -> ctx.render("create_user.html"));
+        app.get("/view_order",ctx-> showOrderPage(ctx, connectionPool));
+        app.get("/accept_offer/{id}", ctx -> showAcceptPage(ctx,connectionPool));
+        app.post("/accept_offer",ctx-> acceptOffer(ctx, connectionPool));
+        app.post("/decline_offer",ctx-> declineOffer(ctx, connectionPool));
+
         app.post("/create_user", ctx -> registerInfo(ctx, connectionPool));
+    }
+
+    private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        try {
+            CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
+            ctx.sessionAttribute("carport_request", cr);
+            ctx.render("/accept_offer.html", Map.of("carport_request", cr));
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+
+        }
+    }
+
+    private static void declineOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException, MessagingException
+    {
+        CarportRequest rq = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.formParam("carport_request_id")),connectionPool);
+        User salesRep = rq.getSalesRep();
+        User user = rq.getUser();
+        GmailSender mailSender = new GmailSender();
+
+        mailSender.sendPlainTextEmail(salesRep.getEmail(),"Kunden har ikke accepteret tilbuddet", "kunden " +  user.getFirstName() + " " + user.getLastName()
+                + " har afslået jeres carport tilbud" + "\n" + "CarportRequest nr: " + rq.getCarportRequestID() + ". " +
+                "\n" + " kunden kan kontaktes på telefon: " + user.getPhoneNumber() + " eller på pr. mail: " + user.getEmail() );
+        ctx.render("/");
+    }
+
+    private static void acceptOffer(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        CarportRequest cr = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.formParam("carport_request_id")),connectionPool);
+        CarportRequestMapper.updateStatus(cr.getCarportRequestID(), 2,connectionPool);
+        Order order = OrderMapper.saveOrderAndReturn(cr.getUser().getUserId(), LocalDate.now(),connectionPool);
+        for(ProductInOrder productInOrder : new Calculator(cr.getCarport().getSpecification()).setItemList())
+        {
+            ProductInOrderMapper.createProductInOrder(order.getId(), productInOrder.getProduct(), productInOrder.getAmount(), connectionPool);
+        }
+        ctx.redirect("/view_order");
+    }
+
+    public static void showOrderPage(Context ctx, ConnectionPool connectionPool)
+    {
+        try
+        {
+
+        CarportRequest cr  = ctx.sessionAttribute("carport_request");
+
+        Specification sp = cr.getCarport().getSpecification();
+        Calculator calc = new Calculator(sp);
+        List<ProductInOrder> itemList = calc.setItemList();
+        ctx.sessionAttribute("item_list", itemList);
+
+        Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
+        ctx.attribute("svg", svg.toString());
+        ctx.render("/view_order", Map.of("carport_request", cr, "item_list",itemList));
+    }
+    catch (DatabaseException e)
+    {
+        throw new RuntimeException(e);
+        }
     }
 
     public static boolean login(Context ctx,ConnectionPool connectionPool)

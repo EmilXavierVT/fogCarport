@@ -7,7 +7,6 @@
     <button class="tab active" data-target="quick_build_section"> Quick-Byg</button>
     <button class="tab" data-target="itemList_section"> Stykliste</button>
     <button class="tab" data-target="drawing_section"> Tegning</button>
-    <button class="tab" data-target="customer_receipt_section"> Kunde-kvittering</button>
     <button class="tab" data-target="customer_email_section"> Kunde-Email</button>
 </div>
 <form th:action="@{/admin/update_request}" method="POST">
@@ -190,20 +189,9 @@
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Stykliste</button>
 
         <button type="button" class="button_white tab"
-                data-target="customer_receipt_section"
-                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kundekvittering</button>
-    </div>
-</div>
-</section>
-<section id="customer_receipt_section" class="tab_content">
-<div class="display_container_vertical">
-    <div class="button_row">
-        <button type="button" class="button_white tab"
-                data-target="drawing_section"
-                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>
-        <button type="button" class="button_white tab"
                 data-target="customer_email_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kunde-Email</button>
+
     </div>
 </div>
 </section>

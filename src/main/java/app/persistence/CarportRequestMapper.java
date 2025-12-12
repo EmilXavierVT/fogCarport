@@ -84,8 +84,9 @@ public class CarportRequestMapper {
                         rs.getInt("carport_request_id"),
                         UserMapper.getUserByID(rs.getInt("user_id"), connectionPool),
                         CarportMapper.getCarportByID(rs.getInt("carport_id"), connectionPool),
-                        rs.getInt("sales_rep_id") != 0 ? UserMapper.getUserByID(rs.getInt("sales_rep_id"), connectionPool) : null
-                        
+                        rs.getInt("sales_rep_id") != 0 ? UserMapper.getUserByID(rs.getInt("sales_rep_id"), connectionPool) : null,
+                        rs.getInt("status")
+
                 ));
             }
             return requests;

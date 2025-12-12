@@ -7,14 +7,14 @@
 <div class="input_container">
     <button class="tab active" data-target="quick_build_section"> Quick-Byg</button>
     <button class="tab" data-target="itemList_section"> Stykliste</button>
-    <button class="tab " data-target="drawing_section"> Tegning</button>
-    <button class="tab " data-target="customer_receipt_section"> Kunde-kvittering</button>
-    <button class="tab " data-target="customer_email_section"> Kunde-Email</button>
+    <button class="tab" data-target="drawing_section"> Tegning</button>
+    <button class="tab" data-target="customer_receipt_section"> Kunde-kvittering</button>
+    <button class="tab" data-target="customer_email_section"> Kunde-Email</button>
 </div>
 
 <form th:action="@{/admin/update_request}" method="POST">
 <section id="quick_build_section" class="tab_content active">
-<div class="quick_build_container">
+<div class="display_container_vertical">
     <h1>Quick-Byg</h1>
     <div class="flat_section_container_admin">
         <div class="flat_section_container_header">
@@ -23,7 +23,7 @@
     <div class="flat_section_container_construction">
         <form class="user_defined_form"></form>
         <label for="width"><h3>Bredde</h3></label>
-        <select id="width" name="width" th:required="true"  >
+        <select class="dropdowns_admin_construction" id="width" name="width" th:required="true">
         <option th:value="${carport_request.carport.specification.width}" th:text="${carport_request.carport.specification.width}">0</option>
         <option value="0">0</option>
         <option value="300">300</option>
@@ -34,7 +34,7 @@
         <option value="600">600</option>
     </select>
         <label for="length"><h3>Længde</h3></label>
-        <select id="length" name="length"  th:required="true">
+        <select class="dropdowns_admin_construction" id="length" name="length"  th:required="true" style="margin-bottom: 17%;">
         <option th:value="${carport_request.carport.specification.length}" th:text="${carport_request.carport.specification.length}">0</option>
         <option value="1">0</option>
         <option value="300">300</option>
@@ -51,12 +51,12 @@
     </div>
         <div class="flat_section_container_construction">
             <label for="shed"></label> <h3>Redskabskur</h3>
-            <select name="shed" id="shed"th:required="true">
+            <select class="dropdowns_admin_construction" name="shed" id="shed"th:required="true">
             <option value="0">Uden Skur</option>
             <option value="1">Med Skur</option>
         </select>
             <label for="shed_width"><h3>Redskabsrum bredde</h3></label>
-            <select name="shed_width" id="shed_width">
+            <select class="dropdowns_admin_construction" name="shed_width" id="shed_width">
                 <option th:value="${carport_request.carport.specification.shedWidth}" th:text="${carport_request.carport.specification.shedWidth}">0</option>
             <option value="0">0</option>
             <option value="300">300</option>
@@ -67,7 +67,7 @@
             <option value="600">600</option>
         </select>
             <label for="shed_length"><h3>Redskabsrum længde</h3></label>
-            <select name="shed_length" id="shed_length">
+            <select class="dropdowns_admin_construction" name="shed_length" id="shed_length">
                 <option th:value="${carport_request.carport.specification.shedDepth}" th:text="${carport_request.carport.specification.shedDepth}">0</option>
             <option value="0">0</option>
             <option value="300">300</option>
@@ -92,12 +92,12 @@
         <div class= "flat_section_container_boxes">
     <div class="flat_section_container_construction">
         <label for="roof"></label> <h3>Carport trapeztag</h3>
-        <select name="roof" id="roof"th:required="true">
+        <select class="dropdowns_admin_construction" name="roof" id="roof"th:required="true">
         <option value="29">Ingen tag</option>
         <option value="6">Plast tag</option>
     </select>
         <label for="roof_angle"><h3>Grader ved rejsning</h3></label>
-        <select name="roof_angle" id="roof_angle" th:required="true">
+        <select class="dropdowns_admin_construction" name="roof_angle" id="roof_angle" th:required="true">
         <option value="0">0</option>
         <option value="5">5</option>
         <option value="10">10</option>
@@ -107,7 +107,7 @@
         </div>
             <div class="flat_section_container_construction">
                 <label for="rafter_type"><h3>Materialer</h3></label>
-                <select id="rafter_type" name="rafter_type" th:required="true">
+                <select class="dropdowns_admin_construction" id="rafter_type" name="rafter_type" th:required="true" style="margin-bottom: 17%;">
                     <option value="1">Færdige spær (dyre)</option>
                     <option value="2">Byg-selv-spær (billige)</option>
                 </select>
@@ -115,13 +115,21 @@
 </div>
     </div>
 </div>
+    <div class="button_row">
+    <button class="button_white"
+            type="submit"
+            style="margin-top: 2%; max-width: 200px; height: 10%;">Opdater Database</button>
 
-    <button type="submit">Opdater Database</button>
+    <button type="button" class="button_white tab"
+            data-target="itemList_section"
+            style="margin-top: 2%; max-width: 200px; height: 10%;">Se Stykliste</button>
+    </div>
 </div>
 </section>
 </form>
 
     <section id="itemList_section" class="tab_content">
+        <div class="display_container_vertical">
         <h2>Forespørgsler</h2>
         <div class="table_container">
             <table id="itemList" class="dashboard_table">
@@ -163,20 +171,51 @@
                     <label>
                         <input name="markup_percentage" class="input_markup_percentage" type="number" min="20" max="99" placeholder="Ændre pris" required />
                     </label>
-                    <button class="button_white" type="submit">dækningsgrad</button>
+                    <button class="button_white" type="submit" style="max-width: 216px; margin-top: 20px;">Dækningsgrad</button>
             </form>
             </div>
+        </div>
+            <div class="button_row">
+            <button type="button" class="button_white tab"
+                    data-target="quick_build_section"
+                    style="margin-top: 2%; max-width: 200px; height: 10%;">Se Quick-byg</button>
+
+                <button type="button" class="button_white tab"
+                        data-target="drawing_section"
+                        style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>
+                </div>
         </div>
     </section>
 
 <section id="drawing_section" class="tab_content">
-<div class="carport-svg-topview">
+    <div class="display_container_vertical">
+<div class="carport-svg-topview" style="height: 500px; width: 100%;">
     <div class="svg_construction" th:utext="${svg}"> </div>
 </div>
+    <div class="button_row">
+        <button type="button" class="button_white tab"
+                data-target="itemList_section"
+                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Stykliste</button>
+
+        <button type="button" class="button_white tab"
+                data-target="customer_receipt_section"
+                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kundekvittering</button>
+    </div>
+    </div>
 </section>
 
 <section id="customer_receipt_section" class="tab_content">
+<div class="display_container_vertical">
+    <div class="button_row">
+        <button type="button" class="button_white tab"
+                data-target="drawing_section"
+                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>
 
+        <button type="button" class="button_white tab"
+                data-target="customer_email_section"
+                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kunde-Email</button>
+    </div>
+</div>
 </section>
 
 <section id="customer_email_section" class="tab_content">
@@ -189,19 +228,20 @@
                     <form class="user_defined_form" th:action="@{/admin/construction}" method="post">
                         <label for="email_subject">
                             <h3>Email Emne</h3> Omhandlende Carport </label>
-                        <input type="text" id="email_subject" name="email_subject" required />
+                        <input class="input_email_box" type="text" id="email_subject" name="email_subject" required />
                         <label for="email_body">
                             <h3>Email Indhold</h3>
                         </label>
-                        <textarea id="email_body" name="email_body" rows="30" cols="100" required>
-Hej (indsæt brugernavn)
-
-
-Dbh.
-                </textarea>
-
-                        <button type="submit">Send Email</button>
+                        <textarea class="text_area_box" id="email_body" name="email_body" rows="30" cols="100"
+                                  placeholder="Hej (indsæt brugernavn)" required>
+                        </textarea>
+                        <button type="submit" class="button_white">Send Email</button>
                     </form>
+                    <div class="button_row">
+                        <button type="button" class="button_white tab"
+                                data-target="drawing_section"
+                                style="margin-top: 2%; max-width: 200px; height: 10%;">Se Tegning</button>
+                    </div>
                 </div>
             </div>
         </div>

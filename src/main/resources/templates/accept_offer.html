@@ -3,7 +3,7 @@
 <header th:replace="~{fragments :: header}"></header>
 
 <div class="content_holder_accept_offer">
-<p th:text="${'hej ' + carport_request.user.firstName}  + ${' du har lavet bestilling : ' + carport_request.carportRequestID} "></p>
+<p th:text="${'Hej ' + carport_request.user.firstName}  + ${' du har lavet bestilling : ' + carport_request.carportRequestID} "></p>
     <p>Vil du acceptere tilbudet ?</p>
     <form action="/accept_offer" method="POST">
     <button type="submit" id="yes-btn" class="yes-btn">JA</button>

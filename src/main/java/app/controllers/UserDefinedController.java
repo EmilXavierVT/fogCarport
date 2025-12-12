@@ -129,7 +129,7 @@ public class UserDefinedController {
                 CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
             }
             else {
-                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
+                User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email,"1234",connectionPool);
                 CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
             }
             }

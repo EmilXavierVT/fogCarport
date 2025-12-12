@@ -25,12 +25,32 @@ public class AdminController {
         app.get("/admin/construction/{id}",ctx-> showConstructionPage(ctx, connectionPool));
 //        app.get("")
         app.post("/admin/construction",ctx -> sendEmail(ctx));
+        app.post("/send_acceptance_offer",ctx -> sendAcceptanceOffer(ctx));
 
         app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
-        app.post("/update_offer_price", ctx -> updateOfferPrice(ctx,connectionPool));
+        app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
     }
 
-    private static void updateOfferPrice(Context ctx, ConnectionPool connectionPool)
+
+    private static void sendAcceptanceOffer(Context ctx) throws MessagingException
+    {
+        GmailSender gmailSender = new GmailSender();
+       CarportRequest rq = ctx.sessionAttribute("carport_request");
+        User user = rq.getUser();
+        int id = rq.getCarportRequestID();
+        String to = user.getEmail();
+        String subject = "Tillykke du skal ha en carport fra FOG";
+        String body = "Vi har vurderet at din carport kan bygges! " + "Her  er et link til at bekræfte tilbuddet: \n" +
+                 "http://localhost:7071/accept_offer/" + id;
+
+        gmailSender.sendPlainTextEmail(to, subject, body);
+        ctx.sessionAttribute("email_sent_message", "Email sendt til " +user.getFirstName() + " " + user.getLastName() + ". Med e-mail: " + to);
+        ctx.redirect("/admin/alert");
+    }
+
+
+
+    private static void updateOfferPrice(Context ctx)
     {
         double markupPercentage = ctx.formParam("markup_percentage") == null ? 1.39 : Double.parseDouble(ctx.formParam("markup_percentage"));
         CarportRequest req = ctx.sessionAttribute("carport_request");
@@ -53,9 +73,6 @@ public class AdminController {
         SpecificationMapper.updateSpecification(req.getCarportRequestID(),width,length,shed,shedWidth,shedLength,roof,connectionPool);
 
         ctx.redirect("/admin/construction/" + req.getCarportRequestID());
-        // req -> carport -> specifaction
-//        mapper til spec alle attributter
-
     }
 
 

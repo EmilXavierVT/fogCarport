@@ -1,14 +1,8 @@
 package app.controllers;
 
-import app.entities.CarportRequest;
-import app.entities.ProductInOrder;
-import app.entities.Specification;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportRequestMapper;
-import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
+import app.persistence.*;
 import app.services.Calculator;
 import app.services.Svg;
 import app.util.GmailSender;
@@ -69,7 +63,11 @@ public class UserController
     private static void acceptOffer(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
         CarportRequest cr = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.formParam("carport_request_id")),connectionPool);
         CarportRequestMapper.updateStatus(cr.getCarportRequestID(), 2,connectionPool);
-        OrderMapper.saveOrderAndReturn(cr.getUser().getUserId(), LocalDate.now(),connectionPool);
+        Order order = OrderMapper.saveOrderAndReturn(cr.getUser().getUserId(), LocalDate.now(),connectionPool);
+        for(ProductInOrder productInOrder : new Calculator(cr.getCarport().getSpecification()).setItemList())
+        {
+            ProductInOrderMapper.createProductInOrder(order.getId(), productInOrder.getProduct(), productInOrder.getAmount(), connectionPool);
+        }
         ctx.redirect("/view_order");
     }
 

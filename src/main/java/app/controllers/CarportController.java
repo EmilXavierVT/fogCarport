@@ -46,7 +46,7 @@ public class CarportController
        }
 
        CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, 0, connectionPool);
-       OrderMapper.saveOrder(user.getUserId(),LocalDate.now(),connectionPool);
+       OrderMapper.saveOrderAndReturn(user.getUserId(),LocalDate.now(),connectionPool);
        ctx.redirect("/payment_complete");
     }
 

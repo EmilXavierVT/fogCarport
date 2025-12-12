@@ -889,9 +889,12 @@ img.user_defined_picture {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    border-radius: 10px;
+    width: 95%;
+    border-radius: 30px;
     border: 3px solid var(--border_box_color);
+    margin-bottom: 0.4%;
+    background: var(--white_widget);
+    box-shadow: 0 3px 7px -1px black;
 }
 .flat_section_admin {
     text-align: center;
@@ -909,14 +912,7 @@ img.user_defined_picture {
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 100%;
-    min-height: 192px;
-    gap: 10px;
-    border-radius: 10px;
-    border: 3px solid var(--border_box_color);
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
+    margin-bottom: 1%;
 }
 
 .flat_section_container_header{
@@ -931,8 +927,33 @@ img.user_defined_picture {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 85%;
+}
+
+.dropdowns_admin_construction {
     width: 100%;
-    border: 3px solid var(--border_box_color);
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    max-width: 400px;
+    border-radius: 15px;
+    border: none;
+}
+
+.input_email_box {
+    border: none;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.4);
+    height: 30px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.text_area_box {
+    border: none;
+    box-shadow: 2px 2px 20px black;
+    border-radius: 15px;
 }
 
 /*price container for admin view*/
@@ -1054,6 +1075,12 @@ td svg {
 
 .view_panel_box h2 {
     text-align: center;
+}
+
+/*BURGER MENU*/
+.burger_btn {
+    display: none;
+    cursor: pointer;
 }
 
 /*MEDIA QUERY*/
@@ -1316,6 +1343,15 @@ td svg {
 
     .table_container {
         overflow-x: auto;
+    }
+
+    .burger_btn {
+        display: block;
+        cursor: pointer;
+    }
+
+    #nav_menu {
+        display: none;
     }
 }
 

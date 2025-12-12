@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment = "head(fragment)">
+<head th:fragment ="head(fragment)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
@@ -12,7 +12,12 @@
           <a href="/">
           <img th:src="@{/images/logo.png}" class="nav_logo" alt="logo">
           </a>
-          <nav>
+         <div id="burger_btn" class="burger_btn">
+              <svg width="62" height="62" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.3335 15.5C10.3335 14.8148 10.6057 14.1577 11.0901 13.6733C11.5746 13.1888 12.2317 12.9166 12.9168 12.9166H49.0835C49.7686 12.9166 50.4257 13.1888 50.9102 13.6733C51.3947 14.1577 51.6668 14.8148 51.6668 15.5C51.6668 16.1851 51.3947 16.8422 50.9102 17.3267C50.4257 17.8111 49.7686 18.0833 49.0835 18.0833H12.9168C12.2317 18.0833 11.5746 17.8111 11.0901 17.3267C10.6057 16.8422 10.3335 16.1851 10.3335 15.5ZM10.3335 31C10.3335 30.3148 10.6057 29.6577 11.0901 29.1733C11.5746 28.6888 12.2317 28.4166 12.9168 28.4166H49.0835C49.7686 28.4166 50.4257 28.6888 50.9102 29.1733C51.3947 29.6577 51.6668 30.3148 51.6668 31C51.6668 31.6851 51.3947 32.3422 50.9102 32.8267C50.4257 33.3111 49.7686 33.5833 49.0835 33.5833H12.9168C12.2317 33.5833 11.5746 33.3111 11.0901 32.8267C10.6057 32.3422 10.3335 31.6851 10.3335 31ZM12.9168 43.9166C12.2317 43.9166 11.5746 44.1888 11.0901 44.6733C10.6057 45.1577 10.3335 45.8148 10.3335 46.5C10.3335 47.1851 10.6057 47.8422 11.0901 48.3267C11.5746 48.8111 12.2317 49.0833 12.9168 49.0833H49.0835C49.7686 49.0833 50.4257 48.8111 50.9102 48.3267C51.3947 47.8422 51.6668 47.1851 51.6668 46.5C51.6668 45.8148 51.3947 45.1577 50.9102 44.6733C50.4257 44.1888 49.7686 43.9166 49.0835 43.9166H12.9168Z" fill="black"/>
+              </svg>
+          </div>
+          <nav id="nav_menu" class="nav_menu">
               <ul>
                   <li><a href="/#carport_section"><p>Carport</p></a></li>
                   <li><a th:href="@{/userdefined}"><p>Quick-Byg</p></a></li>
@@ -39,7 +44,6 @@
               </ul>
           </nav>
       </div>
-
     <div id="cart_overlay" class="cart_overlay hidden">
             <div id="cart_items_container"></div>
         <div class="cart_overlay_content">
@@ -49,7 +53,6 @@
                 <p id="overlay_product_amount" style="font-size: 12px;"></p>
                 <p id="overlay_product_price" style="font-size: 12px;"></p>
             </div>
-
             <form id="overlay_cart_form" th:action="@{/cart}" method="GET">
                 <input type="hidden" name="carportID" id="overlay_input_carportID"/>
                 <input type="hidden" name="productName" id="overlay_input_productName"/>

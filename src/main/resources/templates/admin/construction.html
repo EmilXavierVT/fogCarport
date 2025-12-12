@@ -49,7 +49,7 @@
         <div class="flat_section_container_construction">
             <label for="shed"></label> <h3>Redskabskur</h3>
             <select class="dropdowns_admin_construction" name="shed" id="shed" th:required="true">
-                <option th:text="${carport_request.carport.specification.shed == true ? 'Med Skur' : 'Uden Skur' }"></option>
+                <option th:value="${carport_request.carport.specification.shed == true ? 1: 0 }"th:text="${carport_request.carport.specification.shed == true ? 'Med Skur' : 'Uden Skur' }"></option>
                 <option value="0">Uden Skur</option>
                 <option value="1">Med Skur</option>
         </select>
@@ -188,11 +188,12 @@
         <button type="button" class="button_white tab"
                 data-target="itemList_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Stykliste</button>
+
         <button type="button" class="button_white tab"
                 data-target="customer_receipt_section"
                 style="margin-top: 2%; max-width: 200px; height: 10%;">Se Kundekvittering</button>
     </div>
-    </div>
+</div>
 </section>
 <section id="customer_receipt_section" class="tab_content">
 <div class="display_container_vertical">
@@ -223,6 +224,7 @@
                         <textarea class="text_area_box" id="email_body" name="email_body" rows="30" cols="100"
                                   placeholder="Hej (indsæt brugernavn)" required>
                         </textarea>
+                        <br>
                         <button type="submit" class="button_white">Send Email</button>
                     </form>
                     <form th:action="@{/send_acceptance_offer}" method="post">

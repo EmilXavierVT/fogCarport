@@ -880,7 +880,10 @@ img.user_defined_picture {
 .search_input {
     margin-bottom: 2%;
 }
-.carport-svg-topview {}
+.carport-svg-topview {
+    height: 500px;
+    width: 100%;
+}
 
 .flat_section_container_admin {
     text-align: center;
@@ -930,6 +933,8 @@ img.user_defined_picture {
 }
 
 .dropdowns_admin_construction {
+    color: var(--white_widget);
+    background-color: var(--text);
     width: 100%;
     height: 40px;
     text-align: center;

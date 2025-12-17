@@ -1,8 +1,6 @@
 package app.persistence;
 
 import app.exceptions.DatabaseException;
-import org.junit.jupiter.api.Test;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,9 +26,9 @@ public class TestMapper
                 throw new DatabaseException("No data found");
             }
         }
-        catch (SQLException | DatabaseException e) {
+        catch (SQLException | DatabaseException e)
+        {
             throw new RuntimeException();
         }
     }
-
 }

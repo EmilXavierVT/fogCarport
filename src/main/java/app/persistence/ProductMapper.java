@@ -21,7 +21,6 @@ public class ProductMapper
             ps.setDouble(4, price);
             ps.setInt(5, type);
             ps.executeUpdate();
-
         }
         catch (SQLException e)
         {
@@ -118,25 +117,32 @@ public class ProductMapper
             }
             return products;
         }
-        catch (SQLException e) {
+        catch (SQLException e)
+        {
             throw new DatabaseException("Error getting all products from database", e.getMessage());
         }
     }
 
     public static void updateProductPrice(int productId, float newPrice, ConnectionPool connectionPool)
     {
-        try {
+        try
+        {
             String sql = "UPDATE products SET price = ? WHERE product_id = ?";
             try (Connection connection = connectionPool.getConnection();
-                 PreparedStatement ps = connection.prepareStatement(sql)) {
+                 PreparedStatement ps = connection.prepareStatement(sql))
+            {
                 ps.setFloat(1, newPrice);
                 ps.setInt(2, productId);
                 int rowsAffected = ps.executeUpdate();
-                if (rowsAffected != 1) {
+
+                if (rowsAffected != 1)
+                {
                     throw new DatabaseException("Failed to update product price for ID: " + productId);
                 }
             }
-        } catch (SQLException | DatabaseException e) {
+        }
+        catch (SQLException | DatabaseException e)
+        {
             throw new RuntimeException(e);
         }
     }

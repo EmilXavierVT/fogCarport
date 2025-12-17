@@ -21,6 +21,7 @@ public class UserController
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         app.get("/logout", ctx -> logout(ctx));
         app.post("/login", ctx -> login(ctx,connectionPool));
+        app.get("/login", ctx -> ctx.render("login.html"));
         app.get("/register_password", ctx -> ctx.render("register_password.html"));
         app.post("/register_password", ctx -> createUser(ctx, connectionPool));
         app.get("/create_user", ctx -> ctx.render("create_user.html"));
@@ -33,15 +34,15 @@ public class UserController
     }
 
     private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        CarportRequest rq = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.pathParam("id")),connectionPool);
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        CarportRequest rq = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
         if(rq !=null) {
 
             User user = rq.getUser();
-            int id = rq.getCarportRequestID();
             if (ctx.sessionAttribute("currentUser") == null) {
-                ctx.redirect("/");
+                ctx.redirect("/login");
                 return;
-            } else if (ctx.sessionAttribute("currentUser") == user) {
+            } else if (ctx.sessionAttribute("currentUser") != user) {
                 ctx.redirect("/");
                 return;
             }

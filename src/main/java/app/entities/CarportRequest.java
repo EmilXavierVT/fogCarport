@@ -18,6 +18,7 @@ public class CarportRequest
         this.carport = carportByID;
         this.salesRep = salesRepByID;
     }
+
     public CarportRequest(int carportRequestID, User userByID, Carport carportByID, User salesRepByID, int status)
     {
         this.carportRequestID = carportRequestID;

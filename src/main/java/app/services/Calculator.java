@@ -3,13 +3,10 @@ package app.services;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.ProductInOrderMapper;
 import app.persistence.ProductMapper;
 import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class Calculator
@@ -149,7 +146,6 @@ public class Calculator
     List<Product> tHinges = allProducts.stream().filter(product -> product.getType() == 20).toList();
     List<Product> angleHinges = allProducts.stream().filter(product -> product.getType() == 21).toList();
 
-
     beam = specification.getBeam();
     post = specification.getPost();
     rafter = specification.getRafter();
@@ -173,9 +169,7 @@ public class Calculator
     if(specification instanceof AngleSpecification)
     {
       angle = ((AngleSpecification) specification).getAngle();
-//      We neeed to figure out the correct math to figure this one out
     }
-
 
 //    beams
     if(length<=600)
@@ -186,34 +180,33 @@ public class Calculator
     {
         itemList.add(new ProductInOrder(0,beam,2,600));
         itemList.add(new ProductInOrder(0,beam,1,300));
-    }else
+    }
+    else
     {
         itemList.add(new ProductInOrder(0,beam,2,600));
         itemList.add(new ProductInOrder(0,beam,1,360));
     }
-
 //    post
         itemList.add(new ProductInOrder(0,post,amountOfPosts,0));
-
 //    rafters
         itemList.add(new ProductInOrder(0,rafter,amountOfRafters,width));
-
 //    roof
         if(length<600)
         {
             itemList.add(new ProductInOrder(0, roof, amountOfRoof, length));
-        } else
+        }
+        else
         {
             itemList.add(new ProductInOrder(0, roof, amountOfRoof,600));
             itemList.add(new ProductInOrder(0, roof, amountOfRoof,length-600));
         }
 //    fasciaBoard one will always be width
-
         itemList.add(new ProductInOrder(0,fasciaBoard,2,width));
         if(length<600)
         {
             itemList.add(new ProductInOrder(0,fasciaBoard,2,length));
-        } else if(length<750)
+        }
+        else if(length<750)
         {
             itemList.add(new ProductInOrder(0,fasciaBoard,2,600));
             itemList.add(new ProductInOrder(0,fasciaBoard,1,300));
@@ -222,7 +215,6 @@ public class Calculator
             itemList.add(new ProductInOrder(0,fasciaBoard,2,600));
             itemList.add(new ProductInOrder(0,fasciaBoard,1,360));
         }
-
 //    All shed calculations
         if(specification.isShed())
         {
@@ -230,9 +222,7 @@ public class Calculator
             itemList.add(new ProductInOrder(0, wallCovering, amountOfPlanks, 0));
             itemList.add(new ProductInOrder(0, post, 3, 0));
         }
-
 //        all Screws
-
         itemList.add(new ProductInOrder(0,bottomScrew,bottomScrewsAmount,0));
         itemList.add(new ProductInOrder(0,holeBand,holeBandAmount,0));
         itemList.add(new ProductInOrder(0,rightFitting,rightFittingAmount,0));
@@ -249,7 +239,6 @@ public class Calculator
             itemList.add(new ProductInOrder(0, tHinge, tHingeAmount, 0));
             itemList.add(new ProductInOrder(0, angleHinge, angleHingeAmount, 0));
         }
-
         return itemList;
     }
 
@@ -260,11 +249,7 @@ public class Calculator
          for(ProductInOrder productInOrder : setItemList())
          {
              totalCost += (productInOrder.getProduct().getPrice()*(double)productInOrder.getAmount());
-
          }
         return totalCost;
     }
-
-
-
 }

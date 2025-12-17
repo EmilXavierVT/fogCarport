@@ -14,29 +14,30 @@ import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
-
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Map;
 
-public class UserDefinedController {
+public class UserDefinedController
+{
     public static int width;
     public static int length;
     public static int shedWidth;
     public static int shedLength;
     private static Calculator calc;
 
-    public static void addRoutes(Javalin app) {
+    public static void addRoutes(Javalin app)
+    {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
        app.get("/userdefined",ctx -> ctx.render("userdefined.html"));
        app.get("/flat",ctx->ctx.render("flat.html"));
        app.post("/flat",ctx-> sendRequest(ctx, connectionPool));
        app.get("/angle", ctx -> ctx.render("angle"));
        app.post("/angle", ctx -> sendAngleRequest(ctx, connectionPool));
-//       app.get("/show_drawing", ctx -> showDrawing(ctx));
     }
 
-    private static void sendAngleRequest(Context ctx,ConnectionPool connectionPool) throws DatabaseException, MessagingException {
+    private static void sendAngleRequest(Context ctx,ConnectionPool connectionPool) throws DatabaseException, MessagingException
+    {
         width = Integer.parseInt(ctx.formParam("width"));
         length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
@@ -50,17 +51,14 @@ public class UserDefinedController {
         String city = ctx.formParam("city");
         String phoneNumber = ctx.formParam("phone_number");
         String email = ctx.formParam("email");
-
         boolean roof = !roofType.equals("Ingen tag");
 
         calc = new Calculator(SpecificationWizard.makeAngleSpecification(width,length,roof,shedWidth,shedLength,angle));
-
         System.out.println(calc.setItemList());
-
-
 
         int carportID = CarportMapper.SaveAndGetCarportInDB(name,calc.getCostPrice(),70,"custom",calc.getSpecification().getSpecificationId(),connectionPool);
         User salesRep = UserMapper.getUserByID(29,connectionPool);
+
         if(ctx.sessionAttribute("currentUser") != null)
         {
             User user = ctx.sessionAttribute("currentUser");
@@ -69,17 +67,19 @@ public class UserDefinedController {
         else
         {
             User user= UserMapper.getUserByEmail(email,connectionPool);
-            if(user !=null) {
+            if(user !=null)
+            {
                 CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
             }
-            else {
+            else
+            {
                 User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email," ",connectionPool);
                 CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
             }
         }
-
         System.out.println(calc.setItemList());
         GmailSender gms = new GmailSender();
+
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",
                 "Kære " + name + " Det glæder os at du skal ha en ny carport! " +
@@ -93,7 +93,8 @@ public class UserDefinedController {
         ctx.redirect("/");
     }
 
-    private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException, MessagingException, SQLException {
+    private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException, MessagingException, SQLException
+    {
         width = Integer.parseInt(ctx.formParam("width"));
         length = Integer.parseInt(ctx.formParam("length"));
         String roofType = ctx.formParam("roof");
@@ -106,17 +107,13 @@ public class UserDefinedController {
         String city = ctx.formParam("city");
         String phoneNumber = ctx.formParam("phone_number");
         String email = ctx.formParam("email");
-
         boolean roof = !roofType.equals("Ingen tag");
-
-
-
         calc = new Calculator(SpecificationWizard.makeASpecification(width,length,roof,shedWidth,shedLength));
-
         System.out.println(calc.setItemList());
 
         int carportID = CarportMapper.SaveAndGetCarportInDB(name,  calc.getCostPrice(),70,"custom",calc.getSpecification().getSpecificationId(),connectionPool);
         User salesRep = UserMapper.getUserByID(1,connectionPool);
+
         if(ctx.sessionAttribute("currentUser") != null)
         {
             User user = ctx.sessionAttribute("currentUser");
@@ -125,15 +122,16 @@ public class UserDefinedController {
         else
         {
             User user= UserMapper.getUserByEmail(email,connectionPool);
-            if(user !=null) {
+            if(user !=null)
+            {
                 CarportRequestMapper.createCarportRequest(user.getUserId(), carportID, salesRep.getUserId(), connectionPool);
             }
-            else {
+            else
+            {
                 User newUser = UserMapper.createUser(name," ",zipCode,address,0," ",email,"1234",connectionPool);
                 CarportRequestMapper.createCarportRequest(newUser.getUserId(),carportID,salesRep.getUserId(),connectionPool);
             }
             }
-
         GmailSender gms = new GmailSender();
         gms.sendPlainTextEmail(email,
                 "Tak for din forespørgsel!",
@@ -146,14 +144,12 @@ public class UserDefinedController {
         ctx.redirect("/");
     }
 
-    public static Svg showDrawing( int width, int length, int shedWidth, int shedLength, Specification specification) {
-
+    public static Svg showDrawing( int width, int length, int shedWidth, int shedLength, Specification specification)
+    {
         Locale.setDefault(Locale.US);
         Calculator calc = new Calculator(specification);
 
-        //creating scale around carport
         Svg scale = new Svg(0,0,"0 0 855 690","100%","auto");
-
 
         scale.addLine(50,10,50,width/2+20,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
         scale.addLine(80,width/2 + 45,length/2+100,width/2 +45,"stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow);");
@@ -161,10 +157,8 @@ public class UserDefinedController {
         scale.addText(30,width/3-10,-90, String.valueOf(width) + " cm");
         scale.addText(length/3 +55,width/2 + 60,0, String.valueOf(length) + " cm");
 
-
         //carport
         Svg carportSvg = new Svg(75,10,"0 0 780 600","50%","auto");
-
 
         //ramme
         carportSvg.addRectangle(0,0,width,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
@@ -173,9 +167,8 @@ public class UserDefinedController {
         carportSvg.addRectangle(0,30,4,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
         carportSvg.addRectangle(0,width-30,4,length,"stroke-width:1px; stroke:#000000; fill:#ffffff");
 
-
-
-        if(shedLength == 0 && shedWidth == 0 ) {
+        if(shedLength == 0 && shedWidth == 0 )
+        {
             //stolper
             carportSvg.addRectangle(30, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
             carportSvg.addRectangle(30, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
@@ -188,7 +181,8 @@ public class UserDefinedController {
             int postsPerSide = (calc.getAmountOfPosts() - 4) / 2;
             int spaceBettwenEachpost = spaceBettwenStartAndEnd / (postsPerSide + 1);
 
-            while (postsPerSide > 0) {
+            while (postsPerSide > 0)
+            {
                 startPole += spaceBettwenEachpost;
                 carportSvg.addRectangle(startPole, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
                 carportSvg.addRectangle(startPole, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
@@ -229,7 +223,8 @@ public class UserDefinedController {
             int spaceBettwenEachBottompost = spaceBettwenBottomStartAndEnd / (postsPerSide + 1);
 
             // nederste stolper midden
-            while (bottomPostAmount > 0) {
+            while (bottomPostAmount > 0)
+            {
                 startBottomPole += spaceBettwenEachBottompost;
                 carportSvg.addRectangle(startBottomPole, width - 33, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
                 bottomPostAmount--;
@@ -243,14 +238,15 @@ public class UserDefinedController {
             }
 
             // 1 stolpe længde
-            if(shedLength >= 310 && shedLength <= 620) {
+            if(shedLength >= 310 && shedLength <= 620)
+            {
                 carportSvg.addRectangle((shedLength / 2) + 30, 27, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
                 carportSvg.addRectangle((shedLength / 2) + 30, shedWidth + 17, 10, 10, "stroke-width:2px; stroke:#000000; fill:#ffffff");
                 postsPerSide--;
             }
-
             //2 stoler længde
-            if (shedLength >= 620) {
+            if (shedLength >= 620)
+            {
                     int spaceBettwenStartAndEnd = shedLength / 3;
                     int startPole = 30;
                     int postToPlace = 2;
@@ -263,10 +259,13 @@ public class UserDefinedController {
                         postsPerSide--;
                     }
                 }
-            if(length-100-shedLength > 130){
+            if(length-100-shedLength > 130)
+            {
                 carportSvg.addRectangle(shedLength+130+30,27,10,10,"stroke-width:2px; stroke:#000000; fill:#ffffff");
             }
-            if(length-100-shedLength > 460){
+
+            if(length-100-shedLength > 460)
+            {
                 int firstPost = shedLength+130+30;
                 int space = length-100-firstPost;
                 int secondPost = space/2;
@@ -298,11 +297,6 @@ public class UserDefinedController {
 
         //adding carport to scale
         scale.addSvg(carportSvg);
-
         return scale;
-
-
     }
-
-
 }

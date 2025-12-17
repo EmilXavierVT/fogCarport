@@ -15,6 +15,5 @@ LocalDate date;
         this.id = id;
         this.userId = userId;
         this.date = date;
-
     }
 }

@@ -19,12 +19,10 @@ public class ProductInOrderMapper
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql))
         {
-
             ps.setInt(1, OrderID);
             ps.setInt(2, product.getProductID());
             ps.setInt(3, amount);
             ps.executeUpdate();
-
         }
         catch (SQLException e)
         {
@@ -75,7 +73,8 @@ public class ProductInOrderMapper
                 throw new DatabaseException("Failed to update product in order with ID: " + productInOrderId);
             }
         }
-        catch (SQLException e) {
+        catch (SQLException e)
+        {
             throw new DatabaseException("Error updating product in order", e.getMessage());
         }
     }

@@ -19,7 +19,8 @@ public class GmailSender
        this.email = dotenv.get("EMAIL");
        this.password = dotenv.get("PASSWORD");
 
-       if (email == null || password == null) {
+       if (email == null || password == null)
+       {
            throw new IllegalStateException("MAIL_USERNAME and MAIL_PASSWORD environment variables must be set.");
        }
    }
@@ -34,17 +35,16 @@ public class GmailSender
         Session session = Session.getInstance(props, new Authenticator()
         {
             @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
+            protected PasswordAuthentication getPasswordAuthentication()
+            {
                 return new PasswordAuthentication(email, password);
             }
         });
-
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(email));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setSubject(subject);
         message.setText(body); // Plain text only
-
         Transport.send(message);
         System.out.println("Email sent successfully to " + to);
     }

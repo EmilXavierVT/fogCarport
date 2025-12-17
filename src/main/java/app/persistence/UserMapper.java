@@ -2,7 +2,6 @@ package app.persistence;
 
 import app.entities.User;
 import app.exceptions.DatabaseException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,7 +46,8 @@ public class UserMapper
 
     public static User createUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
-        if (isEmailAlreadyTaken(email, connectionPool)) {
+        if (isEmailAlreadyTaken(email, connectionPool))
+        {
             throw new DatabaseException("Email is already in use.");
         }
 
@@ -80,18 +80,20 @@ public class UserMapper
         String sql = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 int count = rs.getInt("count");
                 return count > 0;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new DatabaseException("E-mail is already taken", e.getMessage());
-
-
         }
         return false;
     }
@@ -106,7 +108,7 @@ public class UserMapper
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            if ( rs.next() )
+            if (rs.next())
             {
                 return new User(
                         rs.getInt("user_id"),
@@ -120,20 +122,14 @@ public class UserMapper
                         rs.getString("password"),
                         rs.getInt("phone_number"),
                         rs.getInt("role")
-
                 );
             }
-//            else
-//            {
-//                throw new DatabaseException("No user found with ID: " + id);
-//            }
             return null;
         }
         catch (SQLException e)
         {
             throw new DatabaseException("Error retrieving user", e.getMessage());
         }
-
     }
 
     public static User updateUser(int id, String firstName, String lastName, int zipCode,
@@ -155,7 +151,7 @@ public class UserMapper
             ps.setInt(8, id);
             int rowsAffected = ps.executeUpdate();
 
-            if ( rowsAffected != 1 )
+            if (rowsAffected!= 1)
             {
                 throw new DatabaseException("Failed to update user with ID: " + id);
             }
@@ -182,7 +178,8 @@ public class UserMapper
                 throw new DatabaseException("Failed to delete user with ID: " + id);
             }
         }
-        catch (SQLException e) {
+        catch (SQLException e)
+        {
             throw new DatabaseException("Error deleting user", e.getMessage());
         }
     }
@@ -198,7 +195,7 @@ public class UserMapper
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
-            if ( rs.next() )
+            if (rs.next())
             {
                 int id = rs.getInt("user_id");
 
@@ -272,15 +269,18 @@ public class UserMapper
         }
     }
 
-    public static User getUserByEmail(String email, ConnectionPool connectionPool) throws DatabaseException {
+    public static User getUserByEmail(String email, ConnectionPool connectionPool) throws DatabaseException
+    {
         String sql = "SELECT * FROM users WHERE email = ?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+             PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 return new User(
                         rs.getInt("user_id"),
                         rs.getString("first_name"),
@@ -295,11 +295,11 @@ public class UserMapper
                         rs.getInt("role")
                 );
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new DatabaseException("Error retrieving user by email", e.getMessage());
         }
     return null;
     }
 }
-
-

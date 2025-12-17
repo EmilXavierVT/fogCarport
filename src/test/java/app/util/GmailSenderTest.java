@@ -22,5 +22,4 @@ class GmailSenderTest
             e.printStackTrace();
         }
     }
-
 }

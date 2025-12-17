@@ -19,7 +19,6 @@ public class SpecificationMapperTest
     private final static String PASSWORD = dotenv.get("DB-PASSWORD");
     private final static String URL = dotenv.get("DB-URL");
     private final static String DB = "carport";
-
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     Product post = new Product(22,"trykimprægneret stolpe","125x125 mm","stolper graves 90 cm i jord",110,22);

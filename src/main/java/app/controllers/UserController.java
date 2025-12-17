@@ -9,9 +9,6 @@ import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
-import ognl.enhance.OrderedReturn;
-import org.jetbrains.annotations.NotNull;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -35,15 +32,19 @@ public class UserController
         app.post("/create_user", ctx -> registerInfo(ctx, connectionPool));
     }
 
-    private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException
+    {
         int id = Integer.parseInt(ctx.pathParam("id"));
-        try {
+
+        try
+        {
             CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
             ctx.sessionAttribute("carport_request", cr);
             ctx.render("/accept_offer.html", Map.of("carport_request", cr));
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new DatabaseException(e.getMessage());
-
         }
     }
 
@@ -53,17 +54,18 @@ public class UserController
         User salesRep = rq.getSalesRep();
         User user = rq.getUser();
         GmailSender mailSender = new GmailSender();
-
         mailSender.sendPlainTextEmail(salesRep.getEmail(),"Kunden har ikke accepteret tilbuddet", "kunden " +  user.getFirstName() + " " + user.getLastName()
                 + " har afslået jeres carport tilbud" + "\n" + "CarportRequest nr: " + rq.getCarportRequestID() + ". " +
                 "\n" + " kunden kan kontaktes på telefon: " + user.getPhoneNumber() + " eller på pr. mail: " + user.getEmail() );
         ctx.render("/");
     }
 
-    private static void acceptOffer(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+    private static void acceptOffer(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException
+    {
         CarportRequest cr = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.formParam("carport_request_id")),connectionPool);
         CarportRequestMapper.updateStatus(cr.getCarportRequestID(), 2,connectionPool);
         Order order = OrderMapper.saveOrderAndReturn(cr.getUser().getUserId(), LocalDate.now(),connectionPool);
+
         for(ProductInOrder productInOrder : new Calculator(cr.getCarport().getSpecification()).setItemList())
         {
             ProductInOrderMapper.createProductInOrder(order.getId(), productInOrder.getProduct(), productInOrder.getAmount(), connectionPool);
@@ -75,14 +77,11 @@ public class UserController
     {
         try
         {
-
         CarportRequest cr  = ctx.sessionAttribute("carport_request");
-
         Specification sp = cr.getCarport().getSpecification();
         Calculator calc = new Calculator(sp);
         List<ProductInOrder> itemList = calc.setItemList();
         ctx.sessionAttribute("item_list", itemList);
-
         Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
         ctx.attribute("svg", svg.toString());
         ctx.render("/view_order", Map.of("carport_request", cr, "item_list",itemList));
@@ -169,7 +168,8 @@ public class UserController
 
     public static void registerInfo(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
-        try {
+        try
+        {
             String firstName = ctx.formParam("first_name");
             String lastName = ctx.formParam("last_name");
             int phoneNumber = Integer.parseInt(ctx.formParam("phone_number"));
@@ -179,10 +179,7 @@ public class UserController
             int streetNumber = Integer.parseInt(ctx.formParam("street_number"));
             User user = ctx.sessionAttribute("currentUser");
             int userId = user.getUserId();
-
             user = UserMapper.updateUser(userId, firstName, lastName, zipCode, streetName, streetNumber, floor, phoneNumber, connectionPool);
-
-
 
             ctx.sessionAttribute("currentUser", user);
             ctx.sessionAttribute("message", "Du har opdateret din profil !");
@@ -190,7 +187,9 @@ public class UserController
             ctx.redirect("/");
             ctx.render("index.html");
 
-        } catch (NumberFormatException | DatabaseException e) {
+        }
+        catch (NumberFormatException | DatabaseException e)
+        {
             ctx.sessionAttribute("register_info_error", "Der skete en fejl under opdatering af din profil, prøv igen !");
             ctx.render("create_user.html");
         }

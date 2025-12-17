@@ -96,6 +96,7 @@ class CalculatorTest
         calc.setConnectionPool(connectionPool);
         System.out.println(calc.getCostPrice());
     }
+
     @Test
     public void testItemList() throws SQLException, DatabaseException
     {

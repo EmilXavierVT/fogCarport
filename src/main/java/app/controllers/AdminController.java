@@ -74,11 +74,12 @@ public class AdminController
 
     private static void sendEmail(Context ctx) throws MessagingException
     {
-        GmailSender gemailSender = new GmailSender();
-        String to = ctx.formParam("to_email");
+        GmailSender mailSender = new GmailSender();
+        CarportRequest req = ctx.sessionAttribute("carport_request");
+        String to = req.getUser().getEmail();
         String subject = ctx.formParam("email_subject");
         String body = ctx.formParam("email_body");
-        gemailSender.sendPlainTextEmail(to, subject, body);
+        mailSender.sendPlainTextEmail(to, subject, body);
         ctx.sessionAttribute("email_sent_message", "Email sendt til " + to);
         ctx.redirect("/admin/alert");
     }

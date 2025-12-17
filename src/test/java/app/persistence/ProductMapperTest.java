@@ -26,7 +26,6 @@ public class ProductMapperTest
     @BeforeAll
     public static void setUpClass() throws SQLException
     {
-
         try (Connection connection = connectionPool.getConnection())
         {
             try (Statement stmt = connection.createStatement())
@@ -74,6 +73,7 @@ public class ProductMapperTest
             }
         }
     }
+
     @Test
     public void findOrder() throws SQLException, DatabaseException
     {

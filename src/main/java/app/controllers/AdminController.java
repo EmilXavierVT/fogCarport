@@ -16,31 +16,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AdminController
-{
-    public static void addRoutes(Javalin app)
-    {
+public class AdminController {
+    public static void addRoutes(Javalin app) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
         app.post("/update_price", ctx -> updatePrice(ctx, connectionPool));
-        app.get("/admin/construction/{id}",ctx-> showConstructionPage(ctx, connectionPool));
-        app.post("/admin/construction",ctx -> sendEmail(ctx));
-        app.post("/send_acceptance_offer",ctx -> sendAcceptanceOffer(ctx));
-        app.post("/delete_offer",ctx -> deleteOffer(ctx, connectionPool));
-        app.post("/admin/update_request", ctx -> updateRequest(ctx,connectionPool));
+        app.get("/admin/construction/{id}", ctx -> showConstructionPage(ctx, connectionPool));
+        app.post("/admin/construction", ctx -> sendEmail(ctx));
+        app.post("/send_acceptance_offer", ctx -> sendAcceptanceOffer(ctx));
+        app.post("/delete_offer", ctx -> deleteOffer(ctx, connectionPool));
+        app.post("/admin/update_request", ctx -> updateRequest(ctx, connectionPool));
         app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
     }
 
-    private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException
-    {
+    private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
         CarportRequest rq = ctx.sessionAttribute("carport_request");
-        CarportMapper.changeTypeToDeletedByID(rq.getCarport().getCarportID(),connectionPool);
+        CarportMapper.changeTypeToDeletedByID(rq.getCarport().getCarportID(), connectionPool);
         ctx.redirect("/admin/alert");
     }
 
-    private static void sendAcceptanceOffer(Context ctx) throws MessagingException
-    {
+    private static void sendAcceptanceOffer(Context ctx) throws MessagingException {
         GmailSender gmailSender = new GmailSender();
         CarportRequest rq = ctx.sessionAttribute("carport_request");
         User user = rq.getUser();
@@ -48,22 +44,20 @@ public class AdminController
         String to = user.getEmail();
         String subject = "Tillykke du skal ha en carport fra FOG";
         String body = "Vi har vurderet at din carport kan bygges! " + "Her  er et link til at bekræfte tilbuddet: \n" +
-                 "http://localhost:7071/accept_offer/" + id;
+                "http://localhost:7071/accept_offer/" + id;
         gmailSender.sendPlainTextEmail(to, subject, body);
-        ctx.sessionAttribute("email_sent_message", "Email sendt til " +user.getFirstName() + " " + user.getLastName() + ". Med e-mail: " + to);
+        ctx.sessionAttribute("email_sent_message", "Email sendt til " + user.getFirstName() + " " + user.getLastName() + ". Med e-mail: " + to);
         ctx.redirect("/admin/alert");
     }
 
-    private static void updateOfferPrice(Context ctx)
-    {
+    private static void updateOfferPrice(Context ctx) {
         double markupPercentage = ctx.formParam("markup_percentage") == null ? 1.39 : Double.parseDouble(ctx.formParam("markup_percentage"));
         CarportRequest req = ctx.sessionAttribute("carport_request");
-        ctx.sessionAttribute("markup_percentage", 1+(markupPercentage/100));
-        ctx.redirect("/admin/construction/"+req.getCarportRequestID());
+        ctx.sessionAttribute("markup_percentage", 1 + (markupPercentage / 100));
+        ctx.redirect("/admin/construction/" + req.getCarportRequestID());
     }
 
-    private static void updateRequest(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException
-    {
+    private static void updateRequest(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
         CarportRequest req = ctx.sessionAttribute("carport_request");
         int width = Integer.parseInt(ctx.formParam("width"));
         int length = Integer.parseInt(ctx.formParam("length"));
@@ -71,12 +65,11 @@ public class AdminController
         int shedWidth = Integer.parseInt(ctx.formParam("shed_width"));
         int shedLength = Integer.parseInt(ctx.formParam("shed_length"));
         int roof = Integer.parseInt(ctx.formParam("roof"));
-        SpecificationMapper.updateSpecification(req.getCarportRequestID(),width,length,shed,shedWidth,shedLength,roof,connectionPool);
+        SpecificationMapper.updateSpecification(req.getCarportRequestID(), width, length, shed, shedWidth, shedLength, roof, connectionPool);
         ctx.redirect("/admin/construction/" + req.getCarportRequestID());
     }
 
-    private static void sendEmail(Context ctx) throws MessagingException
-    {
+    private static void sendEmail(Context ctx) throws MessagingException {
         GmailSender gemailSender = new GmailSender();
         String to = ctx.formParam("to_email");
         String subject = ctx.formParam("email_subject");
@@ -86,17 +79,14 @@ public class AdminController
         ctx.redirect("/admin/alert");
     }
 
-    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool)
-    {
-        try
-        {
+    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool) {
+        try {
             int id = Integer.parseInt(ctx.pathParam("id"));
             CarportRequestMapper.updateStatus(id, 1, connectionPool);
-            CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
+            CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
             ctx.sessionAttribute("carport_request", cr);
 
-            if (cr != null)
-            {
+            if (cr != null) {
                 Specification sp = cr.getCarport().getSpecification();
                 Calculator calc = new Calculator(sp);
                 List<ProductInOrder> itemList = calc.setItemList();
@@ -108,21 +98,16 @@ public class AdminController
 
                 Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
                 ctx.attribute("svg", svg.toString());
-            ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list",itemList, "cost_price",costPrice, "actual_offer", actualOffer));
-            }
-            else
-            {
+                ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list", itemList, "cost_price", costPrice, "actual_offer", actualOffer));
+            } else {
                 throw new RuntimeException("Svg Could not be found");
             }
-        }
-        catch (DatabaseException | SQLException e)
-        {
+        } catch (DatabaseException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void updatePrice(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void updatePrice(Context ctx, ConnectionPool connectionPool) {
         int productId = Integer.parseInt(ctx.formParam("product_id"));
         float newPrice = Float.parseFloat(ctx.formParam("new_price"));
         ProductMapper.updateProductPrice(productId, newPrice, connectionPool);
@@ -130,85 +115,24 @@ public class AdminController
         ctx.redirect("/admin/alert");
     }
 
-    private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
-    {
-        try
-        {
+    private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool) {
+        try {
             List<User> users = UserMapper.getAllUsers(connectionPool);
             List<CarportRequest> requests = CarportRequestMapper.getAllCarportRequests(connectionPool);
             List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
             List<Product> products = ProductMapper.getAllProducts(connectionPool);
-            requests =  requests.stream().filter(cr -> cr.getStatus() == 0  || cr.getStatus() ==1).toList();
-            requests = requests.stream().filter((cr-> cr.getCarport().getType() == 70)).toList();
+            requests = requests.stream().filter(cr -> cr.getStatus() == 0 || cr.getStatus() == 1).toList();
+            requests = requests.stream().filter((cr -> cr.getCarport().getType() == 70)).toList();
 
             ctx.render("admin/alert.html", Map.of("all_users", users,
                     "all_carport_requests", requests,
                     "all_standard_carports", standardCarports,
                     "all_products", products));
 
-        }
-        catch (DatabaseException e)
-        {
+        } catch (DatabaseException e) {
             System.out.println("showAdminDashboard signature: Could not show admin dashboard" + e.getMessage());
             ctx.redirect("/");
         }
     }
-
-    private static void showAllUsers(Context ctx, ConnectionPool connectionPool)
-    {
-        try
-        {
-            List<User> users = UserMapper.getAllUsers(connectionPool);
-            ctx.render("admin/alert.html", Map.of("all_users", users));
-        }
-        catch (DatabaseException e)
-        {
-            System.out.println("showAllUsers signature: Could not show all users" + e.getMessage());
-            ctx.redirect("/");
-        }
-    }
-
-    private static void showAllOrders(Context ctx, ConnectionPool connectionPool)
-    {
-        try
-        {
-            List<CarportRequest> orders = CarportRequestMapper.getAllCarportRequests(connectionPool);
-            ctx.render("admin/alert.html", Map.of("all_carport_requests", orders));
-        }
-        catch (DatabaseException e)
-        {
-            System.out.println("showAllMaterials signature: Could not get all materials" + e.getMessage());
-            ctx.redirect("/");
-        }
-    }
-
-
-
-    public static void showAllCarports (Context ctx, ConnectionPool connectionPool) throws DatabaseException
-    {
-        try
-        {
-            List<Carport> standardCarports = CarportMapper.getAllStandardCarport(connectionPool);
-            ctx.render("admin/alert.html", Map.of("all_standard_carports", standardCarports));
-        }
-        catch (DatabaseException e)
-        {
-            System.out.println("showAllCarport signature: Could not get all carports" + e.getMessage());
-            ctx.redirect("/");
-        }
-    }
-
-    public static void showAllMaterials (Context ctx, ConnectionPool connectionPool) throws DatabaseException
-    {
-        try
-        {
-            List<Product> products = ProductMapper.getAllProducts(connectionPool);
-            ctx.render("admin/alert.html", Map.of("all_materials", products));
-        }
-        catch (DatabaseException e)
-        {
-            System.out.println("showAllMaterials signature: Could not get all materials" + e.getMessage());
-            ctx.redirect("/");
-        }
-    }
 }
+

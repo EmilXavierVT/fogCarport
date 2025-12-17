@@ -64,7 +64,8 @@ public class GmailSender
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 // Username MUST be literal "apikey"
-                return new PasswordAuthentication("apikey", "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");
+                Dotenv dotenv = Dotenv.load();
+                return new PasswordAuthentication(dotenv.get("SENDGRID_USER"), dotenv.get("SENDGRID_PASSWORD"));
             }
         });
 

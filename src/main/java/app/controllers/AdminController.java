@@ -9,15 +9,14 @@ import app.util.GmailSender;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import jakarta.mail.MessagingException;
-import org.jetbrains.annotations.NotNull;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class AdminController {
-    public static void addRoutes(Javalin app) {
+public class AdminController
+{
+    public static void addRoutes(Javalin app)
+    {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         app.get("/admin/alert", ctx -> showAdminDashboard(ctx, connectionPool));
@@ -30,13 +29,15 @@ public class AdminController {
         app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
     }
 
-    private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
+    private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException
+    {
         CarportRequest rq = ctx.sessionAttribute("carport_request");
         CarportMapper.changeTypeToDeletedByID(rq.getCarport().getCarportID(), connectionPool);
         ctx.redirect("/admin/alert");
     }
 
-    private static void sendAcceptanceOffer(Context ctx) throws MessagingException {
+    private static void sendAcceptanceOffer(Context ctx) throws MessagingException
+    {
         GmailSender gmailSender = new GmailSender();
         CarportRequest rq = ctx.sessionAttribute("carport_request");
         User user = rq.getUser();
@@ -50,7 +51,8 @@ public class AdminController {
         ctx.redirect("/admin/alert");
     }
 
-    private static void updateOfferPrice(Context ctx) {
+    private static void updateOfferPrice(Context ctx)
+    {
         double markupPercentage = ctx.formParam("markup_percentage") == null ? 1.39 : Double.parseDouble(ctx.formParam("markup_percentage"));
         CarportRequest req = ctx.sessionAttribute("carport_request");
         ctx.sessionAttribute("markup_percentage", 1 + (markupPercentage / 100));
@@ -69,7 +71,8 @@ public class AdminController {
         ctx.redirect("/admin/construction/" + req.getCarportRequestID());
     }
 
-    private static void sendEmail(Context ctx) throws MessagingException {
+    private static void sendEmail(Context ctx) throws MessagingException
+    {
         GmailSender gemailSender = new GmailSender();
         String to = ctx.formParam("to_email");
         String subject = ctx.formParam("email_subject");
@@ -79,14 +82,17 @@ public class AdminController {
         ctx.redirect("/admin/alert");
     }
 
-    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool) {
-        try {
+    private static void showConstructionPage(Context ctx, ConnectionPool connectionPool)
+    {
+        try
+        {
             int id = Integer.parseInt(ctx.pathParam("id"));
             CarportRequestMapper.updateStatus(id, 1, connectionPool);
             CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
             ctx.sessionAttribute("carport_request", cr);
 
-            if (cr != null) {
+            if (cr != null)
+            {
                 Specification sp = cr.getCarport().getSpecification();
                 Calculator calc = new Calculator(sp);
                 List<ProductInOrder> itemList = calc.setItemList();
@@ -99,7 +105,9 @@ public class AdminController {
                 Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
                 ctx.attribute("svg", svg.toString());
                 ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list", itemList, "cost_price", costPrice, "actual_offer", actualOffer));
-            } else {
+            }
+            else
+            {
                 throw new RuntimeException("Svg Could not be found");
             }
         } catch (DatabaseException | SQLException e) {
@@ -107,7 +115,8 @@ public class AdminController {
         }
     }
 
-    private static void updatePrice(Context ctx, ConnectionPool connectionPool) {
+    private static void updatePrice(Context ctx, ConnectionPool connectionPool)
+    {
         int productId = Integer.parseInt(ctx.formParam("product_id"));
         float newPrice = Float.parseFloat(ctx.formParam("new_price"));
         ProductMapper.updateProductPrice(productId, newPrice, connectionPool);
@@ -115,8 +124,10 @@ public class AdminController {
         ctx.redirect("/admin/alert");
     }
 
-    private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool) {
-        try {
+    private static void showAdminDashboard(Context ctx, ConnectionPool connectionPool)
+    {
+        try
+        {
             List<User> users = UserMapper.getAllUsers(connectionPool);
             List<CarportRequest> requests = CarportRequestMapper.getAllCarportRequests(connectionPool);
             List<Carport> standardCarports = CarportMapper.getAllStandardCarportForSlider(connectionPool);
@@ -129,7 +140,9 @@ public class AdminController {
                     "all_standard_carports", standardCarports,
                     "all_products", products));
 
-        } catch (DatabaseException e) {
+        }
+        catch (DatabaseException e)
+        {
             System.out.println("showAdminDashboard signature: Could not show admin dashboard" + e.getMessage());
             ctx.redirect("/");
         }

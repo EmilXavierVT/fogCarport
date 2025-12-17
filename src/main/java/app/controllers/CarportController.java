@@ -6,7 +6,6 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;

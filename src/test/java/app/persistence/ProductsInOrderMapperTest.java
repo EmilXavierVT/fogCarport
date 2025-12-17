@@ -7,20 +7,19 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class ProductsInOrderMapperTest {
+public class ProductsInOrderMapperTest
+{
     private final static Dotenv dotenv = Dotenv.load();
     private final static String USER = dotenv.get("DB-USER");
     private final static String PASSWORD = dotenv.get("DB-PASSWORD");
     private final static String URL = dotenv.get("DB-URL");
     private final static String DB = "carport";
-
     static ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     User tempUser = new User(1,"Emil","Thorsen",2200,"Farumgade",1,"2th","ex@tv.dk","1234",12345678,0);
@@ -30,10 +29,12 @@ public class ProductsInOrderMapperTest {
     ProductInOrder expectedProductInOrder = new ProductInOrder(1,tempOrder.getId(),tempProduct,2);
 
     @BeforeAll
-    public static void setUpClass() throws SQLException {
-
-        try (Connection connection = connectionPool.getConnection()) {
-            try (Statement stmt = connection.createStatement()) {
+    public static void setUpClass() throws SQLException
+    {
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (Statement stmt = connection.createStatement())
+            {
                 stmt.execute("DROP TABLE IF EXISTS test_schema.products_in_orders");
                 stmt.execute("DROP TABLE IF EXISTS test_schema.orders");
                 stmt.execute("DROP TABLE IF EXISTS test_schema.users");
@@ -61,17 +62,21 @@ public class ProductsInOrderMapperTest {
                 stmt.execute("ALTER TABLE test_schema.orders ALTER COLUMN order_id SET DEFAULT nextval('test_schema.orders_order_id_seq')");
                 stmt.execute("ALTER TABLE test_schema.users ALTER COLUMN user_id SET DEFAULT nextval('test_schema.users_user_id_seq')");
                 stmt.execute("ALTER TABLE test_schema.products ALTER COLUMN product_id SET DEFAULT nextval('test_schema.products_product_id_seq')");
-
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
     }
 
     @BeforeEach
-    void setUp() throws SQLException {
-        try (Connection connection = connectionPool.getConnection()) {
-            try (Statement stmt = connection.createStatement()) {
+    void setUp() throws SQLException
+    {
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (Statement stmt = connection.createStatement())
+            {
                 stmt.execute("DELETE FROM test_schema.products_in_orders");
                 stmt.execute("DELETE FROM test_schema.orders");
                 stmt.execute("DELETE FROM test_schema.users");
@@ -91,8 +96,6 @@ public class ProductsInOrderMapperTest {
 
                 stmt.execute("INSERT INTO test_schema.orders VALUES " +
                         "(1,1,'2025-11-25')");
-
-
 
                 stmt.execute("INSERT INTO test_schema.users VALUES " +
                         "(1,'Emil','Thorsen',2200,'Farumgade',1,'2th','ex@tv.dk','1234',0)");

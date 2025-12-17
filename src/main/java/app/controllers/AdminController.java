@@ -84,7 +84,7 @@ public class AdminController
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
         int shedWidth = Integer.parseInt(ctx.formParam("shed_width"));
         int shedLength = Integer.parseInt(ctx.formParam("shed_length"));
-        int roof = Integer.parseInt(ctx.formParam("roof"));
+        int roof = CarportRequestMapper.getCarportByRequestID(requestID,connectionPool).getCarport().getSpecification().getRoof().getProductID();
         SpecificationMapper.updateSpecification(requestID, width, length, shed, shedWidth, shedLength, roof, connectionPool);
         ctx.redirect("/admin/alert/");
     }

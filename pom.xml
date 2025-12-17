@@ -90,7 +90,6 @@
             <version>1.18.38</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>

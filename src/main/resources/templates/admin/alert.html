@@ -104,6 +104,7 @@
                                  th:data-shed="${req.carport.specification.shed}"
                                  th:data-shed-depth="${req.carport.specification.shedDepth}"
                                  th:data-shed-width="${req.carport.specification.shedWidth}"
+                                 th:data-carport-request-ID="${req.carportRequestID}"
                                 width="90" height="50" viewBox="0 0 68 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M34.0002 25.5C31.7458 25.5 29.5838 26.3955 27.9898 27.9896C26.3957 29.5837 25.5002 31.7457 25.5002 34C25.5002 36.2543 26.3957 38.4163 27.9898 40.0104C29.5838 41.6045 31.7458 42.5 34.0002 42.5C36.2545 42.5 38.4165 41.6045 40.0106 40.0104C41.6046 38.4163 42.5002 36.2543 42.5002 34C42.5002 31.7457 41.6046 29.5837 40.0106 27.9896C38.4165 26.3955 36.2545 25.5 34.0002 25.5ZM34.0002 48.1667C30.2429 48.1667 26.6396 46.6741 23.9828 44.0173C21.3261 41.3606 19.8335 37.7572 19.8335 34C19.8335 30.2428 21.3261 26.6394 23.9828 23.9827C26.6396 21.3259 30.2429 19.8333 34.0002 19.8333C37.7574 19.8333 41.3607 21.3259 44.0175 23.9827C46.6743 26.6394 48.1668 30.2428 48.1668 34C48.1668 37.7572 46.6743 41.3606 44.0175 44.0173C41.3607 46.6741 37.7574 48.1667 34.0002 48.1667ZM34.0002 12.75C19.8335 12.75 7.73516 21.5617 2.8335 34C7.73516 46.4383 19.8335 55.25 34.0002 55.25C48.1668 55.25 60.2652 46.4383 65.1668 34C60.2652 21.5617 48.1668 12.75 34.0002 12.75Z" fill="black"/>
                         </svg>
@@ -143,10 +144,11 @@
             </div>
         </section>
 </section>
+<form class="edit_form" th:action="@{/admin/update_request_alert}" method="POST">
+    <input type="hidden" name="carport_request_id" id="carport_request_id"/>
 <div id="edit_modal" class="modal_hidden">
     <div class="modal_box">
         <h2>Se og Rediger Mål</h2>
-        <form id="edit_form">
             <label for="length_input">Carport Længde:</label>
             <select name="length" id="length_input" th:required="true">
                 <option value="1">0</option>
@@ -171,7 +173,7 @@
                 <option value="600">600</option>
             </select>
             <label for="roof_input">Carport Trapeztag:</label>
-            <select name="roof" id="roof_input"th:required="true">
+            <select name="roof" id="roof_input" th:required="true">
                 <option value="1">Ingen tag</option>
                 <option value="2">Plast tag</option>
             </select>
@@ -204,12 +206,12 @@
             <option value="600">600</option>
         </select>
             <div class="button_row">
-            <button type="button" id="save_btn" class="overlay_to_save_button">Gem</button>
+            <button type="submit" id="save_btn" class="overlay_to_save_button">Gem</button>
             <button type="button" id="close_btn" class="close_btn">Luk</button>
             </div>
-        </form>
     </div>
 </div>
+</form>
 <div id="view_panel" class="view_panel_hidden">
     <div class="view_panel_box">
         <h2>Forespørgsel Detaljer</h2>

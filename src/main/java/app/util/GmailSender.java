@@ -64,7 +64,7 @@ public class GmailSender
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 Dotenv dotenv = Dotenv.load();
-    return null;
+                return new PasswordAuthentication(dotenv.get("SENDGRID_USER"), dotenv.get("SENDGRID_API_KEY"));
             }
         });
 

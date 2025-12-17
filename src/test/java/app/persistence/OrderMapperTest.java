@@ -127,7 +127,6 @@ public class OrderMapperTest
     public void nextAvailableIdTest() throws SQLException, DatabaseException
     {
         assertEquals(3,OrderMapper.getAvailableOrderId(connectionPool));
-
     }
 }
 

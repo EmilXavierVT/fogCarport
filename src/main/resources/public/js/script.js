@@ -228,17 +228,16 @@ searchInputMaterials.addEventListener('input', function()
 //ADMIN OVERLAY VIEW AND EDIT
 document.querySelectorAll(".open_details").forEach(svg => {
     svg.addEventListener("click", function() {
+
+        document.getElementById("carport_request_id").value = this.dataset.carportRequestId
         document.getElementById("length_input").value = this.dataset.length;
         document.getElementById("width_input").value = this.dataset.width;
         document.getElementById("shed_input").value = this.dataset.shed;
         document.getElementById("roof_input").value = this.dataset.roof;
         document.getElementById("shed_depth_input").value = this.dataset.shedDepth;
         document.getElementById("shed_width_input").value = this.dataset.shedWidth;
-
         document.getElementById("view_length").textContent = this.dataset.length;
         document.getElementById("view_width").textContent = this.dataset.width;
-        //document.getElementById("view_roof").textContent = this.dataset.roof;
-        //document.getElementById("view_shed").textContent = this.dataset.shed;
         document.getElementById("view_shed_depth").textContent = this.dataset.shedDepth;
         document.getElementById("view_shed_width").textContent = this.dataset.shedWidth;
 

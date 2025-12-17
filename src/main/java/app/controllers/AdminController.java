@@ -27,6 +27,8 @@ public class AdminController
         app.post("/delete_offer", ctx -> deleteOffer(ctx, connectionPool));
         app.post("/admin/update_request", ctx -> updateRequest(ctx, connectionPool));
         app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
+        app.post("/admin/update_request_alert", ctx -> updateRequestAlert(ctx, connectionPool));
+
     }
 
     private static void deleteOffer(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException
@@ -70,6 +72,20 @@ public class AdminController
         int roof = Integer.parseInt(ctx.formParam("roof"));
         SpecificationMapper.updateSpecification(req.getCarportRequestID(), width, length, shed, shedWidth, shedLength, roof, connectionPool);
         ctx.redirect("/admin/construction/" + req.getCarportRequestID());
+    }
+
+    private static void updateRequestAlert(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException
+    {
+        String requestIDString = ctx.formParam("carport_request_id");
+        int requestID = Integer.parseInt(requestIDString);
+        int width = Integer.parseInt(ctx.formParam("width"));
+        int length = Integer.parseInt(ctx.formParam("length"));
+        boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
+        int shedWidth = Integer.parseInt(ctx.formParam("shed_width"));
+        int shedLength = Integer.parseInt(ctx.formParam("shed_length"));
+        int roof = Integer.parseInt(ctx.formParam("roof"));
+        SpecificationMapper.updateSpecification(requestID, width, length, shed, shedWidth, shedLength, roof, connectionPool);
+        ctx.redirect("/admin/alert/");
     }
 
     private static void sendEmail(Context ctx) throws MessagingException

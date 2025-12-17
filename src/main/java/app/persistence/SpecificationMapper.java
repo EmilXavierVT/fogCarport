@@ -96,14 +96,15 @@ public class SpecificationMapper
     public static void updateSpecification(int SpecificationID, long EAN, String model, int roomFor,boolean shed, int post,
                                            int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                            int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
-                                           int parkingWidth, int shedDepth, int shedWidth,ConnectionPool connectionPool) throws SQLException {
+                                           int parkingWidth, int shedDepth, int shedWidth,ConnectionPool connectionPool) throws SQLException
+    {
         String sql = "UPDATE specifications SET EAN = ?,model = ?,room_for = ?,shed = ?,post = ?,beam = ?,rafter = ?, roof = ?," +
                                  "fascia_board = ?, length = ?, width = ?, height_front = ?, height_rear = ?, roof_length = ?, roof_width = ?," +
                                  " exterior_width_at_post = ?, parking_length = ?, parking_width = ?,  shed_depth = ?, shed_width = ? WHERE specification_id = ?";
 
         try(Connection connection = connectionPool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)){
-
+            PreparedStatement ps = connection.prepareStatement(sql))
+        {
             ps.setLong(1,EAN);
             ps.setString(2,model);
             ps.setInt(3,roomFor);
@@ -131,8 +132,9 @@ public class SpecificationMapper
         {
             throw new DatabaseException("Failed to update specification with ID: " + SpecificationID);
         }
-    }
-        catch (DatabaseException e) {
+        }
+        catch (DatabaseException e)
+        {
             throw new RuntimeException(e);
         }
     }
@@ -146,12 +148,14 @@ public class SpecificationMapper
         {
             ps.setInt(1,SpecificationID);
             int rowsAffected = ps.executeUpdate();
+
             if ( rowsAffected != 1 )
             {
                 throw new DatabaseException("Failed to delet user with ID: " + SpecificationID);
             }
         }
-        catch (DatabaseException e) {
+        catch (DatabaseException e)
+        {
             throw new RuntimeException(e);
         }
     }
@@ -159,14 +163,16 @@ public class SpecificationMapper
     public static Specification createAndGetSpecification(long EAN, String model, int roomFor, boolean shed, int post,
                                                           int beam, int rafter, int roof, int fasciaBoard, int length, int width, int heightFront,
                                                           int heightRear, int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength,
-                                                          int parkingWidth, int shedDepth, int shedWidth, ConnectionPool connectionPool) throws SQLException, DatabaseException {
+                                                          int parkingWidth, int shedDepth, int shedWidth, ConnectionPool connectionPool) throws SQLException, DatabaseException
+    {
         String sql = "INSERT INTO specifications (EAN,model,room_for,shed,post,beam,rafter, roof, " +
                 "fascia_board, length, width, height_front, height_rear, roof_length, roof_width," +
                 " exterior_width_at_post, parking_length, parking_width,  shed_depth, shed_width)" +
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+        {
             ps.setLong(1, EAN);
             ps.setString(2, model);
             ps.setInt(3, roomFor);
@@ -188,11 +194,14 @@ public class SpecificationMapper
             ps.setInt(19, shedDepth);
             ps.setInt(20, shedWidth);
             ps.executeUpdate();
-
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
+
+            if (rs.next())
+            {
                 return getSpecificationByID(rs.getInt(1), connectionPool);
-            } else {
+            }
+            else
+            {
                 throw new DatabaseException("No ID was generated for the new specification");
             }
         }
@@ -222,5 +231,4 @@ public class SpecificationMapper
           }
       }
 }
-
 }

@@ -1,13 +1,13 @@
 package app.services;
 
-public class Svg {
+public class Svg
+{
     private static final String SVG_TEMPLATE = "<svg version=\"1.1\"\n" +
             "     x=\"%d\" y=\"%d\"\n "+
             "     viewBox=\"%s\" width=\"%s\" \n" +
             "     height=\"%s\" preserveAspectRatio=\"xMinYMin\">";
 
     private static final String SVG_RECT_TEMPLATE = "    <rect x=\"%d\" y=\"%d\" height=\"%f\" width=\"%f\" style=\"%s\"/>\n";
-
 
     private static final String SVG_ARROW_DEFS = "<defs>\n" +
             "  <marker id=\"beginArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"0\" refY=\"6\" orient=\"auto\" markerUnits=\"userSpaceOnUse\">\n" +
@@ -25,8 +25,8 @@ public class Svg {
             "        marker-end: url(#endArrow);\" />";
 
     private static final String SVG_TEXT_TEMPLATE = "    <text style=\"text-anchor: middle\" transform=\"translate(%d,%d) rotate(%d)\">%s</text>\n";
-    private StringBuilder svg = new StringBuilder();
 
+    private StringBuilder svg = new StringBuilder();
 
     public Svg (int x, int y, String viewBox, String width, String height)
     {
@@ -37,7 +37,6 @@ public class Svg {
     public void addRectangle(int x, int y, double width, double length, String style)
     {
     svg.append(String.format(SVG_RECT_TEMPLATE, x, y, width, length, style));
-
     }
     public void addLine(int x1, int y1, int x2, int y2, String style)
     {

@@ -146,9 +146,9 @@
 </section>
 <form class="edit_form" th:action="@{/admin/update_request_alert}" method="POST">
     <input type="hidden" name="carport_request_id" id="carport_request_id"/>
-<div id="edit_modal" class="modal_hidden">
-    <div class="modal_box">
-        <h2>Se og Rediger Mål</h2>
+    <div id="edit_modal" class="modal_hidden">
+        <div class="modal_box">
+            <h2>Se og Rediger Mål</h2>
             <label for="length_input">Carport Længde:</label>
             <select name="length" id="length_input" th:required="true">
                 <option value="1">0</option>
@@ -187,20 +187,20 @@
             </select>
             <label for="shed_width_input">Redskabsrum Bredde:</label>
             <select name="shed_width" id="shed_width_input">
-            <option value="0">0</option>
-            <option value="300">300</option>
-            <option value="360">360</option>
-            <option value="420">420</option>
-            <option value="480">480</option>
-            <option value="540">540</option>
-            <option value="600">600</option>
-        </select>
+                <option value="0">0</option>
+                <option value="300">300</option>
+                <option value="360">360</option>
+                <option value="420">420</option>
+                <option value="480">480</option>
+                <option value="540">540</option>
+                <option value="600">600</option>
+            </select>
             <div class="button_row">
-            <button type="submit" id="save_btn" class="overlay_to_save_button">Gem</button>
-            <button type="button" id="close_btn" class="close_btn">Luk</button>
+                <button type="submit" id="save_btn" class="overlay_to_save_button">Gem</button>
+                <button type="button" id="close_btn" class="close_btn">Luk</button>
             </div>
+        </div>
     </div>
-</div>
 </form>
 <div id="view_panel" class="view_panel_hidden">
     <div class="view_panel_box">

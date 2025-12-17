@@ -34,8 +34,19 @@ public class UserController
 
     private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-
+        CarportRequest rq = ctx.sessionAttribute("carport_request");
+        User user = rq.getUser();
+        int id = rq.getCarportRequestID();
+        if(ctx.sessionAttribute("currentUser") == null)
+        {
+            ctx.redirect("/");
+            return;
+        }
+        else if("currentUser".equals(user))
+        {
+            ctx.redirect("/");
+            return;
+        }
         try
         {
             CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);

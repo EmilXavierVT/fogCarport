@@ -32,30 +32,29 @@ public class UserController
         app.post("/create_user", ctx -> registerInfo(ctx, connectionPool));
     }
 
-    private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException
-    {
-        CarportRequest rq = ctx.sessionAttribute("carport_request");
-        User user = rq.getUser();
-        int id = rq.getCarportRequestID();
-        if(ctx.sessionAttribute("currentUser") == null)
+    private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        CarportRequest rq = CarportRequestMapper.getCarportByRequestID(Integer.parseInt(ctx.pathParam("id")),connectionPool);
+        if(rq !=null) {
+
+            User user = rq.getUser();
+            int id = rq.getCarportRequestID();
+            if (ctx.sessionAttribute("currentUser") == null) {
+                ctx.redirect("/");
+                return;
+            } else if (ctx.sessionAttribute("currentUser") == user) {
+                ctx.redirect("/");
+                return;
+            }
+            try {
+                CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
+                ctx.sessionAttribute("carport_request", cr);
+                ctx.render("/accept_offer.html", Map.of("carport_request", cr));
+            } catch (SQLException e) {
+                throw new DatabaseException(e.getMessage());
+            }
+        }else
         {
             ctx.redirect("/");
-            return;
-        }
-        else if("currentUser".equals(user))
-        {
-            ctx.redirect("/");
-            return;
-        }
-        try
-        {
-            CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
-            ctx.sessionAttribute("carport_request", cr);
-            ctx.render("/accept_offer.html", Map.of("carport_request", cr));
-        }
-        catch (SQLException e)
-        {
-            throw new DatabaseException(e.getMessage());
         }
     }
 

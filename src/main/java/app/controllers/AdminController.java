@@ -59,7 +59,8 @@ public class AdminController
         ctx.redirect("/admin/construction/" + req.getCarportRequestID());
     }
 
-    private static void updateRequest(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException {
+    private static void updateRequest(Context ctx, ConnectionPool connectionPool) throws SQLException, DatabaseException
+    {
         CarportRequest req = ctx.sessionAttribute("carport_request");
         int width = Integer.parseInt(ctx.formParam("width"));
         int length = Integer.parseInt(ctx.formParam("length"));
@@ -110,7 +111,9 @@ public class AdminController
             {
                 throw new RuntimeException("Svg Could not be found");
             }
-        } catch (DatabaseException | SQLException e) {
+        }
+        catch (DatabaseException | SQLException e)
+        {
             throw new RuntimeException(e);
         }
     }

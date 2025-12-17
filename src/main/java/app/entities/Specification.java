@@ -58,7 +58,8 @@ public class Specification
     public Specification(long EAN, String model, int roomFor, boolean shed, Product post, Product beam, Product rafter,
                          Product roof, Product fasciaBoard, int length, int width, int heightFront, int heightRear,
                          int roofLength, int roofWidth, int exteriorWidthAtPost, int parkingLength, int parkingWidth,
-                         int shedDepth, int shedWidth) {
+                         int shedDepth, int shedWidth)
+    {
         this.EAN = EAN;
         this.model = model;
         this.roomFor = roomFor;

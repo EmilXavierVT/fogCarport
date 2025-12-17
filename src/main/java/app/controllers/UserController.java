@@ -34,28 +34,35 @@ public class UserController
     }
 
     private static void showAcceptPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException, SQLException {
-        int id = Integer.parseInt(ctx.pathParam("id"));
+       int id = Integer.parseInt(ctx.pathParam("id"));
         CarportRequest rq = CarportRequestMapper.getCarportByRequestID(id,connectionPool);
         if(rq !=null) {
 
+            if (ctx.sessionAttribute("currentUser") == null)
+            {
+                ctx.sessionAttribute("request_id",id);
+                ctx.render("/login.html", Map.of("request_id", id));
+                return;
+            }
+
             User user = rq.getUser();
-            if (ctx.sessionAttribute("currentUser") == null) {
-                ctx.redirect("/login");
-                return;
-            } else if (ctx.sessionAttribute("currentUser") != user) {
-                ctx.redirect("/");
-                return;
+            User currentUser = ctx.sessionAttribute("currentUser");
+            if (currentUser.getUserId() == user.getUserId()) {
+
+                try
+                {
+                    CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
+                    ctx.sessionAttribute("carport_request", cr);
+                    ctx.render("/accept_offer.html", Map.of("carport_request", cr));
+
+                } catch (SQLException e) {
+                    throw new DatabaseException(e.getMessage());
+                }
             }
-            try {
-                CarportRequest cr = CarportRequestMapper.getCarportByRequestID(id, connectionPool);
-                ctx.sessionAttribute("carport_request", cr);
-                ctx.render("/accept_offer.html", Map.of("carport_request", cr));
-            } catch (SQLException e) {
-                throw new DatabaseException(e.getMessage());
-            }
-        }else
+        else
         {
             ctx.redirect("/");
+        }
         }
     }
 
@@ -123,6 +130,12 @@ public class UserController
                 ctx.render("/admin/alert.html", Map.of("message", "Du er nu logget ind som admin."));
                 return true;
             }
+            else if(ctx.sessionAttribute("request_id") != null)
+            {
+                ctx.sessionAttribute("admin", false);
+                ctx.redirect("/accept_offer/" + ctx.sessionAttribute("request_id"));
+                return true;
+            }
             else
             {
                 ctx.sessionAttribute("admin", false);
@@ -141,6 +154,7 @@ public class UserController
             ctx.render("/index.html",Map.of("error_login", "login fejlede!"));
             return false;
         }
+
     }
 
     private static void logout(Context ctx)

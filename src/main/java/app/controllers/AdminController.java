@@ -47,7 +47,7 @@ public class AdminController
         String to = user.getEmail();
         String subject = "Tillykke du skal ha en carport fra FOG";
         String body = "Vi har vurderet at din carport kan bygges! " + "Her  er et link til at bekræfte tilbuddet: \n" +
-                "http://carport.project-ice.dk/accept_offer/" + id + "\n" +
+                "http://localhost:7071/accept_offer/" + id + "\n" +
                 "DET ER ESSENTIELT AT VÆRE LOGGET IND FØR DU TRYKKER PÅ LINKET!";
         gmailSender.sendPlainTextEmail(to, subject, body);
         ctx.sessionAttribute("email_sent_message", "Email sendt til " + user.getFirstName() + " " + user.getLastName() + ". Med e-mail: " + to);

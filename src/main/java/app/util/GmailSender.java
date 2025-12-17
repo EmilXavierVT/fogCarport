@@ -63,9 +63,8 @@ public class GmailSender
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                // Username MUST be literal "apikey"
                 Dotenv dotenv = Dotenv.load();
-                return new PasswordAuthentication(dotenv.get("SENDGRID_USER"), dotenv.get("SENDGRID_PASSWORD"));
+                return new PasswordAuthentication(dotenv.get("SENDGRID_USER"), dotenv.get("SENDGRID_API_KEY"));
             }
         });
 

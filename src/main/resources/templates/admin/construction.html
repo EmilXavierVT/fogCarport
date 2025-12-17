@@ -203,6 +203,8 @@
             <div class="flat_section_container_boxes">
                 <div class="flat_section_container_construction">
                     <form class="user_defined_form" th:action="@{/admin/construction}" method="post">
+                        <h3  th:text="'Telefon Nummer: ' + ${carport_request.user.phoneNumber}"></h3>
+                        <h3 th:text="'Til: ' + ${carport_request.user.email}"></h3>
                         <label for="email_subject">
                             <h3>Email Emne</h3> Omhandlende Carport </label>
                         <input class="input_email_box" type="text" id="email_subject" name="email_subject" required />

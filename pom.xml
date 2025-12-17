@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <javalin.version>6.1.3</javalin.version>
         <javalin-rendering.version>6.1.3</javalin-rendering.version>
         <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>

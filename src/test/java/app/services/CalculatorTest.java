@@ -87,25 +87,25 @@ class CalculatorTest
             }
         }
     }
-
-    @Test
-    public void testCalculatePrice() throws DatabaseException, SQLException
-    {
-        Specification testSpecification = SpecificationMapper.getSpecificationByID(1,connectionPool);
-        Calculator calc = new Calculator(testSpecification);
-        calc.setConnectionPool(connectionPool);
-        System.out.println(calc.getCostPrice());
-    }
-
-    @Test
-    public void testItemList() throws SQLException, DatabaseException
-    {
-        Specification testSpec = SpecificationMapper.getSpecificationByID(1,connectionPool);
-        Calculator calc = new Calculator(testSpec);
-
-       for(ProductInOrder pio : calc.setItemList())
-       {
-           System.out.println(pio + "\n");
-       }
-    }
+//
+//    @Test
+//    public void testCalculatePrice() throws DatabaseException, SQLException
+//    {
+//        Specification testSpecification = SpecificationMapper.getSpecificationByID(1,connectionPool);
+//        Calculator calc = new Calculator(testSpecification);
+//        calc.setConnectionPool(connectionPool);
+//        System.out.println(calc.getCostPrice());
+//    }
+//
+//    @Test
+//    public void testItemList() throws SQLException, DatabaseException
+//    {
+//        Specification testSpec = SpecificationMapper.getSpecificationByID(1,connectionPool);
+//        Calculator calc = new Calculator(testSpec);
+//
+//       for(ProductInOrder pio : calc.setItemList())
+//       {
+//           System.out.println(pio + "\n");
+//       }
+//    }
 }

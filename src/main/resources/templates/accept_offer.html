@@ -1,21 +1,27 @@
 <head th:replace="~{fragments :: head(~{::flat})}"><title>Fladt Tag</title></head>
 <body>
 <header th:replace="~{fragments :: header}"></header>
-<div class="content_holder_accept_offer">
-<p th:text="${'Hej ' + carport_request.user.firstName}  + ${' du har lavet bestilling : ' + carport_request.carportRequestID} "></p>
-    <p>Vil du acceptere tilbudet ?</p>
+<div class="content_holder_accept_offer" style="margin-top: 10%; margin-bottom: 10%;">
+    <div class="display_container_vertical" style="background-color: var(--blue_widget); height: 300px;
+    box-shadow: inset 0 0 50px 10px rgba(0,0,0,0.5);">
+<h1 th:text="${'Hej ' + carport_request.user.firstName}  + ${' du har lavet bestilling : ' + carport_request.carportRequestID}"
+    style="color: var(--background_color);"></h1>
+    <p style="color: var(--background_color); font-size: 1.3rem;">Vil du acceptere tilbudet ?</p>
+        <div class="button_row" style="margin-bottom: 2%;">
     <form action="/accept_offer" method="POST">
-    <button type="submit" id="yes-btn" class="yes-btn">JA</button>
+    <button type="submit" id="yes-btn" class="button_white" style="width: 250px;">JA</button>
         <label>
             <input hidden name="carport_request_id" th:value="${carport_request.carportRequestID}">
         </label>
     </form>
     <form action="/decline_offer" method="POST">
-    <button type="submit" id="no-btn" class="no-btn">NEJ</button>
+    <button type="submit" id="no-btn" class="button_white" style="width: 250px;">NEJ</button>
         <label>
             <input hidden name="carport_request_id" th:value="${carport_request.carportRequestID}">
         </label>
     </form>
+        </div>
+    </div>
 </div>
 <script src="/js/script.js"></script>
 </body>

@@ -29,7 +29,7 @@ public class AdminController
         app.post("/send_acceptance_offer", ctx -> sendAcceptanceOffer(ctx));
         app.post("/delete_offer", ctx -> deleteOffer(ctx, connectionPool));
         app.post("/admin/update_request", ctx -> updateRequest(ctx, connectionPool));
-        app.post("/update_offer_price/{id}", ctx -> updateOfferPrice(ctx));
+        app.post("/update_offer_price", ctx -> updateOfferPrice(ctx));
         app.post("/admin/update_request_alert", ctx -> updateRequestAlert(ctx, connectionPool));
 
     }

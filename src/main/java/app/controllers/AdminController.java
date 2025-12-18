@@ -129,7 +129,16 @@ public class AdminController
 
                 Svg svg = UserDefinedController.showDrawing(sp.getWidth(), sp.getLength(), sp.getShedWidth(), sp.getShedDepth(), sp);
                 ctx.attribute("svg", svg.toString());
-                ctx.render("admin/construction.html", Map.of("carport_request", cr, "item_list", itemList, "cost_price", costPrice, "actual_offer", actualOffer));
+                ctx.render(
+                        "admin/construction.html",
+                        Map.of(
+                                "carport_request", cr,
+                                "item_list", itemList,
+                                "cost_prices", df.format(costPrice),
+                                "actual_offer", df.format(actualOffer)
+                        )
+                );
+
             }
             else
             {

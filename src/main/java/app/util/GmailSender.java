@@ -66,8 +66,7 @@ public class GmailSender
 
                 Dotenv dotenv = Dotenv.load();
                 return new PasswordAuthentication( dotenv.get("SENDGRID_USER"), dotenv.get("SENDGRID_PASSWORD"));
-                Dotenv dotenv = Dotenv.load();
-                return new PasswordAuthentication(dotenv.get("SENDGRID_USER"), dotenv.get("SENDGRID_API_KEY"));
+
             }
         });
 

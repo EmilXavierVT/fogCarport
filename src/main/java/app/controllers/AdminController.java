@@ -116,6 +116,9 @@ public class AdminController
                 Calculator calc = new Calculator(sp);
                 List<ProductInOrder> itemList = calc.setItemList();
                 ctx.sessionAttribute("item_list", itemList);
+                DecimalFormat df = new DecimalFormat("#.00");
+                df.setRoundingMode(RoundingMode.HALF_UP);
+
                 double markupPercentage = ctx.sessionAttribute("markup_percentage") == null ? 1.39 : ctx.sessionAttribute("markup_percentage");
                 double salesCost = 5;
                 double costPrice = salesCost * calc.getCostPrice();

@@ -156,7 +156,7 @@
         <div class="price_container">
             <div>
             <h2>Kost Pris: <span th:text="${cost_price} + ' DKK'"></span></h2>
-            <h2>Tilbuds Pris: <span th:text="${actual_offer} + ' DKK'"></span></h2>
+            <h2>Tilbuds Pris: <span th:text="${actual_offer} + ' DKK'" ></span></h2>
             </div>
             <div>
                 <form th:action="@{/update_offer_price}" method="post">
